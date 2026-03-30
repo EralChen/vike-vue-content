@@ -9,8 +9,12 @@ export async function data() {
   // https://vike.dev/useConfig
   const config = useConfig();
 
-  const response = await fetch("https://brillout.github.io/star-wars/api/films.json");
-  const moviesData = (await response.json()) as MovieDetails[];
+  const response = await fetch(
+    "https://swapi.dev/api/films/?format=json"
+  );
+
+  const res = (await response.json());
+  const moviesData: MovieDetails[] = res.results
 
   config({
     // Set <title>
@@ -25,8 +29,9 @@ export async function data() {
 }
 
 function minimize(movies: MovieDetails[]): Movie[] {
-  return movies.map((movie) => {
-    const { title, release_date, id } = movie;
-    return { title, release_date, id };
+  return movies.map((movie, index) => {
+    const { title, release_date } = movie;
+
+    return { title, release_date, id: index + 1 + ''};
   });
 }

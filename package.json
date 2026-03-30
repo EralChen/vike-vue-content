@@ -1,18 +1,17 @@
 {
   "scripts": {
-    "dev": "vike dev",
-    "build": "vike build",
-    "preview": "vike build && vike preview"
+    "dev": "pnpm run -C demo dev"
   },
   "dependencies": {
-    "vike": "^0.4.255",
-    "vike-vue": "^0.9.11",
-    "vue": "^3.5.30"
+    "@vunk/core": "^1.6.9",
+    "@vunk/form": "^2.17.0",
+    "@vunk/shared": "^0.9.1",
+    "vue": "^3.5.31"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.5",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3"
   },
   "type": "module"
 }

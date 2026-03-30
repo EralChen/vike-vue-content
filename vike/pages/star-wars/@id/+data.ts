@@ -3,6 +3,7 @@
 import type { PageContextServer } from "vike/types";
 import { useConfig } from "vike-vue/useConfig";
 import type { MovieDetails } from "../types.js";
+import { request } from '@vunk/shared/fetch'
 
 export type Data = Awaited<ReturnType<typeof data>>;
 
@@ -10,8 +11,13 @@ export async function data(pageContext: PageContextServer) {
   // https://vike.dev/useConfig
   const config = useConfig();
 
-  const response = await fetch(`https://brillout.github.io/star-wars/api/films/${pageContext.routeParams.id}.json`);
-  let movie = (await response.json()) as MovieDetails;
+  let movie = await request<never, MovieDetails>({
+    baseURL: 'https://swapi.dev/api',
+    method: 'GET',
+    url: `/films/${pageContext.routeParams.id}?format=json`
+  });
+
+
 
   config({
     // Set <title>
