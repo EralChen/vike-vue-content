@@ -1,0 +1,6 @@
+{
+  "name": "@vunk-formaker/components",
+  "dependencies": {
+    "vanilla-jsoneditor": "^0.6.4"
+  }
+}

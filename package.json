@@ -1,17 +1,23 @@
 {
   "scripts": {
-    "dev": "pnpm run -C demo dev"
+    "dev:vike": "pnpm run -C vike dev",
+    "dev:app": "pnpm run -C app dev"
   },
   "dependencies": {
     "@vunk/core": "^1.6.9",
     "@vunk/form": "^2.17.0",
     "@vunk/shared": "^0.9.1",
+    "element-plus": "latest",
     "vue": "^3.5.31"
   },
   "devDependencies": {
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^24.12.0",
     "@vitejs/plugin-vue": "^6.0.5",
+    "@vue/tsconfig": "^0.9.0",
     "typescript": "^6.0.2",
-    "vite": "^8.0.3"
+    "vite": "^8.0.3",
+    "vitest": "^4.1.2"
   },
   "type": "module"
 }
