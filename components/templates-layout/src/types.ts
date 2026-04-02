@@ -1,6 +1,6 @@
 import type { VueComponentPropsType } from '@vunk/shared'
 import { ElCollapse, ElCollapseItem } from 'element-plus'
-import { BasicSource } from '@vunk/form'
+import type { BasicSource } from '@vunk/form'
 
 
 export interface ElCollapseSource<S> extends VueComponentPropsType<typeof ElCollapse>, BasicSource {

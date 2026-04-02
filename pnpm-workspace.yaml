@@ -1,4 +1,7 @@
 packages:
- - vike
- - components
- - app
+  - internal
+  - components
+  - vike
+  - app
+allowBuilds:
+  esbuild: false
