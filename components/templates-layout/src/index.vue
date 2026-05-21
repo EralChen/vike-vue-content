@@ -16,16 +16,16 @@ export default defineComponent({
 </script>
 <template>
   <VkfFormItemRendererTemplate :type="'ElCollapse'">
-    <template #default="{ data: props, Renderer, raw, templateIf }">
-      <ElCollapse v-if="templateIf(data)" v-bind="props">
+    <template #default="{ data: props, Renderer, raw }">
+      <ElCollapse  v-bind="props">
         <component :is="Renderer" :source="raw.templateSlots"></component>
       </ElCollapse>
     </template>
   </VkfFormItemRendererTemplate>
 
   <VkfFormItemRendererTemplate :type="'ElCollapseItem'">
-    <template #default="{ data: props, Renderer, raw, templateIf }">
-      <ElCollapseItem v-bind="props" v-if="templateIf(data)">
+    <template #default="{ data: props, Renderer, raw }">
+      <ElCollapseItem v-bind="props" >
         <component :is="Renderer" :source="raw.templateSlots"></component>
       </ElCollapseItem>
     </template>
