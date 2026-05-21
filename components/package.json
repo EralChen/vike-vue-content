@@ -1,9 +1,12 @@
 {
   "name": "@vunk-formaker/components",
   "dependencies": {
-    "vanilla-jsoneditor": "^0.6.4"
+    "@element-plus/icons-vue": "latest",
+    "vanilla-jsoneditor": "^3.12.0"
   },
   "scripts": {
-    "build": "vite build"
+    "build": "run-p build:es build:types",
+    "build:es": "vite build",
+    "build:types": "vue-tsc"
   }
 }

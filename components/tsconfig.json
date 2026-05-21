@@ -2,6 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
     "../env.d.ts",
+    "./app.d.ts",
     "./**/*.ts",
     "./**/*.tsx",
     "./**/*.vue"
@@ -10,13 +11,15 @@
     "dist",
     "vite.config.ts"
   ],
+
+  
   "compilerOptions": {
     "noEmit": false,
     "allowImportingTsExtensions": true,
     "emitDeclarationOnly": true,
-    "composite": true,
     "declaration": true,
-
+    "rootDir": "./",
+    "outDir": "dist",
     
     // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking.
     // Specified here to keep it out of the root directory.

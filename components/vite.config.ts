@@ -2,10 +2,7 @@
 import { defineConfig, type UserConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { glob } from 'node:fs/promises'
-import { entryDir } from '@lib/internal'
 import path from 'node:path';
-import { dts } from 'rolldown-plugin-dts';
-
 
 export default defineConfig(async ({ command, mode }) => {
   const buildLibEntry = await getBuildLibEntry()
@@ -28,9 +25,7 @@ export default defineConfig(async ({ command, mode }) => {
 
       
       },
-      outDir: path.resolve(entryDir, 'dist'),
       emptyOutDir: true,
-
       rolldownOptions: {
         external: [
           'vue',
@@ -39,9 +34,7 @@ export default defineConfig(async ({ command, mode }) => {
       },
     },
     plugins: [
-      dts({ vue: true }),
       vue()
-
     ]
   } as UserConfig 
 })

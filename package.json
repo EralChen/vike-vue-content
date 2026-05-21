@@ -6,25 +6,34 @@
   },
   "dependencies": {
     "@vunk/core": "^1.6.9",
-    "@vunk/form": "^2.17.0",
+    "@vunk/form": "2.18.1",
     "@vunk/shared": "^0.9.1",
     "element-plus": "latest",
-    "vue": "^3.5.31"
+    "vue": "^3.5.34"
   },
   "devDependencies": {
     "@lib/internal": "workspace:*",
     "@ts-macro/tsc": "^0.3.7",
     "@tsconfig/node24": "^24.0.4",
-    "@types/node": "^24.12.0",
-    "@vitejs/plugin-vue": "^6.0.5",
-    "@vue/language-core": "^3.2.6",
-    "@vue/tsconfig": "^0.9.0",
+    "@types/node": "^25.9.1",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/language-core": "^3.3.1",
+    "@vue/tsconfig": "^0.9.1",
     "fast-glob": "^3.3.3",
-    "rolldown-plugin-dts": "^0.23.2",
-    "typescript": "^6.0.2",
+    "npm-run-all2": "^9.0.0",
+    "typescript": "^6.0.3",
     "unbuild": "^3.6.1",
-    "vite": "^8.0.3",
-    "vitest": "^4.1.2"
+    "vite": "^8.0.13",
+    "vitest": "^4.1.7",
+    "vue-tsc": "^3.3.1"
   },
-  "type": "module"
+  "type": "module",
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "vite": "^8.0.0",
+        "typescript": "^6.0.0"
+      }
+    }
+  }
 }

@@ -1,9 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
-    "env.d.ts", 
-    "app/src/**/*", "app/src/**/*.vue",
-    "vite/pages/**/*", "vite/components/**/*"
+    "env.d.ts",
   ],
   "exclude": ["app/**/__tests__/*"],
   "compilerOptions": {
