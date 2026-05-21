@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts" setup>
+import 'element-plus/dist/index.css';
 import Content from "../components/Content.vue";
 import Link from "../components/Link.vue";
 import Logo from "../components/Logo.vue";

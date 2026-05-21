@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.app.json",
+  "include": [
+    "app.d.ts",
+    "pages/**/*.vue",
+    "pages/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "vite.config.ts"
+  ],
+
+  "compilerOptions": {
+    "rootDir": "./",
+    "outDir": "dist"
+  }
+}
