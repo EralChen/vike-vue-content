@@ -1,0 +1,13 @@
+{
+  "name": "docs",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev"
+  },
+  "dependencies": {
+    "@movk/nuxt-docs": "latest",
+    "better-sqlite3": "^12.10.0",
+    "nuxt": "^4.4.6",
+    "tailwindcss": "^4.3.0"
+  }
+}
