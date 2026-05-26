@@ -1,6 +1,7 @@
 
 import { defineConfig, type UserConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import { glob } from 'node:fs/promises'
 import path from 'node:path';
 
@@ -34,7 +35,8 @@ export default defineConfig(async ({ command, mode }) => {
       },
     },
     plugins: [
-      vue()
+      vue(),
+      vueJsx(),
     ]
   } as UserConfig 
 })
