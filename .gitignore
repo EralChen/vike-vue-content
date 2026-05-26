@@ -1,5 +1,6 @@
 # Source
 .dev/
+docs/.data/
 
 # MacOS
 .DS_Store
