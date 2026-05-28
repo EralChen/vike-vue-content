@@ -1,11 +1,17 @@
 {
   "name": "vike-vue-content",
   "version": "0.0.1",
-  "description": "A template for Vue projects",
+  "description": "Content rendering framework for Vike and Vue documentation sites",
   "author": "EralChen",
   "license": "MIT",
+  "type": "module",
   "keywords": [
-    "vue"
+    "vike",
+    "vike-vue",
+    "vue",
+    "content",
+    "docs",
+    "markdown"
   ],
   "scripts": {
     "build": "bash ./build.sh"
@@ -19,6 +25,7 @@
       "import": "./composables/hello/index.es.js",
       "types": "./composables/hello/index.d.ts"
     },
+    "./config": "./config/+config.js",
     "./shared/types": {
       "import": "./shared/types/index.es.js",
       "types": "./shared/types/index.d.ts"

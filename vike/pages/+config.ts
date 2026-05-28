@@ -1,5 +1,6 @@
 import type { Config } from "vike/types";
 import vikeVue from "vike-vue/config";
+import vikeVueContent from "vike-vue-content/config";
 
 // Default config (can be overridden by pages)
 // https://vike.dev/config
@@ -9,5 +10,5 @@ export default {
   title: "My Vike App",
   description: "Demo showcasing Vike",
 
-  extends: [vikeVue],
+  extends: [vikeVue, vikeVueContent],
 } as Config;

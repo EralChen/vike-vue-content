@@ -6,6 +6,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ENTRY_DIR="${ROOT_DIR}/entry"
 
 PACKAGES=(
+	"config"
 	"components"
 	"composables"
 	"shared"
@@ -168,6 +169,13 @@ for (const root of roots) {
 	const rootDir = path.join(entryDir, root)
 	if (!fs.existsSync(rootDir)) {
 		continue
+	}
+
+	const rootConfigJs = path.join(rootDir, '+config.js')
+	if (fs.existsSync(rootConfigJs)) {
+		const exportKey = `./${root}`
+		const relFile = toPosix(path.relative(entryDir, rootConfigJs))
+		exportsMap[exportKey] = `./${relFile}`
 	}
 
 	walk(rootDir, (fullPath) => {
