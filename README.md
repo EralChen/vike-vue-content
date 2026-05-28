@@ -4,6 +4,27 @@
 
 
 
+## Installation
+
+```bash
+npm install vike-vue-content
+```
+
+```ts
+// vike.config.ts
+import vikeVue from 'vike-vue/config'
+import vikeVueContent from 'vike-vue-content/config'
+import type { Config } from 'vike/types'
+
+// https://vike.dev/config
+export default {
+  // https://vike.dev/extends
+  extends: [vikeVue, vikeVueContent],
+  // ... other config
+} satisfies Config
+```
+
+
 ## For Developers
 
 开发过程中你可以参考源码
