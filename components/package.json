@@ -1,5 +1,5 @@
 {
-  "name": "@vunk-formaker/components",
+  "name": "@vunk-template/components",
   "dependencies": {
     "@element-plus/icons-vue": "latest",
     "vanilla-jsoneditor": "^3.12.0"
