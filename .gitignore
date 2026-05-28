@@ -1,6 +1,12 @@
+# ai client
+.pi
+.agents
+
 # Source
 .dev/
+.forks/
 docs/.data/
+entry/**/
 
 # MacOS
 .DS_Store

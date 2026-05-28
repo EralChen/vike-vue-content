@@ -1,3 +1,27 @@
 {
-  "name": "@vunk/formaker"
+  "name": "@vunk/template",
+  "version": "0.0.1",
+  "description": "A template for Vue projects",
+  "author": "EralChen",
+  "license": "MIT",
+  "keywords": [
+    "vue"
+  ],
+  "scripts": {
+    "build": "bash ./build.sh"
+  },
+  "exports": {
+    "./components/hello-world": {
+      "import": "./components/hello-world/index.es.js",
+      "types": "./components/hello-world/index.d.ts"
+    },
+    "./composables/hello": {
+      "import": "./composables/hello/index.es.js",
+      "types": "./composables/hello/index.d.ts"
+    },
+    "./shared/types": {
+      "import": "./shared/types/index.es.js",
+      "types": "./shared/types/index.d.ts"
+    }
+  }
 }
