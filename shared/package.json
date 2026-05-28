@@ -1,5 +1,5 @@
 {
-  "name": "@vunk-markdown/shared",
+  "name": "@vike-vue-content/shared",
   "private": true,
   "scripts": {
     "build": "run-p build:es build:types",

@@ -1,5 +1,5 @@
 {
-  "name": "@vunk-formaker/vike",
+  "name": "@vike-vue-content/vike",
   "scripts": {
     "dev": "vike dev",
     "build": "vike build",
