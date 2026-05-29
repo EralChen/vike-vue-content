@@ -1,4 +1,5 @@
 import type { App } from 'vue'
+import 'vike-vue-content/config'
  
 declare global {
   namespace Vike {

@@ -151,6 +151,7 @@ const dependencies = {}
 const entryIndexJs = path.join(entryDir, 'index.js')
 if (fs.existsSync(entryIndexJs)) {
 	exportsMap['.'] = {
+		default: './index.js',
 		import: './index.js',
 	}
 
@@ -176,15 +177,35 @@ for (const root of roots) {
 	const rootPackageJson = path.join(entryDir, '..', root, 'package.json')
 	if (fs.existsSync(rootPackageJson)) {
 		const rootPackage = JSON.parse(fs.readFileSync(rootPackageJson, 'utf8'))
-		Object.assign(dependencies, rootPackage.dependencies || {})
+		const publicDependencies = Object.fromEntries(
+			Object.entries(rootPackage.dependencies || {})
+				.filter(([name]) => !name.startsWith('@vike-vue-content/'))
+		)
+		Object.assign(dependencies, publicDependencies)
 	}
 
-	const rootConfigJs = path.join(rootDir, '+config.js')
-	if (fs.existsSync(rootConfigJs)) {
-		const exportKey = `./${root}`
-		const relFile = toPosix(path.relative(entryDir, rootConfigJs))
-		exportsMap[exportKey] = `./${relFile}`
-	}
+	walk(rootDir, (fullPath) => {
+		if (!fullPath.endsWith('+config.js')) {
+			return
+		}
+
+		const relFile = toPosix(path.relative(entryDir, fullPath))
+		const relWithinRoot = toPosix(path.relative(rootDir, fullPath))
+		const exportKey = relWithinRoot === '+config.js'
+			? `./${root}`
+			: `./${relWithinRoot.replace(/\/\+config\.js$/, '')}/config`
+		const typeRelFile = relFile.replace(/\.js$/, '.d.ts')
+		const typeFullPath = path.join(entryDir, ...typeRelFile.split('/'))
+
+		exportsMap[exportKey] = {
+			default: `./${relFile}`,
+			import: `./${relFile}`,
+		}
+
+		if (fs.existsSync(typeFullPath)) {
+			exportsMap[exportKey].types = `./${typeRelFile}`
+		}
+	})
 
 	walk(rootDir, (fullPath) => {
 		if (!fullPath.endsWith('index.es.js') && !fullPath.endsWith('index.mjs')) {
@@ -192,11 +213,15 @@ for (const root of roots) {
 		}
 
 		const relFile = toPosix(path.relative(entryDir, fullPath))
-		const exportKey = `./${relFile.replace(/\/index\.(es\.js|mjs)$/, '')}`
+		const relWithinRoot = toPosix(path.relative(rootDir, fullPath))
+		const exportKey = root === 'config'
+			? `./${relWithinRoot.replace(/\/index\.(es\.js|mjs)$/, '')}`
+			: `./${relFile.replace(/\/index\.(es\.js|mjs)$/, '')}`
 		const typeRelFile = relFile.replace(/\/index\.(es\.js|mjs)$/, '/index.d.ts')
 		const typeFullPath = path.join(entryDir, ...typeRelFile.split('/'))
 
 		exportsMap[exportKey] = {
+			default: `./${relFile}`,
 			import: `./${relFile}`,
 		}
 

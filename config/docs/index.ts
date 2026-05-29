@@ -1,0 +1,6 @@
+export { defineDocsPageConfig as default, defineDocsPageConfig } from './+config'
+export { DocsPage } from '@vike-vue-content/components/docs-page'
+export { data } from './data'
+export { onBeforePrerenderStart } from './prerender'
+export { route } from './route'
+export type { DocsPageData, DocsPageOptions } from './+config'

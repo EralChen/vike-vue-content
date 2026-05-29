@@ -18,27 +18,68 @@
   },
   "exports": {
     "./components/content-renderer": {
-      "import": "./components/content-renderer/index.es.js"
+      "default": "./components/content-renderer/index.es.js",
+      "import": "./components/content-renderer/index.es.js",
+      "types": "./components/content-renderer/index.d.ts"
+    },
+    "./components/docs-page": {
+      "default": "./components/docs-page/index.es.js",
+      "import": "./components/docs-page/index.es.js",
+      "types": "./components/docs-page/index.d.ts"
     },
     "./components/hello-world": {
-      "import": "./components/hello-world/index.es.js"
+      "default": "./components/hello-world/index.es.js",
+      "import": "./components/hello-world/index.es.js",
+      "types": "./components/hello-world/index.d.ts"
     },
     "./composables/hello": {
+      "default": "./composables/hello/index.es.js",
       "import": "./composables/hello/index.es.js",
       "types": "./composables/hello/index.d.ts"
     },
-    "./config": "./config/+config.js",
+    "./config": {
+      "default": "./config/+config.js",
+      "import": "./config/+config.js",
+      "types": "./config/+config.d.ts"
+    },
+    "./docs": {
+      "default": "./config/docs/index.es.js",
+      "import": "./config/docs/index.es.js",
+      "types": "./config/docs/index.d.ts"
+    },
+    "./docs/data": {
+      "default": "./config/docs/data/index.es.js",
+      "import": "./config/docs/data/index.es.js",
+      "types": "./config/docs/data/index.d.ts"
+    },
+    "./docs/prerender": {
+      "default": "./config/docs/prerender/index.es.js",
+      "import": "./config/docs/prerender/index.es.js",
+      "types": "./config/docs/prerender/index.d.ts"
+    },
+    "./docs/route": {
+      "default": "./config/docs/route/index.es.js",
+      "import": "./config/docs/route/index.es.js",
+      "types": "./config/docs/route/index.d.ts"
+    },
+    "./index.css": {
+      "import": "./index.css"
+    },
     "./query": {
+      "default": "./query/index.es.js",
       "import": "./query/index.es.js",
       "types": "./query/index.d.ts"
     },
     "./shared/types": {
+      "default": "./shared/types/index.es.js",
       "import": "./shared/types/index.es.js",
       "types": "./shared/types/index.d.ts"
     }
   },
   "dependencies": {
     "@comark/vue": "^0.3.1",
-    "comark": "^0.3.2"
+    "comark": "^0.3.2",
+    "vike": "^0.4.259",
+    "vike-vue": "^0.9.11"
   }
 }

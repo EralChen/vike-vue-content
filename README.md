@@ -38,9 +38,11 @@ import { useHello } from 'vike-vue-content/composables/hello'
 
 | 入口 | 用途 |
 | --- | --- |
-| `vike-vue-content/config` | Vike config 扩展入口，目前是最小 no-op 扩展 |
+| `vike-vue-content/config` | Vike config 扩展入口，注册 `docs` 自定义 config，并在页面设置 `docs` 时自动挂上 `Page` 与 `data` |
+| `vike-vue-content/docs/route` | docs Route Function 入口，供 `+route.ts` 直接复用 |
 | `vike-vue-content/query` | 内容查询入口，提供 `queryCollection()`、`queryCollectionNavigation()` 和 `queryCollectionItemSurroundings()` |
 | `vike-vue-content/components/content-renderer` | Vue 内容渲染组件，基于 `@comark/vue` 渲染 Comark AST |
+| `vike-vue-content/components/docs-page` | docs 页面视图组件，包含侧边栏、内容渲染和上一页/下一页 |
 | `vike-vue-content/components/hello-world` | Vue 组件导出模板 |
 | `vike-vue-content/composables/hello` | Vue composable 导出模板 |
 | `vike-vue-content/shared/types` | 共享类型导出模板，目前暂未暴露具体类型 |
@@ -60,7 +62,7 @@ export default {
 } satisfies Config
 ```
 
-当前 `vike-vue-content/config` 是最小 no-op 扩展，不会改变页面渲染行为。后续内容源扫描、Markdown 渲染和路由生成会挂载到这个入口上。
+当前 `vike-vue-content/config` 会为设置了 `docs` 的页面自动挂上 docs 视图组件与数据加载逻辑；`route` 和 `onBeforePrerenderStart` 仍然需要物理 runtime 文件锚点来满足 Vike 0.4.x 的限制。
 
 ## 内容查询
 
@@ -94,7 +96,32 @@ defineProps<{
 
 ## 内容驱动路由
 
-把 Markdown 放进 `content/<collection>/**/*.md`，配合一个 catch-all Vike 路由即可按目录结构自动生成页面：
+把 Markdown 放进 `content/<collection>/**/*.md`。在 Vike 0.4.x 下，`route` 和 `onBeforePrerenderStart` 都需要独立的 runtime 文件，因此消费方使用一个 `+config.ts`、一个 `+route.ts` 和一个 `+onBeforePrerenderStart.ts` 作为最小锚点；`Page` 与 `data` 由全局的 `vike-vue-content/config` 通过 `meta.effect` 自动挂上：
+
+```ts
+// vike/pages/docs/+config.ts
+import type { Config } from 'vike/types'
+
+export default {
+	docs: {
+		base: '/docs',
+		collection: 'docs',
+		contentDir: 'content',
+	},
+} satisfies Config
+```
+
+```ts
+// vike/pages/docs/+route.ts
+export { route as default } from 'vike-vue-content/docs/route'
+```
+
+```ts
+// vike/pages/docs/+onBeforePrerenderStart.ts
+export { onBeforePrerenderStart as default } from 'vike-vue-content/docs/prerender'
+```
+
+默认情况下，`base` 与 `collection` 都是 `docs`，上面的写法只是把约定显式化。最终路由仍然按内容目录结构展开：
 
 | 内容文件 | 访问路径 |
 | --- | --- |
@@ -116,7 +143,7 @@ const navigation = await queryCollectionNavigation('docs')
 const [prev, next] = await queryCollectionItemSurroundings('docs', urlPathname)
 ```
 
-完整示例见 `vike/pages/docs/`（`+route.ts`、`+data.ts`、`+Page.vue`、`DocsNav.vue`）。
+消费方最小锚点示例见 `vike/pages/docs/+config.ts`、`vike/pages/docs/+route.ts` 与 `vike/pages/docs/+onBeforePrerenderStart.ts`。
 
 ## 开发状态
 
@@ -136,9 +163,9 @@ vike-vue-content 的工程目标分为两层：
 
 本仓库开发时可参考本地源码镜像：
 
-- `../.dev/vike`
-- `../.dev/vike-vue`
-- `../.dev/content`
-- `../.dev/movk-nuxt-docs`
+- `./.dev/vike`
+- `./.dev/vike-vue`
+- `./.dev/content`
+- `./.dev/movk-nuxt-docs`
 
 
