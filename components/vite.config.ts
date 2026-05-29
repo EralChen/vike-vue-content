@@ -29,7 +29,13 @@ export default defineConfig(async ({ command, mode }) => {
       },
       emptyOutDir: true,
       rolldownOptions: {
-        external: external,
+        external: [
+          ...external,
+          '@comark/vue',
+          /^@comark\/vue(\/.*)?$/,
+          'comark',
+          /^comark(\/.*)?$/,
+        ],
       },
     },
     plugins: [

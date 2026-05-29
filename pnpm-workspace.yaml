@@ -1,6 +1,7 @@
 packages:
   - internal
   - config
+  - query
   - components
   - vike
   - app

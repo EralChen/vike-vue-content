@@ -14,9 +14,13 @@
     "markdown"
   ],
   "scripts": {
-    "build": "bash ./build.sh"
+    "build": "bash build.sh"
   },
   "exports": {
+    "./components/content-renderer": {
+      "import": "./components/content-renderer/index.es.js",
+      "types": "./components/content-renderer/index.d.ts"
+    },
     "./components/hello-world": {
       "import": "./components/hello-world/index.es.js",
       "types": "./components/hello-world/index.d.ts"
@@ -26,9 +30,17 @@
       "types": "./composables/hello/index.d.ts"
     },
     "./config": "./config/+config.js",
+    "./query": {
+      "import": "./query/index.es.js",
+      "types": "./query/index.d.ts"
+    },
     "./shared/types": {
       "import": "./shared/types/index.es.js",
       "types": "./shared/types/index.d.ts"
     }
+  },
+  "dependencies": {
+    "@comark/vue": "^0.3.1",
+    "comark": "^0.3.2"
   }
 }

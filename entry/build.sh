@@ -7,6 +7,7 @@ ENTRY_DIR="${ROOT_DIR}/entry"
 
 PACKAGES=(
 	"config"
+	"query"
 	"components"
 	"composables"
 	"shared"
@@ -145,6 +146,7 @@ function walk(dir, onFile) {
 
 const pkg = JSON.parse(fs.readFileSync(pkgFile, 'utf8'))
 const exportsMap = {}
+const dependencies = {}
 
 const entryIndexJs = path.join(entryDir, 'index.js')
 if (fs.existsSync(entryIndexJs)) {
@@ -169,6 +171,12 @@ for (const root of roots) {
 	const rootDir = path.join(entryDir, root)
 	if (!fs.existsSync(rootDir)) {
 		continue
+	}
+
+	const rootPackageJson = path.join(entryDir, '..', root, 'package.json')
+	if (fs.existsSync(rootPackageJson)) {
+		const rootPackage = JSON.parse(fs.readFileSync(rootPackageJson, 'utf8'))
+		Object.assign(dependencies, rootPackage.dependencies || {})
 	}
 
 	const rootConfigJs = path.join(rootDir, '+config.js')
@@ -202,6 +210,13 @@ pkg.exports = Object.fromEntries(
 	Object.entries(exportsMap)
 		.sort((a, b) => a[0].localeCompare(b[0])),
 )
+
+if (Object.keys(dependencies).length > 0) {
+	pkg.dependencies = Object.fromEntries(
+		Object.entries(dependencies)
+			.sort((a, b) => a[0].localeCompare(b[0])),
+	)
+}
 
 fs.writeFileSync(pkgFile, `${JSON.stringify(pkg, null, 2)}\n`, 'utf8')
 
