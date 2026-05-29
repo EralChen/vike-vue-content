@@ -39,7 +39,7 @@ import { useHello } from 'vike-vue-content/composables/hello'
 | 入口 | 用途 |
 | --- | --- |
 | `vike-vue-content/config` | Vike config 扩展入口，目前是最小 no-op 扩展 |
-| `vike-vue-content/query` | 内容查询入口，提供 `queryCollection().path().all()/first()` |
+| `vike-vue-content/query` | 内容查询入口，提供 `queryCollection()`、`queryCollectionNavigation()` 和 `queryCollectionItemSurroundings()` |
 | `vike-vue-content/components/content-renderer` | Vue 内容渲染组件，基于 `@comark/vue` 渲染 Comark AST |
 | `vike-vue-content/components/hello-world` | Vue 组件导出模板 |
 | `vike-vue-content/composables/hello` | Vue composable 导出模板 |
@@ -91,6 +91,32 @@ defineProps<{
 ```
 
 当前先支持本地 `content/**/*.md`、`path()`、`all()` 和 `first()`。
+
+## 内容驱动路由
+
+把 Markdown 放进 `content/<collection>/**/*.md`，配合一个 catch-all Vike 路由即可按目录结构自动生成页面：
+
+| 内容文件 | 访问路径 |
+| --- | --- |
+| `content/docs/index.md` | `/docs` |
+| `content/docs/getting-started.md` | `/docs/getting-started` |
+| `content/docs/guide/routing.md` | `/docs/guide/routing` |
+
+`queryCollectionNavigation()` 返回按目录嵌套的导航树，`queryCollectionItemSurroundings()` 返回上一页/下一页，可直接用于侧边栏和翻页：
+
+```ts
+import {
+  queryCollection,
+  queryCollectionNavigation,
+  queryCollectionItemSurroundings,
+} from 'vike-vue-content/query'
+
+const [page] = await queryCollection('docs').path(urlPathname).all()
+const navigation = await queryCollectionNavigation('docs')
+const [prev, next] = await queryCollectionItemSurroundings('docs', urlPathname)
+```
+
+完整示例见 `vike/pages/docs/`（`+route.ts`、`+data.ts`、`+Page.vue`、`DocsNav.vue`）。
 
 ## 开发状态
 

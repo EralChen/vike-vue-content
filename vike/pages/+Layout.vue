@@ -5,8 +5,7 @@
     <Sidebar>
       <Logo />
       <Link href="/"> Welcome </Link>
-      <Link href="/todo"> Todo </Link>
-      <Link href="/star-wars"> Data Fetching </Link>
+      <Link href="/docs"> 文档 </Link>
     </Sidebar>
     <Content><slot /></Content>
   </div>

@@ -18,12 +18,10 @@
   },
   "exports": {
     "./components/content-renderer": {
-      "import": "./components/content-renderer/index.es.js",
-      "types": "./components/content-renderer/index.d.ts"
+      "import": "./components/content-renderer/index.es.js"
     },
     "./components/hello-world": {
-      "import": "./components/hello-world/index.es.js",
-      "types": "./components/hello-world/index.d.ts"
+      "import": "./components/hello-world/index.es.js"
     },
     "./composables/hello": {
       "import": "./composables/hello/index.es.js",
