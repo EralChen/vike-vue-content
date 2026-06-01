@@ -3,6 +3,7 @@ packages:
   - config
   - query
   - components
+  - entry
   - vike
   - app
   - docs
@@ -12,3 +13,4 @@ allowBuilds:
   esbuild: true
   sharp: true
   vue-demi: true
+overrides:

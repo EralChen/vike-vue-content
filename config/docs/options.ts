@@ -1,9 +1,10 @@
 export type DocsPageOptions = {
-	base?: string
 	collection?: string
 	contentDir?: string
 	title?: string
 }
+
+export const DEFAULT_DOCS_BASE = '/docs'
 
 export type ResolvedDocsPageOptions = {
 	base: string
@@ -20,19 +21,22 @@ export function normalizeRoutePath(value: string): string {
 	return compact || '/'
 }
 
-export function resolveDocsPageOptions(value: unknown, definedAt = 'docs'): ResolvedDocsPageOptions {
+export function resolveDocsPageOptions(
+	value: unknown,
+	definedAt = 'docs',
+	base = DEFAULT_DOCS_BASE,
+): ResolvedDocsPageOptions {
 	if (value !== undefined && (value === null || typeof value !== 'object' || Array.isArray(value))) {
 		throw new Error(`${definedAt} should be an object`)
 	}
 
 	const options = (value ?? {}) as DocsPageOptions
 	const collection = normalizeCollection(options.collection ?? 'docs', definedAt)
-	const base = normalizeRoutePath(options.base ?? `/${collection}`)
 	const contentDir = normalizeContentDir(options.contentDir)
 	const title = normalizeTitle(options.title)
 
 	return {
-		base,
+		base: normalizeRoutePath(base),
 		collection,
 		collectionBase: normalizeRoutePath(`/${collection}`),
 		contentDir,

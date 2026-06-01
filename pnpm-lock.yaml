@@ -115,6 +115,21 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0
 
+  entry:
+    dependencies:
+      '@comark/vue':
+        specifier: ^0.3.1
+        version: 0.3.1(shiki@4.1.0)(vue@3.5.35(typescript@6.0.3))
+      comark:
+        specifier: ^0.3.2
+        version: 0.3.2(shiki@4.1.0)
+      vike:
+        specifier: ^0.4.259
+        version: 0.4.259(h3@1.15.11)(hono@4.12.23)(srvx@0.11.16)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
+      vike-vue:
+        specifier: ^0.9.11
+        version: 0.9.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(vike@0.4.259(h3@1.15.11)(hono@4.12.23)(srvx@0.11.16)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0)))(vue@3.5.35(typescript@6.0.3))
+
   internal: {}
 
   query:
@@ -132,8 +147,8 @@ importers:
         specifier: ^0.9.11
         version: 0.9.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(vike@0.4.259(h3@1.15.11)(hono@4.12.23)(srvx@0.11.16)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0)))(vue@3.5.35(typescript@6.0.3))
       vike-vue-content:
-        specifier: file:..\entry
-        version: file:entry(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(h3@1.15.11)(hono@4.12.23)(shiki@4.1.0)(srvx@0.11.16)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.35(typescript@6.0.3))
+        specifier: workspace:*
+        version: link:../entry
 
 packages:
 
@@ -6929,9 +6944,6 @@ packages:
 
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
-
-  vike-vue-content@file:entry:
-    resolution: {directory: entry, type: directory}
 
   vike-vue@0.9.11:
     resolution: {integrity: sha512-Ujcu7NG/ZFsiAgEomA0PtuHFg0J/BMcol/QHiDzaIlov2JSiDfapyBLidrPVTrHwLHvmeCnxa4ruVqG+/Vj1XA==}
@@ -15265,32 +15277,6 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
-
-  vike-vue-content@file:entry(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(h3@1.15.11)(hono@4.12.23)(shiki@4.1.0)(srvx@0.11.16)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.35(typescript@6.0.3)):
-    dependencies:
-      '@comark/vue': 0.3.1(shiki@4.1.0)(vue@3.5.35(typescript@6.0.3))
-      comark: 0.3.2(shiki@4.1.0)
-      vike: 0.4.259(h3@1.15.11)(hono@4.12.23)(srvx@0.11.16)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
-      vike-vue: 0.9.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(vike@0.4.259(h3@1.15.11)(hono@4.12.23)(srvx@0.11.16)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0)))(vue@3.5.35(typescript@6.0.3))
-    transitivePeerDependencies:
-      - '@cloudflare/workers-types'
-      - '@emnapi/core'
-      - '@emnapi/runtime'
-      - '@hattip/core'
-      - '@types/express'
-      - '@webroute/route'
-      - beautiful-mermaid
-      - elysia
-      - fastify
-      - h3
-      - hono
-      - katex
-      - react-streaming
-      - shiki
-      - srvx
-      - supports-color
-      - vite
-      - vue
 
   vike-vue@0.9.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(vike@0.4.259(h3@1.15.11)(hono@4.12.23)(srvx@0.11.16)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0)))(vue@3.5.35(typescript@6.0.3)):
     dependencies:

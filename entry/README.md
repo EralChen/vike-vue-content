@@ -39,7 +39,8 @@ import { useHello } from 'vike-vue-content/composables/hello'
 | 入口 | 用途 |
 | --- | --- |
 | `vike-vue-content/config` | Vike config 扩展入口，注册 `docs` 自定义 config，并在页面设置 `docs` 时自动挂上 `Page` 与 `data` |
-| `vike-vue-content/docs/route` | docs Route Function 入口，供 `+route.ts` 直接复用 |
+| `vike-vue-content/docs/route` | docs Route Function helper，默认从调用它的 `+route.ts` 文件系统位置推导公开前缀，也支持显式传参覆盖 |
+| `vike-vue-content/docs/prerender` | docs prerender helper，默认从调用它的 `+onBeforePrerenderStart.ts` 文件系统位置推导公开前缀，也支持显式传参覆盖 |
 | `vike-vue-content/query` | 内容查询入口，提供 `queryCollection()`、`queryCollectionNavigation()` 和 `queryCollectionItemSurroundings()` |
 | `vike-vue-content/components/content-renderer` | Vue 内容渲染组件，基于 `@comark/vue` 渲染 Comark AST |
 | `vike-vue-content/components/docs-page` | docs 页面视图组件，包含侧边栏、内容渲染和上一页/下一页 |
@@ -104,7 +105,6 @@ import type { Config } from 'vike/types'
 
 export default {
 	docs: {
-		base: '/docs',
 		collection: 'docs',
 		contentDir: 'content',
 	},
@@ -113,15 +113,19 @@ export default {
 
 ```ts
 // vike/pages/docs/+route.ts
-export { route as default } from 'vike-vue-content/docs/route'
+import { createDocsRoute } from 'vike-vue-content/docs/route'
+
+export default createDocsRoute()
 ```
 
 ```ts
 // vike/pages/docs/+onBeforePrerenderStart.ts
-export { onBeforePrerenderStart as default } from 'vike-vue-content/docs/prerender'
+import { createDocsPrerender } from 'vike-vue-content/docs/prerender'
+
+export default createDocsPrerender()
 ```
 
-默认情况下，`base` 与 `collection` 都是 `docs`，上面的写法只是把约定显式化。最终路由仍然按内容目录结构展开：
+当前实现里，`docs` 配置只负责内容集合、目录和标题；公开路由前缀默认从 `+route.ts` / `+onBeforePrerenderStart.ts` 这一对物理锚点的文件系统位置推导，只有需要覆盖默认前缀时才需要显式传参。最终路由仍然按内容目录结构展开：
 
 | 内容文件 | 访问路径 |
 | --- | --- |

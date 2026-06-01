@@ -4,7 +4,7 @@
 
 ## 记录规则
 
-1. 新任务接着当前最大编号继续写，例如下一个任务使用 `13.<slug>.md`。
+1. 新任务接着当前最大编号继续写，例如下一个任务使用 `14.<slug>.md`。
 2. 每个任务文件只保留对后来者有用的信息：目标、最终改动、关键决策、验证结果和后续方向。
 3. 已被后续任务推翻的中间状态只在有必要解释决策时简短提及，不保留流水账和误导性“下一步”。
 4. 本文件只维护索引，不追加长篇任务正文。
@@ -23,3 +23,5 @@
 10. [沉淀 Dev Log 写作 Skill](10.write-devlog-skill.md)
 11. [内容驱动路由闭环](11.content-driven-routing.md)
 12. [内容驱动路由的静态预渲染与 contentDir 解析修复](12.prerender-and-contentdir.md)
+13. [收敛 docs 包集成、预渲染与类型扩展](13.docs-package-integration.md)
+14. [删除 docs.base，收敛零参数 docs 锚点](14.docs-base-removal-and-zero-arg-anchors.md)

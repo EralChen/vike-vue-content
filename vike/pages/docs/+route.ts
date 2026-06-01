@@ -1,1 +1,0 @@
-export { route as default } from 'vike-vue-content/docs/route'

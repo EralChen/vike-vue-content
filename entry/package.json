@@ -14,7 +14,8 @@
     "markdown"
   ],
   "scripts": {
-    "build": "bash build.sh"
+    "build": "bash build.sh",
+    "stub": "echo entry"
   },
   "exports": {
     "./components/content-renderer": {

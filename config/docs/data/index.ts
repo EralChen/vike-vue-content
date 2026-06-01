@@ -9,6 +9,7 @@ import type { PageContextServer } from 'vike/types'
 import { useConfig } from 'vike-vue/useConfig'
 
 import { resolveDocsPageOptions } from '../options'
+import { getDocsRouteBaseFromRouteParams } from '../route'
 import {
 	mapContentEntryPath,
 	mapNavigationItem,
@@ -27,7 +28,8 @@ export type DocsPageData = {
 
 export async function data(pageContext: PageContextServer): Promise<DocsPageData> {
 	const config = useConfig()
-	const options = resolveServerDocsOptions(readDocsConfig(pageContext.config))
+	const docsBase = getDocsRouteBaseFromRouteParams(pageContext.routeParams)
+	const options = resolveServerDocsOptions(readDocsConfig(pageContext.config), docsBase)
 	const requestedPath = pageContext.routeParams.path ?? options.base
 	const collectionPath = toCollectionPath(requestedPath, options)
 
@@ -58,8 +60,8 @@ export async function data(pageContext: PageContextServer): Promise<DocsPageData
 
 export default data
 
-function resolveServerDocsOptions(value: unknown) {
-	const options = resolveDocsPageOptions(value, 'pageContext.config.docs')
+function resolveServerDocsOptions(value: unknown, docsBase: string) {
+	const options = resolveDocsPageOptions(value, 'pageContext.config.docs', docsBase)
 	return {
 		...options,
 		contentDir: path.isAbsolute(options.contentDir)

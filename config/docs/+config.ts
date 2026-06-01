@@ -1,17 +1,8 @@
 import type { Config } from 'vike/types'
 
-import { resolveDocsPageOptions } from './options'
-
-export interface DocsPageOptions {
-	base?: string
-	collection?: string
-	contentDir?: string
-	title?: string
-}
+import type { DocsPageOptions } from './options'
 
 export function defineDocsPageConfig(options: DocsPageOptions = {}): Config {
-	const resolvedOptions = resolveDocsPageOptions(options, 'defineDocsPageConfig()')
-
 	return {
 		meta: {
 			docs: {
@@ -22,7 +13,7 @@ export function defineDocsPageConfig(options: DocsPageOptions = {}): Config {
 				},
 			},
 		},
-		docs: resolvedOptions,
+		docs: options,
 		Page: 'import:vike-vue-content/components/docs-page:default',
 		data: 'import:vike-vue-content/docs/data:data',
 		onBeforePrerenderStart: 'import:vike-vue-content/docs/prerender:onBeforePrerenderStart',
@@ -30,4 +21,5 @@ export function defineDocsPageConfig(options: DocsPageOptions = {}): Config {
 }
 
 export type { DocsPageData } from './data'
+export type { DocsPageOptions } from './options'
 export default defineDocsPageConfig
