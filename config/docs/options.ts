@@ -1,18 +1,8 @@
-export type DocsPageOptions = {
-	collection?: string
-	contentDir?: string
-	title?: string
-}
+import type { DocsPageOptions, ResolvedDocsPageOptions } from '@vike-vue-content/shared/types'
+
+export type { DocsPageOptions, ResolvedDocsPageOptions } from '@vike-vue-content/shared/types'
 
 export const DEFAULT_DOCS_BASE = '/docs'
-
-export type ResolvedDocsPageOptions = {
-	base: string
-	collection: string
-	collectionBase: string
-	contentDir: string
-	title: string
-}
 
 export function normalizeRoutePath(value: string): string {
 	const normalized = value.replace(/\\/g, '/').trim()

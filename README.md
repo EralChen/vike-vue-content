@@ -46,7 +46,7 @@ import { useHello } from 'vike-vue-content/composables/hello'
 | `vike-vue-content/components/docs-page` | docs 页面视图组件，包含侧边栏、内容渲染和上一页/下一页 |
 | `vike-vue-content/components/hello-world` | Vue 组件导出模板 |
 | `vike-vue-content/composables/hello` | Vue composable 导出模板 |
-| `vike-vue-content/shared/types` | 共享类型导出模板，目前暂未暴露具体类型 |
+| `vike-vue-content/shared/types` | 共享类型导出，暴露 `ContentEntry`、`ContentNavigationItem`、`DocsPageOptions`、`DocsPageData` 等公共类型 |
 
 ## Vike 集成
 

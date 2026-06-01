@@ -6,6 +6,7 @@
     "postinstall": "pnpm run -r --parallel stub"
   },
   "dependencies": {
+    "@vike-vue-content/shared": "workspace:*",
     "@vueuse/core": "^14.3.0",
     "@vunk/core": "^1.6.9",
     "@vunk/form": "2.18.2",

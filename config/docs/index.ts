@@ -3,4 +3,14 @@ export { DocsPage } from '@vike-vue-content/components/docs-page'
 export { data } from './data'
 export { createDocsPrerender, onBeforePrerenderStart } from './prerender'
 export { createDocsRoute, route } from './route'
-export type { DocsPageData, DocsPageOptions } from './+config'
+export type {
+	ContentDirectoryConfig,
+	ContentEntry,
+	ContentNavigationConfig,
+	ContentNavigationItem,
+	DocsPageData,
+	DocsPageOptions,
+	QueryBuilder,
+	QueryOptions,
+	ResolvedDocsPageOptions,
+} from '@vike-vue-content/shared/types'

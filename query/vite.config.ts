@@ -1,5 +1,6 @@
 import { builtinModules } from 'node:module'
 import { defineConfig, type UserConfig } from 'vite'
+import { replaceLibAlias } from '@lib/internal'
 
 const nodeBuiltins = builtinModules.flatMap((name) => [name, `node:${name}`])
 
@@ -20,4 +21,5 @@ export default defineConfig({
       ],
     },
   },
+  plugins: [replaceLibAlias()],
 } as UserConfig)

@@ -1,6 +1,6 @@
 import type { Config } from 'vike/types'
 
-import type { DocsPageOptions } from './options'
+import type { DocsPageData, DocsPageOptions } from '@vike-vue-content/shared/types'
 
 export function defineDocsPageConfig(options: DocsPageOptions = {}): Config {
 	return {
@@ -8,6 +8,5 @@ export function defineDocsPageConfig(options: DocsPageOptions = {}): Config {
 	} as Config
 }
 
-export type { DocsPageData } from './data'
-export type { DocsPageOptions } from './options'
+export type { DocsPageData, DocsPageOptions } from '@vike-vue-content/shared/types'
 export default defineDocsPageConfig

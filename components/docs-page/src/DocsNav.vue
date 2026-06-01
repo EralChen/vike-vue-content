@@ -1,15 +1,16 @@
 <template>
-	<ul class="docs-nav">
-		<li v-for="item in items" :key="item.path">
+	<ul class="vvc-docs-nav-list">
+		<li v-for="item in items" :key="item.path" class="vvc-docs-nav-item">
 			<a
 				v-if="item.page !== false"
 				:href="item.path"
 				:aria-current="item.path === currentPath ? 'page' : undefined"
+				class="vvc-docs-nav-link"
 				:class="{ 'is-active': item.path === currentPath }"
 			>
 				{{ item.title }}
 			</a>
-			<span v-else class="docs-nav-group">{{ item.title }}</span>
+			<span v-else class="vvc-docs-nav-group">{{ item.title }}</span>
 
 			<DocsNav
 				v-if="item.children && item.children.length"
@@ -34,22 +35,22 @@ defineProps<{
 }>()
 </script>
 
-<style scoped>
-.docs-nav {
+<style>
+.vvc-docs-nav-list {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-.docs-nav .docs-nav {
+.vvc-docs-nav-list .vvc-docs-nav-list {
 	padding-left: 12px;
 }
 
-.docs-nav li {
+.vvc-docs-nav-item {
 	margin: 4px 0;
 }
 
-.docs-nav a {
+.vvc-docs-nav-link {
 	display: block;
 	padding: 4px 8px;
 	border-radius: 4px;
@@ -57,12 +58,12 @@ defineProps<{
 	text-decoration: none;
 }
 
-.docs-nav a.is-active {
+.vvc-docs-nav-link.is-active {
 	background-color: rgba(0, 0, 0, 0.08);
 	font-weight: 600;
 }
 
-.docs-nav-group {
+.vvc-docs-nav-group {
 	display: block;
 	padding: 4px 8px;
 	font-size: 12px;

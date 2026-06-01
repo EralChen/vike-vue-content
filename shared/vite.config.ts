@@ -1,7 +1,7 @@
 import { glob } from 'node:fs/promises'
 import path from 'node:path'
 import { defineConfig, type UserConfig } from 'vite'
-import { external } from '@lib/internal'
+import { external, replaceLibAlias } from '@lib/internal'
 
 export default defineConfig(async () => {
   const buildLibEntry = await getBuildLibEntry()
@@ -24,6 +24,7 @@ export default defineConfig(async () => {
         external,
       },
     },
+    plugins: [replaceLibAlias()],
   } as UserConfig
 })
 

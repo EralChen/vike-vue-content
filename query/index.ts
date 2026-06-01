@@ -1,57 +1,18 @@
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
-import { createParse, type ComarkTree } from 'comark'
+import { createParse } from 'comark'
+import type {
+  ContentDirectoryConfig,
+  ContentEntry,
+  ContentNavigationConfig,
+  ContentNavigationItem,
+  QueryBuilder,
+  QueryOptions,
+} from '@vike-vue-content/shared/types'
 import { parse as parseYaml } from 'yaml'
 
 const parseMarkdown = createParse()
 const CONTENT_DIRECTORY_CONFIG_FILE = '.config.yml'
-
-export type ContentEntry = {
-  id: string
-  collection: string
-  path: string
-  stem: string
-  title?: string
-  description?: string
-  body: ComarkTree
-  rawbody: string
-  frontmatter: Record<string, unknown>
-  meta: Record<string, unknown>
-}
-
-export type ContentNavigationItem = {
-  title: string
-  path: string
-  stem?: string
-  children?: ContentNavigationItem[]
-  page?: false
-  config?: ContentDirectoryConfig
-  navigation?: ContentNavigationConfig
-  [key: string]: unknown
-}
-
-export type ContentDirectoryConfig = {
-  navigation?: ContentNavigationConfig
-  redirect?: string
-}
-
-export type ContentNavigationConfig = {
-  label?: string
-  icon?: string
-  hidden?: boolean
-  flatten?: boolean
-}
-
-export type QueryOptions = {
-  cwd?: string
-  contentDir?: string
-}
-
-export type QueryBuilder = {
-  path(value: string): QueryBuilder
-  all(): Promise<ContentEntry[]>
-  first(): Promise<ContentEntry | null>
-}
 
 export function queryCollection(collection: string, options: QueryOptions = {}): QueryBuilder {
   const cwd = options.cwd ?? process.cwd()

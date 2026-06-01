@@ -19,3 +19,4 @@
 7. [切换到 Comark AST 与 Vue 渲染闭环](7.comark-ast-renderer.md)
 14. [删除 docs.base，收敛零参数 docs 锚点](14.docs-base-removal-and-zero-arg-anchors.md)
 15. [收敛 docs 内容配置、导航与重定向标准](15.docs-content-config-and-redirects-standard.md)
+16. [建立 shared/types 公共类型入口](16.shared-public-types-entry.md)

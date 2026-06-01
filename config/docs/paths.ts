@@ -1,4 +1,4 @@
-import type { ContentEntry, ContentNavigationItem } from '@vike-vue-content/query'
+import type { ContentEntry, ContentNavigationItem } from '@vike-vue-content/shared/types'
 
 import { normalizeRoutePath, type ResolvedDocsPageOptions } from './options'
 

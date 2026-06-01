@@ -57,6 +57,42 @@ for pkg in "${PACKAGES[@]}"; do
 	cp -R "${src_dir}/." "${dest_dir}/"
 done
 
+echo "[alias] rewrite internal alias specifiers in entry artifacts"
+
+node - "${ENTRY_DIR}" <<'NODE'
+const fs = require('node:fs')
+const path = require('node:path')
+
+const entryDir = process.argv[2]
+const alias = '@vike-vue-content'
+const libName = 'vike-vue-content'
+const textFilePattern = /\.(?:[cm]?js|d\.(?:ts|mts|cts))$/
+
+function walk(dir) {
+	for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+		const fullPath = path.join(dir, item.name)
+		if (item.isDirectory()) {
+			walk(fullPath)
+			continue
+		}
+
+		if (!textFilePattern.test(item.name)) {
+			continue
+		}
+
+		const source = fs.readFileSync(fullPath, 'utf8')
+		if (!source.includes(alias)) {
+			continue
+		}
+
+		fs.writeFileSync(fullPath, source.replaceAll(alias, libName), 'utf8')
+	}
+}
+
+walk(entryDir)
+console.log('[alias] rewritten @vike-vue-content/* -> vike-vue-content/*')
+NODE
+
 echo "[done] entry artifacts prepared in ${ENTRY_DIR}"
 
 

@@ -1,27 +1,35 @@
 <template>
-	<div class="docs-layout">
-		<aside class="docs-sidebar">
+	<div class="vvc-docs-page">
+		<aside class="vvc-docs-page-sidebar">
 			<DocsNav :items="navigation" :current-path="requestedPath" />
 		</aside>
 
-		<article class="docs-content">
+		<article class="vvc-docs-page-content">
 			<template v-if="page">
 				<ContentRenderer :key="requestedPath" :tree="contentTree" />
 
-				<nav class="docs-surround">
-					<a v-if="prev" class="docs-surround-link prev" :href="prev.path">
-						<span class="label">上一页</span>
-						<span class="title">{{ prev.title }}</span>
+				<nav class="vvc-docs-page-surround">
+					<a
+						v-if="prev"
+						class="vvc-docs-page-surround-link vvc-docs-page-surround-link-prev"
+						:href="prev.path"
+					>
+						<span class="vvc-docs-page-surround-label">上一页</span>
+						<span class="vvc-docs-page-surround-title">{{ prev.title }}</span>
 					</a>
 					<span v-else />
-					<a v-if="next" class="docs-surround-link next" :href="next.path">
-						<span class="label">下一页</span>
-						<span class="title">{{ next.title }}</span>
+					<a
+						v-if="next"
+						class="vvc-docs-page-surround-link vvc-docs-page-surround-link-next"
+						:href="next.path"
+					>
+						<span class="vvc-docs-page-surround-label">下一页</span>
+						<span class="vvc-docs-page-surround-title">{{ next.title }}</span>
 					</a>
 				</nav>
 			</template>
 
-			<section v-else class="docs-not-found">
+			<section v-else class="vvc-docs-page-not-found">
 				<h1>404</h1>
 				<p>找不到内容：{{ requestedPath }}</p>
 			</section>
@@ -31,33 +39,12 @@
 
 <script setup lang="ts">
 import type { ComarkTree } from 'comark'
+import type { DocsPageData } from '@vike-vue-content/shared/types'
 import { computed } from 'vue'
 import { useData } from 'vike-vue/useData'
 
 import ContentRenderer from '../../content-renderer'
 import DocsNav from './DocsNav.vue'
-
-type DocsPageData = {
-	docsBase: string
-	page: {
-		body: ComarkTree
-	} | null
-	navigation: Array<{
-		title: string
-		path: string
-		children?: DocsPageData['navigation']
-		page?: false
-	}>
-	prev: {
-		title: string
-		path: string
-	} | null
-	next: {
-		title: string
-		path: string
-	} | null
-	requestedPath: string
-}
 
 const docsData = useData<DocsPageData>() as DocsPageData
 
@@ -67,22 +54,22 @@ const navigation = computed(() => docsData.navigation)
 const prev = computed(() => docsData.prev)
 const next = computed(() => docsData.next)
 const requestedPath = computed(() => docsData.requestedPath)
-const contentTree = computed<ComarkTree | undefined>(() => page.value?.body)
+const contentTree = computed<ComarkTree | undefined>(() => page.value?.body as ComarkTree | undefined)
 </script>
 
-<style scoped>
-.docs-layout {
+<style>
+.vvc-docs-page {
 	display: grid;
 	grid-template-columns: 220px 1fr;
 	gap: 32px;
 	align-items: start;
 }
 
-.docs-content {
+.vvc-docs-page-content {
 	min-width: 0;
 }
 
-.docs-surround {
+.vvc-docs-page-surround {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: 16px;
@@ -91,7 +78,7 @@ const contentTree = computed<ComarkTree | undefined>(() => page.value?.body)
 	padding-top: 16px;
 }
 
-.docs-surround-link {
+.vvc-docs-page-surround-link {
 	display: flex;
 	flex-direction: column;
 	padding: 12px 16px;
@@ -101,20 +88,20 @@ const contentTree = computed<ComarkTree | undefined>(() => page.value?.body)
 	text-decoration: none;
 }
 
-.docs-surround-link.next {
+.vvc-docs-page-surround-link-next {
 	text-align: right;
 }
 
-.docs-surround-link .label {
+.vvc-docs-page-surround-label {
 	font-size: 12px;
 	opacity: 0.6;
 }
 
-.docs-surround-link .title {
+.vvc-docs-page-surround-title {
 	font-weight: 600;
 }
 
-.docs-not-found {
+.vvc-docs-page-not-found {
 	color: #b00020;
 }
 </style>

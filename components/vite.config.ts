@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { glob } from 'node:fs/promises'
 import path from 'node:path';
-import { external } from '@lib/internal';
+import { external, replaceLibAlias } from '@lib/internal';
 
 export default defineConfig(async ({ command, mode }) => {
   const buildLibEntry = await getBuildLibEntry()
@@ -41,6 +41,7 @@ export default defineConfig(async ({ command, mode }) => {
     plugins: [
       vue(),
       vueJsx(),
+      replaceLibAlias(),
     ]
   } as UserConfig 
 })

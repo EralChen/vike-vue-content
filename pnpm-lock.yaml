@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@vike-vue-content/shared':
+        specifier: workspace:*
+        version: link:shared
       '@vueuse/core':
         specifier: ^14.3.0
         version: 14.3.0(vue@3.5.35(typescript@6.0.3))
@@ -146,6 +149,8 @@ importers:
       yaml:
         specifier: ^2.9.0
         version: 2.9.0
+
+  shared: {}
 
   vike:
     dependencies:

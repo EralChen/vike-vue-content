@@ -1,9 +1,9 @@
-import type { ContentEntry, ContentNavigationItem } from '@vike-vue-content/query'
 import {
 	queryCollection,
 	queryCollectionItemSurroundings,
 	queryCollectionNavigation,
 } from '@vike-vue-content/query'
+import type { DocsPageData } from '@vike-vue-content/shared/types'
 import path from 'node:path'
 import type { PageContextServer } from 'vike/types'
 import { useConfig } from 'vike-vue/useConfig'
@@ -18,14 +18,7 @@ import {
 	toCollectionPath,
 } from '../paths'
 
-export type DocsPageData = {
-	docsBase: string
-	page: ContentEntry | null
-	navigation: ContentNavigationItem[]
-	prev: ContentNavigationItem | null
-	next: ContentNavigationItem | null
-	requestedPath: string
-}
+export type { DocsPageData } from '@vike-vue-content/shared/types'
 
 export async function data(pageContext: PageContextServer): Promise<DocsPageData> {
 	const config = useConfig()
