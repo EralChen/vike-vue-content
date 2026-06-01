@@ -1,5 +1,6 @@
 import { defineConfig, type UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { external, replaceLibAlias } from '@lib/internal'
 
 const buildEntries = {
   root: '+config.ts',
@@ -25,7 +26,7 @@ export default defineConfig({
     emptyOutDir: true,
     rolldownOptions: {
       external: [
-        'vue',
+        ...external,
         /^node:/,
         'vike',
         /^vike(\/.*)?$/,
@@ -38,5 +39,5 @@ export default defineConfig({
       ],
     },
   },
-  plugins: [vue()],
+  plugins: [vue(), replaceLibAlias()],
 } as UserConfig)

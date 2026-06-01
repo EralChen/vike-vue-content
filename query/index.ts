@@ -1,8 +1,10 @@
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { createParse, type ComarkTree } from 'comark'
+import { parse as parseYaml } from 'yaml'
 
 const parseMarkdown = createParse()
+const CONTENT_DIRECTORY_CONFIG_FILE = '.config.yml'
 
 export type ContentEntry = {
   id: string
@@ -23,7 +25,21 @@ export type ContentNavigationItem = {
   stem?: string
   children?: ContentNavigationItem[]
   page?: false
+  config?: ContentDirectoryConfig
+  navigation?: ContentNavigationConfig
   [key: string]: unknown
+}
+
+export type ContentDirectoryConfig = {
+  navigation?: ContentNavigationConfig
+  redirect?: string
+}
+
+export type ContentNavigationConfig = {
+  label?: string
+  icon?: string
+  hidden?: boolean
+  flatten?: boolean
 }
 
 export type QueryOptions = {
@@ -44,7 +60,7 @@ export function queryCollection(collection: string, options: QueryOptions = {}):
   let selectedPath: string | null = null
 
   const load = async () => {
-    const files = await walkMarkdownFiles(contentRoot)
+    const { markdownFiles: files } = await scanContentRoot(contentRoot)
     const entries = await Promise.all(
       files.map((filePath) => readContentEntry(contentRoot, filePath)),
     )
@@ -72,8 +88,14 @@ export function queryCollection(collection: string, options: QueryOptions = {}):
   return api
 }
 
-async function walkMarkdownFiles(rootDir: string): Promise<string[]> {
-  const files: string[] = []
+type ContentScanResult = {
+  markdownFiles: string[]
+  directoryConfigs: Map<string, ContentDirectoryConfig>
+}
+
+async function scanContentRoot(rootDir: string): Promise<ContentScanResult> {
+  const markdownFiles: string[] = []
+  const directoryConfigs = new Map<string, ContentDirectoryConfig>()
 
   async function visit(dir: string) {
     let items
@@ -89,14 +111,22 @@ async function walkMarkdownFiles(rootDir: string): Promise<string[]> {
         await visit(itemPath)
         continue
       }
+      if (item.isFile() && item.name === CONTENT_DIRECTORY_CONFIG_FILE) {
+        const routePath = toDirectoryRoutePath(rootDir, dir)
+        const config = await readDirectoryConfig(itemPath, routePath)
+        if (config) {
+          directoryConfigs.set(routePath, config)
+        }
+        continue
+      }
       if (item.isFile() && item.name.endsWith('.md')) {
-        files.push(itemPath)
+        markdownFiles.push(itemPath)
       }
     }
   }
 
   await visit(rootDir)
-  return files
+  return { markdownFiles, directoryConfigs }
 }
 
 async function readContentEntry(contentRoot: string, filePath: string): Promise<ContentEntry> {
@@ -128,8 +158,17 @@ export async function queryCollectionNavigation(
   collection: string,
   options: QueryOptions = {},
 ): Promise<ContentNavigationItem[]> {
-  const entries = await queryCollection(collection, options).all()
-  return buildNavigationTree(entries)
+  const cwd = options.cwd ?? process.cwd()
+  const contentRoot = path.resolve(cwd, options.contentDir ?? 'content')
+  const { markdownFiles, directoryConfigs } = await scanContentRoot(contentRoot)
+  const entries = await Promise.all(
+    markdownFiles.map((filePath) => readContentEntry(contentRoot, filePath)),
+  )
+
+  return buildNavigationTree(
+    entries.filter((entry) => entry.collection === collection.trim()),
+    filterDirectoryConfigsByCollection(directoryConfigs, collection),
+  )
 }
 
 export async function queryCollectionItemSurroundings(
@@ -157,11 +196,29 @@ export async function queryCollectionPaths(
   collection: string,
   options: QueryOptions = {},
 ): Promise<string[]> {
-  const entries = await queryCollection(collection, options).all()
-  return entries.map((entry) => entry.path)
+  const cwd = options.cwd ?? process.cwd()
+  const contentRoot = path.resolve(cwd, options.contentDir ?? 'content')
+  const { markdownFiles } = await scanContentRoot(contentRoot)
+  const entries = await Promise.all(
+    markdownFiles.map((filePath) => readContentEntry(contentRoot, filePath)),
+  )
+
+  return entries
+    .filter((entry) => entry.collection === collection.trim())
+    .filter((entry) => !hasEntryRedirect(entry))
+    .map((entry) => entry.path)
+    .sort((left, right) => left.localeCompare(right))
 }
 
-function buildNavigationTree(entries: ContentEntry[]): ContentNavigationItem[] {
+function hasEntryRedirect(entry: ContentEntry): boolean {
+  const redirectValue = entry.frontmatter.redirect
+  return typeof redirectValue === 'string' && redirectValue.trim().length > 0
+}
+
+function buildNavigationTree(
+  entries: ContentEntry[],
+  directoryConfigs: Map<string, ContentDirectoryConfig>,
+): ContentNavigationItem[] {
   const root: ContentNavigationItem[] = []
   const sorted = [...entries].sort((a, b) => a.stem.localeCompare(b.stem))
 
@@ -181,6 +238,7 @@ function buildNavigationTree(entries: ContentEntry[]): ContentNavigationItem[] {
           path: currentPath,
           children: [],
         }
+        applyDirectoryConfig(node, directoryConfigs.get(currentPath))
         if (!isLeaf) {
           node.page = false
         }
@@ -191,6 +249,7 @@ function buildNavigationTree(entries: ContentEntry[]): ContentNavigationItem[] {
         node.title = entry.title ?? node.title
         node.stem = entry.stem
         delete node.page
+        applyDirectoryConfig(node, directoryConfigs.get(currentPath))
       }
 
       level = node.children!
@@ -229,6 +288,150 @@ function generateTitle(segment: string): string {
     .filter(Boolean)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
+}
+
+function applyDirectoryConfig(
+  item: ContentNavigationItem,
+  config: ContentDirectoryConfig | undefined,
+): void {
+  if (!config) {
+    return
+  }
+
+  if (config.navigation?.label) {
+    item.title = config.navigation.label
+  }
+
+  if (config.navigation) {
+    item.navigation = config.navigation
+  }
+
+  item.config = config
+}
+
+function filterDirectoryConfigsByCollection(
+  configs: Map<string, ContentDirectoryConfig>,
+  collection: string,
+): Map<string, ContentDirectoryConfig> {
+  const targetCollection = collection.trim()
+  const filtered = new Map<string, ContentDirectoryConfig>()
+
+  for (const [routePath, config] of configs) {
+    if (getCollectionFromRoutePath(routePath) === targetCollection) {
+      filtered.set(routePath, config)
+    }
+  }
+
+  return filtered
+}
+
+function getCollectionFromRoutePath(routePath: string): string {
+  return routePath.split('/').filter(Boolean)[0] ?? ''
+}
+
+function toDirectoryRoutePath(contentRoot: string, directoryPath: string): string {
+  const relPath = toPosix(path.relative(contentRoot, directoryPath))
+  return normalizeRoutePath(`/${relPath}`)
+}
+
+async function readDirectoryConfig(
+  filePath: string,
+  routePath: string,
+): Promise<ContentDirectoryConfig | null> {
+  const raw = await readFile(filePath, 'utf8')
+
+  let value: unknown
+  try {
+    value = parseYaml(raw)
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error)
+    throw new Error(`Invalid ${CONTENT_DIRECTORY_CONFIG_FILE} at ${routePath}: ${reason}`)
+  }
+
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`Invalid ${CONTENT_DIRECTORY_CONFIG_FILE} at ${routePath}: expected an object`)
+  }
+
+  return normalizeDirectoryConfig(value as Record<string, unknown>, routePath)
+}
+
+function normalizeDirectoryConfig(
+  value: Record<string, unknown>,
+  routePath: string,
+): ContentDirectoryConfig | null {
+  const navigation = normalizeNavigationConfig(value.navigation, routePath)
+  const redirect = asString(value.redirect)
+
+  if (value.redirect !== undefined && redirect === undefined) {
+    throw new Error(
+      `Invalid ${CONTENT_DIRECTORY_CONFIG_FILE} at ${routePath}: redirect should be a string`,
+    )
+  }
+
+  if (navigation === undefined && redirect === undefined) {
+    return null
+  }
+
+  return {
+    navigation,
+    redirect,
+  }
+}
+
+function normalizeNavigationConfig(
+  value: unknown,
+  routePath: string,
+): ContentNavigationConfig | undefined {
+  if (value === undefined) {
+    return undefined
+  }
+
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(
+      `Invalid ${CONTENT_DIRECTORY_CONFIG_FILE} at ${routePath}: navigation should be an object`,
+    )
+  }
+
+  const config = value as Record<string, unknown>
+  const label = asString(config.label)
+  const icon = asString(config.icon)
+  const hidden = config.hidden
+  const flatten = config.flatten
+
+  if (config.label !== undefined && label === undefined) {
+    throw new Error(
+      `Invalid ${CONTENT_DIRECTORY_CONFIG_FILE} at ${routePath}: navigation.label should be a string`,
+    )
+  }
+
+  if (config.icon !== undefined && icon === undefined) {
+    throw new Error(
+      `Invalid ${CONTENT_DIRECTORY_CONFIG_FILE} at ${routePath}: navigation.icon should be a string`,
+    )
+  }
+
+  if (hidden !== undefined && typeof hidden !== 'boolean') {
+    throw new Error(
+      `Invalid ${CONTENT_DIRECTORY_CONFIG_FILE} at ${routePath}: navigation.hidden should be a boolean`,
+    )
+  }
+
+  if (flatten !== undefined && typeof flatten !== 'boolean') {
+    throw new Error(
+      `Invalid ${CONTENT_DIRECTORY_CONFIG_FILE} at ${routePath}: navigation.flatten should be a boolean`,
+    )
+  }
+
+  if (label === undefined && icon === undefined && hidden === undefined && flatten === undefined) {
+    return undefined
+  }
+
+  return {
+    label,
+    icon,
+    hidden,
+    flatten,
+  }
 }
 
 function asRecord(value: unknown): Record<string, unknown> {

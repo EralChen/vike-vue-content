@@ -32,6 +32,14 @@ export function mapNavigationTree(
 	return items.map((item) => mapNavigationItemPath(item, options))
 }
 
+export function resolveNavigationItems(
+	items: ContentNavigationItem[],
+	currentPath: string,
+): ContentNavigationItem[] {
+	const targetPath = normalizeRoutePath(currentPath)
+	return filterNavigationItems(items, targetPath)
+}
+
 export function mapNavigationItem(
 	item: ContentNavigationItem | null,
 	options: ResolvedDocsPageOptions,
@@ -60,6 +68,50 @@ function mapNavigationItemPath(
 	}
 
 	return mapped
+}
+
+function filterNavigationItems(
+	items: ContentNavigationItem[],
+	targetPath: string,
+): ContentNavigationItem[] {
+	const filtered: ContentNavigationItem[] = []
+
+	for (const item of items) {
+		const children = item.children?.length
+			? filterNavigationItems(item.children, targetPath)
+			: undefined
+		const shouldHide = item.navigation?.hidden && matchesNavigationScope(item.path, targetPath)
+		const shouldFlatten = item.navigation?.flatten === true && Boolean(children?.length)
+
+		if (shouldHide || shouldFlatten) {
+			if (children?.length) {
+				filtered.push(...children)
+			}
+			continue
+		}
+
+		const nextItem: ContentNavigationItem = {
+			...item,
+		}
+
+		if (children?.length) {
+			nextItem.children = children
+		} else {
+			delete nextItem.children
+		}
+
+		filtered.push(nextItem)
+	}
+
+	return filtered
+}
+
+function matchesNavigationScope(itemPath: string, targetPath: string): boolean {
+	if (itemPath === '/') {
+		return true
+	}
+
+	return targetPath === itemPath || targetPath.startsWith(`${itemPath}/`)
 }
 
 function remapRouteBase(value: string, fromBase: string, toBase: string): string {

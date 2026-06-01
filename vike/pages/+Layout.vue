@@ -1,6 +1,7 @@
 <!-- https://vike.dev/Layout -->
 
 <template>
+  <h1>vike-vue-content</h1>
   <div class="layout">
     <slot></slot>
   </div>

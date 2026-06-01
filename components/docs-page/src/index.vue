@@ -24,7 +24,6 @@
 			<section v-else class="docs-not-found">
 				<h1>404</h1>
 				<p>找不到内容：{{ requestedPath }}</p>
-				<a :href="docsBase">返回文档首页</a>
 			</section>
 		</article>
 	</div>

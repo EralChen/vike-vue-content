@@ -14,6 +14,7 @@ import {
 	mapContentEntryPath,
 	mapNavigationItem,
 	mapNavigationTree,
+	resolveNavigationItems,
 	toCollectionPath,
 } from '../paths'
 
@@ -48,10 +49,12 @@ export async function data(pageContext: PageContextServer): Promise<DocsPageData
 		title: page?.title ?? options.title,
 	})
 
+	const mappedNavigation = mapNavigationTree(navigation, options)
+
 	return {
 		docsBase: options.base,
 		page: page ? mapContentEntryPath(page, options) : null,
-		navigation: mapNavigationTree(navigation, options),
+		navigation: resolveNavigationItems(mappedNavigation, requestedPath),
 		prev: mapNavigationItem(surroundings[0], options),
 		next: mapNavigationItem(surroundings[1], options),
 		requestedPath,

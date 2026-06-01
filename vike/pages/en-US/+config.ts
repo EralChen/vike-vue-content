@@ -1,8 +1,6 @@
-import type { Config } from 'vike/types'
+import { defineDocsPageConfig } from 'vike-vue-content/docs'
 
-export default {
-    docs: {
-        collection: 'en-US',
-        contentDir: 'content',
-    },
-} satisfies Config
+export default defineDocsPageConfig({
+    collection: 'en-US',
+    contentDir: 'content',
+})

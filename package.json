@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "build": "pnpm run -C entry build",
     "dev:vike": "pnpm run -C vike dev",
     "dev:app": "pnpm run -C app dev",
     "postinstall": "pnpm run -r --parallel stub"
@@ -19,7 +20,7 @@
     "@types/node": "^25.9.1",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vitejs/plugin-vue-jsx": "^5.1.5",
-    "@vue/language-core": "^3.3.2",
+    "@vue/language-core": "^3.3.3",
     "@vue/tsconfig": "^0.9.1",
     "fast-glob": "^3.3.3",
     "npm-run-all2": "^9.0.1",
@@ -27,7 +28,7 @@
     "unbuild": "^3.6.1",
     "vite": "^8.0.14",
     "vitest": "^4.1.7",
-    "vue-tsc": "^3.3.2"
+    "vue-tsc": "^3.3.3"
   },
   "type": "module"
 }

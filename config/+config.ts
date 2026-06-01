@@ -2,6 +2,7 @@ import type { Config } from 'vike/types'
 import type _ from 'vike-vue/config'
 
 import type { DocsPageOptions } from './docs/+config'
+import { collectWorkspaceDocsRedirects } from './docs/redirects'
 import { docsRuntimeBasePlugin } from './docs/plugin'
 
 const config = {
@@ -9,6 +10,7 @@ const config = {
   require: {
     vike: '>=0.4.191',
   },
+  redirects: collectWorkspaceDocsRedirects(),
   vite: {
     plugins: [docsRuntimeBasePlugin()],
   },
