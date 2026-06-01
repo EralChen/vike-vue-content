@@ -73,6 +73,7 @@ export default {
 import { queryCollection } from 'vike-vue-content/query'
 
 const page = await queryCollection('docs').path('/docs').first()
+const orderedPages = await queryCollection('docs').order('title', 'ASC').all()
 ```
 
 `queryCollection()` 使用 [Comark](https://github.com/comarkdown/comark) 解析 Markdown、YAML frontmatter 和 AST。`page.body` 是可序列化的 `ComarkTree`，可以交给内容渲染组件：
@@ -93,7 +94,14 @@ defineProps<{
 </template>
 ```
 
-当前先支持本地 `content/**/*.md`、`path()`、`all()` 和 `first()`。
+当前实现还会从 Markdown 生成页面元数据：
+
+- `title`：优先使用 frontmatter `title`，否则回退到首个一级标题
+- `description`：优先使用 frontmatter `description`，否则回退到首段正文
+- `toc`：从 Markdown 标题生成目录结构
+- `navigation`：支持页面级 frontmatter `navigation` 元数据
+
+查询 API 当前先支持本地 `content/**/*.md`、`path()`、`order()`、`all()` 和 `first()`。
 
 ## 内容驱动路由
 
@@ -132,6 +140,8 @@ export default createDocsPrerender()
 | `content/docs/index.md` | `/docs` |
 | `content/docs/getting-started.md` | `/docs/getting-started` |
 | `content/docs/guide/routing.md` | `/docs/guide/routing` |
+
+当文件或目录使用 `1.foo.md`、`2.bar/` 这类数字前缀时，前缀会参与排序，但不会暴露到最终访问路径里。
 
 `queryCollectionNavigation()` 返回按目录嵌套的导航树，`queryCollectionItemSurroundings()` 返回上一页/下一页，可直接用于侧边栏和翻页：
 

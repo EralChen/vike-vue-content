@@ -5,17 +5,29 @@ export type ContentEntry = {
 	stem: string
 	title?: string
 	description?: string
+	toc?: ContentTocLink[]
+	navigation?: boolean | ContentNavigationConfig
 	body: unknown
 	rawbody: string
 	frontmatter: Record<string, unknown>
 	meta: Record<string, unknown>
 }
 
+export type ContentTocLink = {
+	id: string
+	text: string
+	depth: number
+	children?: ContentTocLink[]
+}
+
 export type ContentNavigationConfig = {
+	title?: string
 	label?: string
+	description?: string
 	icon?: string
 	hidden?: boolean
 	flatten?: boolean
+	[key: string]: unknown
 }
 
 export type ContentDirectoryConfig = {
@@ -39,8 +51,15 @@ export type QueryOptions = {
 	contentDir?: string
 }
 
+export type QueryOrderDirection = 'ASC' | 'DESC'
+
+export type NavigationQueryBuilder = Promise<ContentNavigationItem[]> & {
+	order(field: string, direction?: QueryOrderDirection): NavigationQueryBuilder
+}
+
 export type QueryBuilder = {
 	path(value: string): QueryBuilder
+	order(field: string, direction?: QueryOrderDirection): QueryBuilder
 	all(): Promise<ContentEntry[]>
 	first(): Promise<ContentEntry | null>
 }

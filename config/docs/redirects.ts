@@ -242,17 +242,25 @@ function belongsToCollection(routePath: string, collection: string): boolean {
 
 function toDirectoryRoutePath(contentRoot: string, directoryPath: string): string {
 	const relativePath = toPosix(path.relative(contentRoot, directoryPath))
-	return normalizeRoutePath(`/${relativePath}`)
+	return normalizeRoutePath(`/${stripOrderingPath(relativePath)}`)
 }
 
 function toMarkdownRoutePath(contentRoot: string, filePath: string): string {
 	const relativePath = toPosix(path.relative(contentRoot, filePath))
-	const stem = relativePath.replace(/\.md$/i, '')
+	const stem = stripOrderingPath(relativePath.replace(/\.md$/i, ''))
 	return normalizeRoutePath('/' + stem.replace(/\/index$/i, ''))
 }
 
 function toPosix(value: string): string {
 	return value.replace(/\\/g, '/')
+}
+
+function stripOrderingPath(value: string): string {
+	return value
+		.split('/')
+		.filter(Boolean)
+		.map((segment) => segment.replace(/^\d+\./, ''))
+		.join('/')
 }
 
 function readDocsPageOptions(filePath: string): DocsPageOptions | null {
