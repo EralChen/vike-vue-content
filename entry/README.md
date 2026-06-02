@@ -1,65 +1,24 @@
 # vike-vue-content
 
-[Vike](https://vike.dev/) 生态下，基于 [vike-vue](https://github.com/vikejs/vike-vue)，面向 Vue 文档站点的内容渲染框架。目标是为 Vike 项目提供接近 [Nuxt Content](https://content.nuxt.com/) 的内容组织、路由生成、文档渲染和站点构建体验。
+[Vike](https://vike.dev/) + [Vue](https://vuejs.org/) 的内容渲染框架，为文档站点提供开箱即用的主题系统、内容路由和文档组件。
 
-> vike-vue-content 目前处于 early-stage。当前发布包已经提供最小 Vike config 入口和模板级导出，完整的 Markdown 内容管线、文档路由和查询能力正在建设中。长期路线见 [ROADMAP.md](ROADMAP.md)。
+## 特性
 
-## 适合场景
+- 🎨 **主题系统** - 17 种主色调、深色/浅色模式、圆角和字体自定义
+- 📄 **内容驱动路由** - Markdown 文件自动生成页面路由
+- 🔍 **内容查询** - 查询、排序、分页、上下页导航
+- 📑 **文档组件** - 导航栏、目录、内容渲染器等开箱即用
+- ⚡ **无 FOUC** - 内联脚本初始化主题，页面切换无闪烁
 
-- 在 Vike + Vue 项目中构建内容驱动的文档站点。
-- 为 npm 包、组件库、工具库维护轻量但可扩展的文档入口。
-- 迁移或复刻 Nuxt Content 风格的内容目录、页面渲染和发布体验。
+## 快速开始
 
-## 安装
+### 安装
 
 ```bash
 npm install vike-vue-content
 ```
 
-如果使用 pnpm：
-
-```bash
-pnpm add vike-vue-content
-```
-
-## 当前可用导出
-
-当前 npm 包暴露的是最小模板能力，适合验证包结构、类型声明和按路径导入是否工作：
-
-```ts
-import vikeVueContent from 'vike-vue-content/config'
-import { queryCollection } from 'vike-vue-content/query'
-import { ContentRenderer } from 'vike-vue-content/components/content-renderer'
-import { DocsPage } from 'vike-vue-content/components/docs-page'
-import { DocsNav } from 'vike-vue-content/components/docs-nav'
-import { DocsSurround } from 'vike-vue-content/components/docs-surround'
-import { DocsToc } from 'vike-vue-content/components/docs-toc'
-import { Hello } from 'vike-vue-content/components/hello-world'
-import { useHello } from 'vike-vue-content/composables/hello'
-import { useScrollspy } from 'vike-vue-content/composables/scrollspy'
-```
-
-可用入口：
-
-| 入口 | 用途 |
-| --- | --- |
-| `vike-vue-content/config` | Vike config 扩展入口，注册 `docs` 自定义 config，并在页面设置 `docs` 时自动挂上 `Page` 与 `data` |
-| `vike-vue-content/docs/route` | docs Route Function helper，默认从调用它的 `+route.ts` 文件系统位置推导公开前缀，也支持显式传参覆盖 |
-| `vike-vue-content/docs/prerender` | docs prerender helper，默认从调用它的 `+onBeforePrerenderStart.ts` 文件系统位置推导公开前缀，也支持显式传参覆盖 |
-| `vike-vue-content/query` | 内容查询入口，提供 `queryCollection()`、`queryCollectionNavigation()` 和 `queryCollectionItemSurroundings()` |
-| `vike-vue-content/components/content-renderer` | Vue 内容渲染组件，基于 `@comark/vue` 渲染 Comark AST |
-| `vike-vue-content/components/docs-page` | docs 页面视图组件，包含侧边栏、内容渲染和上一页/下一页 |
-| `vike-vue-content/components/hello-world` | Vue 组件导出模板 |
-| `vike-vue-content/components/docs-nav` | 文档导航组件 |
-| `vike-vue-content/components/docs-surround` | 文档上下页导航组件 |
-| `vike-vue-content/components/docs-toc` | 文档目录组件 |
-| `vike-vue-content/composables/hello` | Vue composable 导出模板 |
-| `vike-vue-content/composables/scrollspy` | 滚动监听 composable |
-| `vike-vue-content/shared/types` | 共享类型导出，暴露 `ContentEntry`、`ContentNavigationItem`、`DocsPageOptions`、`DocsPageData` 等公共类型 |
-
-## Vike 集成
-
-在 Vike 项目中可以先接入最小 config 扩展，为后续内容能力保留稳定入口：
+### 配置 Vike
 
 ```ts
 // vike.config.ts
@@ -68,91 +27,117 @@ import vikeVueContent from 'vike-vue-content/config'
 import type { Config } from 'vike/types'
 
 export default {
-	extends: [vikeVue, vikeVueContent],
+  extends: [vikeVue, vikeVueContent],
 } satisfies Config
 ```
 
-当前 `vike-vue-content/config` 会为设置了 `docs` 的页面自动挂上 docs 视图组件与数据加载逻辑；`route` 和 `onBeforePrerenderStart` 仍然需要物理 runtime 文件锚点来满足 Vike 0.4.x 的限制。
-
-## 内容查询
-
-服务端数据函数可以通过 `vike-vue-content/query` 读取 Markdown 内容：
-
-```ts
-import { queryCollection } from 'vike-vue-content/query'
-
-const page = await queryCollection('docs').path('/docs').first()
-const orderedPages = await queryCollection('docs').order('title', 'ASC').all()
-```
-
-`queryCollection()` 使用 [Comark](https://github.com/comarkdown/comark) 解析 Markdown、YAML frontmatter 和 AST。`page.body` 是可序列化的 `ComarkTree`，可以交给内容渲染组件：
+### 使用主题组件
 
 ```vue
-<script setup lang="ts">
-import { ContentRenderer } from 'vike-vue-content/components/content-renderer'
-
-defineProps<{
-	page: {
-		body: unknown
-	}
-}>()
+<script setup>
+import { ThemeToggle } from 'vike-vue-content/components/theme-toggle'
+import { ThemeSettings } from 'vike-vue-content/components/theme-settings'
 </script>
 
 <template>
-	<ContentRenderer :tree="page.body" />
+  <header>
+    <h1>My App</h1>
+    <div>
+      <!-- 主题设置面板 -->
+      <ThemeSettings />
+      <!-- 颜色模式切换 -->
+      <ThemeToggle />
+    </div>
+  </header>
 </template>
 ```
 
-当前实现还会从 Markdown 生成页面元数据：
+## 主题系统
 
-- `title`：优先使用 frontmatter `title`，否则回退到首个一级标题
-- `description`：优先使用 frontmatter `description`，否则回退到首段正文
-- `toc`：从 Markdown 标题生成目录结构
-- `navigation`：支持页面级 frontmatter `navigation` 元数据
+### 功能
 
-查询 API 当前先支持本地 `content/**/*.md`、`path()`、`order()`、`all()` 和 `first()`。
+| 功能 | 说明 |
+|------|------|
+| Primary | 17 种主色调 + Black |
+| Neutral | 5 种中性色 |
+| Radius | 5 种圆角预设 |
+| Font | 8 种字体选择 |
+| Color Mode | 浅色 / 深色 / 跟随系统 |
+| Export | 导出 CSS 或配置 |
+| Reset | 一键重置 |
 
-## 内容驱动路由
+### 编程式控制
 
-把 Markdown 放进 `content/<collection>/**/*.md`。在 Vike 0.4.x 下，`route` 和 `onBeforePrerenderStart` 都需要独立的 runtime 文件，因此消费方使用一个 `+config.ts`、一个 `+route.ts` 和一个 `+onBeforePrerenderStart.ts` 作为最小锚点；`Page` 与 `data` 由全局的 `vike-vue-content/config` 通过 `meta.effect` 自动挂上：
+```vue
+<script setup>
+import { useTheme } from 'vike-vue-content/composables/theme'
 
-```ts
-// vike/pages/docs/+config.ts
-import type { Config } from 'vike/types'
-
-export default {
-	docs: {
-		collection: 'docs',
-		contentDir: 'content',
-	},
-} satisfies Config
+const {
+  theme,           // 响应式主题配置
+  isDark,          // 是否深色模式
+  primary,         // 主色调
+  toggleDarkMode,  // 切换深色模式
+  setPrimaryColor, // 设置主色调
+  resetTheme       // 重置主题
+} = useTheme()
+</script>
 ```
 
-```ts
-// vike/pages/docs/+route.ts
-import { createDocsRoute } from 'vike-vue-content/docs/route'
+### CSS 变量
 
-export default createDocsRoute()
+组件自动适配主题变量：
+
+```css
+--vvc-color-primary      /* 主色调 */
+--vvc-color-neutral      /* 中性色 */
+--vvc-radius             /* 圆角 */
+--vvc-font-family        /* 字体 */
+--vvc-bg                 /* 背景色 */
+--vvc-text               /* 文本色 */
+--vvc-border             /* 边框色 */
 ```
 
-```ts
-// vike/pages/docs/+onBeforePrerenderStart.ts
-import { createDocsPrerender } from 'vike-vue-content/docs/prerender'
+## 文档组件
 
-export default createDocsPrerender()
+```vue
+<script setup>
+import { DocsPage } from 'vike-vue-content/components/docs-page'
+import { DocsNav } from 'vike-vue-content/components/docs-nav'
+import { DocsToc } from 'vike-vue-content/components/docs-toc'
+import { DocsSurround } from 'vike-vue-content/components/docs-surround'
+import { ContentRenderer } from 'vike-vue-content/components/content-renderer'
+</script>
 ```
 
-当前实现里，`docs` 配置只负责内容集合、目录和标题；公开路由前缀默认从 `+route.ts` / `+onBeforePrerenderStart.ts` 这一对物理锚点的文件系统位置推导，只有需要覆盖默认前缀时才需要显式传参。最终路由仍然按内容目录结构展开：
+| 组件 | 说明 |
+|------|------|
+| `DocsPage` | 完整文档页面（侧边栏 + 内容 + 目录） |
+| `DocsNav` | 文档导航 |
+| `DocsToc` | 页面目录（支持 sticky 定位） |
+| `DocsSurround` | 上一页/下一页 |
+| `ContentRenderer` | Markdown 内容渲染 |
 
-| 内容文件 | 访问路径 |
-| --- | --- |
-| `content/docs/index.md` | `/docs` |
-| `content/docs/getting-started.md` | `/docs/getting-started` |
-| `content/docs/guide/routing.md` | `/docs/guide/routing` |
+### TOC 定位
 
-当文件或目录使用 `1.foo.md`、`2.bar/` 这类数字前缀时，前缀会参与排序，但不会暴露到最终访问路径里。
+TOC 使用 sticky 定定，自动适配布局。如果页面有固定 header，可通过 CSS 变量调整：
 
-`queryCollectionNavigation()` 返回按目录嵌套的导航树，`queryCollectionItemSurroundings()` 返回上一页/下一页，可直接用于侧边栏和翻页：
+```css
+:root {
+  /* 根据 header 高度调整 */
+  --vvc-toc-sticky-top: 80px;
+}
+```
+
+或者关联已有的 header 变量：
+
+```css
+:root {
+  --header-height: 64px;
+  --vvc-toc-sticky-top: var(--header-height);
+}
+```
+
+## 内容查询
 
 ```ts
 import {
@@ -161,34 +146,78 @@ import {
   queryCollectionItemSurroundings,
 } from 'vike-vue-content/query'
 
-const [page] = await queryCollection('docs').path(urlPathname).all()
+// 查询单页
+const page = await queryCollection('docs').path('/getting-started').first()
+
+// 查询导航树
 const navigation = await queryCollectionNavigation('docs')
-const [prev, next] = await queryCollectionItemSurroundings('docs', urlPathname)
+
+// 查询上下页
+const [prev, next] = await queryCollectionItemSurroundings('docs', '/getting-started')
 ```
 
-消费方最小锚点示例见 `vike/pages/docs/+config.ts`、`vike/pages/docs/+route.ts` 与 `vike/pages/docs/+onBeforePrerenderStart.ts`。
+## 内容驱动路由
 
-## 开发状态
+1. 创建内容目录和 Markdown 文件：
 
-vike-vue-content 的工程目标分为两层：
+```
+content/
+└── docs/
+    ├── index.md
+    ├── getting-started.md
+    └── guide/
+        └── routing.md
+```
 
-- 当前层：稳定包结构、Vike config 入口、子包构建、类型声明和 npm 发布入口。
-- 框架层：实现内容源扫描、Markdown/MDX 渲染、Vike 路由集成、查询 API、文档布局、搜索和主题系统。
+2. 配置 docs 路由锚点：
 
-路线图和阶段目标见 [ROADMAP.md](ROADMAP.md)。
-开发者接手工程请先读 [development/README.md](development/README.md)。开发记录入口见 [devlog/README.md](devlog/README.md)，新任务接着 `devlog/` 下的编号文件写。
+```ts
+// vike/pages/docs/+config.ts
+export default {
+  docs: {
+    collection: 'docs',
+    contentDir: 'content',
+  },
+}
+
+// vike/pages/docs/+route.ts
+export { createDocsRoute as default } from 'vike-vue-content/docs/route'
+
+// vike/pages/docs/+onBeforePrerenderStart.ts
+export { createDocsPrerender as default } from 'vike-vue-content/docs/prerender'
+```
+
+3. 自动生成路由：
+
+| 文件路径 | 访问路径 |
+|----------|----------|
+| `content/docs/index.md` | `/docs` |
+| `content/docs/getting-started.md` | `/docs/getting-started` |
+| `content/docs/guide/routing.md` | `/docs/guide/routing` |
+
+## 导出清单
+
+```
+vike-vue-content/
+├── config                          # Vike config 扩展
+├── query                           # 内容查询 API
+├── components/
+│   ├── content-renderer            # 内容渲染器
+│   ├── docs-page                   # 文档页面
+│   ├── docs-nav                    # 文档导航
+│   ├── docs-toc                    # 页面目录
+│   ├── docs-surround               # 上下页导航
+│   ├── theme-toggle                # 颜色模式切换
+│   └── theme-settings              # 主题设置面板
+├── composables/
+│   ├── theme                       # 主题 composable
+│   └── scrollspy                   # 滚动监听
+└── shared/
+    └── types                       # 公共类型
+```
 
 ## 相关资源
 
-- [Vike](https://vike.dev/)
-- [vike-vue](https://github.com/vikejs/vike-vue)
-- [Nuxt Content](https://content.nuxt.com/)
-
-本仓库开发时可参考本地源码镜像：
-
-- `./.dev/vike`
-- `./.dev/vike-vue`
-- `./.dev/content`
-- `./.dev/movk-nuxt-docs`
-
-
+- [Vike](https://vike.dev/) - 框架
+- [vike-vue](https://github.com/vikejs/vike-vue) - Vue 集成
+- [ROADMAP.md](ROADMAP.md) - 开发路线图

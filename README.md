@@ -113,9 +113,29 @@ import { ContentRenderer } from 'vike-vue-content/components/content-renderer'
 |------|------|
 | `DocsPage` | 完整文档页面（侧边栏 + 内容 + 目录） |
 | `DocsNav` | 文档导航 |
-| `DocsToc` | 页面目录 |
+| `DocsToc` | 页面目录（支持 sticky 定位） |
 | `DocsSurround` | 上一页/下一页 |
 | `ContentRenderer` | Markdown 内容渲染 |
+
+### TOC 定位
+
+TOC 使用 sticky 定定，自动适配布局。如果页面有固定 header，可通过 CSS 变量调整：
+
+```css
+:root {
+  /* 根据 header 高度调整 */
+  --vvc-toc-sticky-top: 80px;
+}
+```
+
+或者关联已有的 header 变量：
+
+```css
+:root {
+  --header-height: 64px;
+  --vvc-toc-sticky-top: var(--header-height);
+}
+```
 
 ## 内容查询
 

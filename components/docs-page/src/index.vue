@@ -145,9 +145,11 @@ watch([requestedPath, tocLinks], async () => {
 .vvc-docs-page-outline {
 	grid-area: outline;
 	position: sticky;
-	top: 32px;
-	max-height: calc(100vh - 48px);
+	top: var(--vvc-toc-sticky-top, 80px);
+	max-height: calc(100vh - var(--vvc-toc-sticky-top, 80px) - 16px);
 	overflow: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--vvc-border, #e2e8f0) transparent;
 }
 
 .vvc-docs-page-content {

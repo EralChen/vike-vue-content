@@ -3,27 +3,24 @@
 <template>
   <div class="layout">
     <header class="layout-header">
-      <h1>vike-vue-content</h1>
-      <div class="layout-header-actions">
-        <!-- 主题设置按钮 -->
-        <div class="theme-picker-wrapper" ref="pickerRef">
-          <button
-            class="theme-picker-trigger"
-            @click="isPickerOpen = !isPickerOpen"
-            :class="{ 'is-open': isPickerOpen }"
-            title="主题设置"
-            aria-label="主题设置"
-          >
-            🎨
-          </button>
-          <Transition name="picker-panel">
-            <div v-if="isPickerOpen" class="theme-picker-panel">
-              <ThemeSettings />
-            </div>
-          </Transition>
+      <div class="layout-header-inner">
+        <h1 class="layout-header-title">vike-vue-content</h1>
+        <div class="layout-header-actions">
+          <!-- 主题设置按钮 -->
+          <div class="theme-picker-wrapper" ref="pickerRef">
+            <button class="theme-picker-trigger" @click="isPickerOpen = !isPickerOpen"
+              :class="{ 'is-open': isPickerOpen }" title="主题设置" aria-label="主题设置">
+              🎨
+            </button>
+            <Transition name="picker-panel">
+              <div v-if="isPickerOpen" class="theme-picker-panel">
+                <ThemeSettings />
+              </div>
+            </Transition>
+          </div>
+          <!-- 颜色模式切换 -->
+          <ThemeToggle />
         </div>
-        <!-- 颜色模式切换 -->
-        <ThemeToggle />
       </div>
     </header>
     <main class="layout-main">
@@ -70,27 +67,36 @@ onUnmounted(() => {
 }
 
 .layout-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--vvc-border, #e2e8f0);
+}
+
+.dark .layout-header {
+  background-color: rgba(15, 23, 42, 0.75);
+}
+
+.layout-header-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
-  background-color: #ffffff;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.dark .layout-header {
-  border-bottom-color: #334155;
-  background-color: #0f172a;
-}
-
-.layout-header h1 {
+.layout-header-title {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--vvc-text, #0f172a);
 }
 
-.dark .layout-header h1 {
+.dark .layout-header-title {
   color: #f1f5f9;
 }
 
@@ -112,11 +118,11 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.375rem;
+  border-radius: var(--vvc-radius, 0.375rem);
   transition: all 0.2s ease;
   font-size: 18px;
   line-height: 1;
-  color: #475569;
+  color: var(--vvc-text-muted, #475569);
 }
 
 .dark .theme-picker-trigger {
@@ -124,7 +130,7 @@ onUnmounted(() => {
 }
 
 .theme-picker-trigger:hover {
-  background-color: #f1f5f9;
+  background-color: var(--vvc-bg-elevated, #f1f5f9);
 }
 
 .dark .theme-picker-trigger:hover {
@@ -132,7 +138,7 @@ onUnmounted(() => {
 }
 
 .theme-picker-trigger.is-open {
-  background-color: #f1f5f9;
+  background-color: var(--vvc-bg-elevated, #f1f5f9);
 }
 
 .dark .theme-picker-trigger.is-open {
@@ -161,5 +167,8 @@ onUnmounted(() => {
 .layout-main {
   flex: 1;
   padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 </style>

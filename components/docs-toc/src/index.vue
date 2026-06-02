@@ -1,5 +1,5 @@
 <template>
-	<nav class="vvc-docs-page-toc" aria-label="本页目录">
+	<nav class="vvc-docs-page-toc" aria-label="本页目录" ref="tocRef">
 		<p class="vvc-docs-page-toc-heading">On this page</p>
 		<div class="vvc-docs-page-toc-content">
 			<div
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { props as dprops, emits } from './ctx'
 import type { ContentTocLink } from './types'
 import DocsTocTree from './DocsTocTree.vue'
@@ -23,6 +23,7 @@ import DocsTocTree from './DocsTocTree.vue'
 const props = defineProps(dprops)
 const emit = defineEmits(emits)
 
+const tocRef = ref<HTMLElement | null>(null)
 
 type FlattenedTocItem = {
 	link: ContentTocLink
