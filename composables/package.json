@@ -1,5 +1,5 @@
 {
-  "name": "@vunk-template/composables",
+  "name": "@vike-vue-content/composables",
   "private": true,
   "scripts": {
     "build": "run-p build:es build:types",

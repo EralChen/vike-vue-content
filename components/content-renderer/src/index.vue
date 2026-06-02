@@ -3,11 +3,11 @@ import { ComarkRenderer } from '@comark/vue'
 import { props as dprops, emits } from './ctx'
 
 const props = defineProps(dprops)
-defineEmits(emits)
+const emit = defineEmits(emits)
 </script>
 
 <template>
-  <Suspense>
+  <Suspense @resolve="emit('resolve')">
     <ComarkRenderer
       v-if="props.tree"
       :tree="props.tree"

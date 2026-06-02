@@ -16,4 +16,6 @@ export const props = {
   },
 }
 
-export const emits = {}
+export const emits = {
+  resolve: () => true,
+}

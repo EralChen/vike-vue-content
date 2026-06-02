@@ -23,10 +23,25 @@
       "import": "./components/content-renderer/index.es.js",
       "types": "./components/content-renderer/index.d.ts"
     },
+    "./components/docs-nav": {
+      "default": "./components/docs-nav/index.es.js",
+      "import": "./components/docs-nav/index.es.js",
+      "types": "./components/docs-nav/index.d.ts"
+    },
     "./components/docs-page": {
       "default": "./components/docs-page/index.es.js",
       "import": "./components/docs-page/index.es.js",
       "types": "./components/docs-page/index.d.ts"
+    },
+    "./components/docs-surround": {
+      "default": "./components/docs-surround/index.es.js",
+      "import": "./components/docs-surround/index.es.js",
+      "types": "./components/docs-surround/index.d.ts"
+    },
+    "./components/docs-toc": {
+      "default": "./components/docs-toc/index.es.js",
+      "import": "./components/docs-toc/index.es.js",
+      "types": "./components/docs-toc/index.d.ts"
     },
     "./components/hello-world": {
       "default": "./components/hello-world/index.es.js",
@@ -37,6 +52,11 @@
       "default": "./composables/hello/index.es.js",
       "import": "./composables/hello/index.es.js",
       "types": "./composables/hello/index.d.ts"
+    },
+    "./composables/scrollspy": {
+      "default": "./composables/scrollspy/index.es.js",
+      "import": "./composables/scrollspy/index.es.js",
+      "types": "./composables/scrollspy/index.d.ts"
     },
     "./config": {
       "default": "./config/+config.js",
@@ -80,6 +100,7 @@
   "dependencies": {
     "@comark/vue": "^0.3.1",
     "comark": "^0.3.2",
+    "github-slugger": "^2.0.0",
     "vike": "^0.4.259",
     "vike-vue": "^0.9.11",
     "yaml": "^2.9.0"

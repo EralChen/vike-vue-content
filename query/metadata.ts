@@ -1,5 +1,6 @@
 import type { ComarkElement, ComarkNode, ComarkTree } from 'comark'
 import type { ContentTocLink } from '@vike-vue-content/shared/types'
+import GithubSlugger from 'github-slugger'
 
 const FRONTMATTER_RE = /^---\s*\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/
 
@@ -126,13 +127,13 @@ function attachHeadingIds(node: ComarkNode, headings: HeadingMeta[]): ComarkNode
   }
 
   const nextAttributes = { ...(attributes ?? {}) }
-  if (!nextAttributes.id) {
-    if (depth >= 2) {
-      const heading = headings.shift()
-      nextAttributes.id = heading?.id ?? slugifyHeading(extractTextFromNodes(nextChildren))
-    } else {
-      nextAttributes.id = slugifyHeading(extractTextFromNodes(nextChildren))
-    }
+  if (depth >= 2) {
+    // 始终用我们自己计算的 slug 覆盖 comark 生成的 id（comark 会把中文标题
+    // 退化成 `-1`/`-2`，与 TOC 里的 id 不一致，导致锚点失效、目录无法高亮）。
+    const heading = headings.shift()
+    nextAttributes.id = heading?.id ?? slugifyHeading(extractTextFromNodes(nextChildren))
+  } else if (!nextAttributes.id) {
+    nextAttributes.id = slugifyHeading(extractTextFromNodes(nextChildren))
   }
 
   return [tag, nextAttributes, ...nextChildren]
@@ -186,27 +187,23 @@ function cleanMarkdownText(value: string): string {
     .trim()
 }
 
-function createHeadingSlugger() {
-  const counts = new Map<string, number>()
+// 与 Nuxt Content (@nuxtjs/mdc) 的 heading id 规则逐字节对齐：
+// 先用 github-slugger 生成 slug（保留 CJK、按实例去重），再套用 MDC compiler.js
+// 的后处理：折叠连字符、去首尾连字符、数字开头加 `_` 前缀。
+function applyMdcHeadingIdRules(slug: string): string {
+  return slug
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .replace(/^(\d)/, '_$1')
+}
 
-  return (value: string) => {
-    const base = slugifyHeading(value) || 'section'
-    const count = counts.get(base) ?? 0
-    counts.set(base, count + 1)
-    return count === 0 ? base : `${base}-${count + 1}`
-  }
+function createHeadingSlugger() {
+  const slugger = new GithubSlugger()
+  return (value: string) => applyMdcHeadingIdRules(slugger.slug(value))
 }
 
 function slugifyHeading(value: string): string {
-  return value
-    .trim()
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^\p{Letter}\p{Number}\s-]/gu, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
+  return applyMdcHeadingIdRules(new GithubSlugger().slug(value))
 }
 
 function getHeadingDepth(tag: string): number | null {

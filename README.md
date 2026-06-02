@@ -30,8 +30,13 @@ pnpm add vike-vue-content
 import vikeVueContent from 'vike-vue-content/config'
 import { queryCollection } from 'vike-vue-content/query'
 import { ContentRenderer } from 'vike-vue-content/components/content-renderer'
+import { DocsPage } from 'vike-vue-content/components/docs-page'
+import { DocsNav } from 'vike-vue-content/components/docs-nav'
+import { DocsSurround } from 'vike-vue-content/components/docs-surround'
+import { DocsToc } from 'vike-vue-content/components/docs-toc'
 import { Hello } from 'vike-vue-content/components/hello-world'
 import { useHello } from 'vike-vue-content/composables/hello'
+import { useScrollspy } from 'vike-vue-content/composables/scrollspy'
 ```
 
 可用入口：
@@ -45,7 +50,11 @@ import { useHello } from 'vike-vue-content/composables/hello'
 | `vike-vue-content/components/content-renderer` | Vue 内容渲染组件，基于 `@comark/vue` 渲染 Comark AST |
 | `vike-vue-content/components/docs-page` | docs 页面视图组件，包含侧边栏、内容渲染和上一页/下一页 |
 | `vike-vue-content/components/hello-world` | Vue 组件导出模板 |
+| `vike-vue-content/components/docs-nav` | 文档导航组件 |
+| `vike-vue-content/components/docs-surround` | 文档上下页导航组件 |
+| `vike-vue-content/components/docs-toc` | 文档目录组件 |
 | `vike-vue-content/composables/hello` | Vue composable 导出模板 |
+| `vike-vue-content/composables/scrollspy` | 滚动监听 composable |
 | `vike-vue-content/shared/types` | 共享类型导出，暴露 `ContentEntry`、`ContentNavigationItem`、`DocsPageOptions`、`DocsPageData` 等公共类型 |
 
 ## Vike 集成

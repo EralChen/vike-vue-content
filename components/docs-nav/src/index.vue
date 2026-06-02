@@ -21,18 +21,12 @@
 	</ul>
 </template>
 
-<script setup lang="ts">
-type DocsNavigationItem = {
-	title: string
-	path: string
-	children?: DocsNavigationItem[]
-	page?: false
-}
+<script lang="ts" setup>
+import { props as dprops, emits } from './ctx'
+import DocsNav from './index.vue'
 
-defineProps<{
-	items: DocsNavigationItem[]
-	currentPath: string
-}>()
+const props = defineProps(dprops)
+const emit = defineEmits(emits)
 </script>
 
 <style>
