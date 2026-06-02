@@ -48,6 +48,16 @@
       "import": "./components/hello-world/index.es.js",
       "types": "./components/hello-world/index.d.ts"
     },
+    "./components/theme-settings": {
+      "default": "./components/theme-settings/index.es.js",
+      "import": "./components/theme-settings/index.es.js",
+      "types": "./components/theme-settings/index.d.ts"
+    },
+    "./components/theme-toggle": {
+      "default": "./components/theme-toggle/index.es.js",
+      "import": "./components/theme-toggle/index.es.js",
+      "types": "./components/theme-toggle/index.d.ts"
+    },
     "./composables/hello": {
       "default": "./composables/hello/index.es.js",
       "import": "./composables/hello/index.es.js",
@@ -57,6 +67,11 @@
       "default": "./composables/scrollspy/index.es.js",
       "import": "./composables/scrollspy/index.es.js",
       "types": "./composables/scrollspy/index.d.ts"
+    },
+    "./composables/theme": {
+      "default": "./composables/theme/index.es.js",
+      "import": "./composables/theme/index.es.js",
+      "types": "./composables/theme/index.d.ts"
     },
     "./config": {
       "default": "./config/+config.js",

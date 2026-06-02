@@ -4,6 +4,7 @@ import type _ from 'vike-vue/config'
 import type { DocsPageOptions } from './docs/+config'
 import { collectWorkspaceDocsRedirects } from './docs/redirects'
 import { docsRuntimeBasePlugin } from './docs/plugin'
+import { generateThemeInitScript } from '@vike-vue-content/composables/theme'
 
 const config = {
   name: 'vike-vue-content',
@@ -14,6 +15,8 @@ const config = {
   vite: {
     plugins: [docsRuntimeBasePlugin()],
   },
+  // 在 head 开始位置注入主题初始化脚本，防止 FOUC
+  headHtmlBegin: generateThemeInitScript(),
   meta: {
     docs: {
       env: {
