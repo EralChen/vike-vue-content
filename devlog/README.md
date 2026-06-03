@@ -26,3 +26,4 @@
 20. [重构 components 和 composables 目录结构](20.components-composables-restructure.md)
 21. [实现主题系统](21.theme-system-implementation.md)
 22. [TOC Sticky 定位优化](22.toc-sticky-positioning.md)
+23. [Link 组件与 Vite base 前缀处理](23.link-component-and-base-handling.md)
