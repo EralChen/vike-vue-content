@@ -6,6 +6,8 @@
       <div class="layout-header-inner">
         <h1 class="layout-header-title">vike-vue-content</h1>
         <div class="layout-header-actions">
+          <!-- 语言切换 -->
+          <LanguageSwitcher />
           <!-- 主题设置按钮 -->
           <div class="theme-picker-wrapper" ref="pickerRef">
             <button class="theme-picker-trigger" @click="isPickerOpen = !isPickerOpen"
@@ -36,6 +38,7 @@ import 'vike-vue-content/index.css';
 import { ThemeToggle } from 'vike-vue-content/components/theme-toggle';
 import { ThemeSettings } from 'vike-vue-content/components/theme-settings';
 import { useTheme } from 'vike-vue-content/composables/theme';
+import LanguageSwitcher from '../components/LanguageSwitcher.vue';
 
 // 初始化主题
 useTheme();
