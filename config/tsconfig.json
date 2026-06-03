@@ -2,10 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
     "../env.d.ts",
-    "./**/*.d.ts",
-    "./**/*.ts",
-    "./**/*.tsx",
-    "./**/*.vue"
+    "+config.ts"
   ],
   "exclude": [
     "dist",

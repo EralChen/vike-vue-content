@@ -48,6 +48,11 @@
       "import": "./components/hello-world/index.es.js",
       "types": "./components/hello-world/index.d.ts"
     },
+    "./components/link": {
+      "default": "./components/link/index.es.js",
+      "import": "./components/link/index.es.js",
+      "types": "./components/link/index.d.ts"
+    },
     "./components/theme-settings": {
       "default": "./components/theme-settings/index.es.js",
       "import": "./components/theme-settings/index.es.js",

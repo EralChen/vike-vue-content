@@ -1,7 +1,7 @@
 <template>
 	<ul class="vvc-docs-nav-list">
 		<li v-for="item in items" :key="item.path" class="vvc-docs-nav-item">
-			<a
+			<Link
 				v-if="item.page !== false"
 				:href="item.path"
 				:aria-current="item.path === currentPath ? 'page' : undefined"
@@ -9,7 +9,7 @@
 				:class="{ 'is-active': item.path === currentPath }"
 			>
 				{{ item.title }}
-			</a>
+			</Link>
 			<span v-else class="vvc-docs-nav-group">{{ item.title }}</span>
 
 			<DocsNav
@@ -24,6 +24,7 @@
 <script lang="ts" setup>
 import { props as dprops, emits } from './ctx'
 import DocsNav from './index.vue'
+import { Link } from '@vike-vue-content/components/link'
 
 const props = defineProps(dprops)
 const emit = defineEmits(emits)

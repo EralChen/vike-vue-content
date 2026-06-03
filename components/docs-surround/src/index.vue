@@ -1,27 +1,28 @@
 <template>
 	<nav class="vvc-docs-page-surround">
-		<a
+		<Link
 			v-if="prev"
 			class="vvc-docs-page-surround-link vvc-docs-page-surround-link-prev"
 			:href="prev.path"
 		>
 			<span class="vvc-docs-page-surround-label">上一页</span>
 			<span class="vvc-docs-page-surround-title">{{ prev.title }}</span>
-		</a>
+		</Link>
 		<span v-else />
-		<a
+		<Link
 			v-if="next"
 			class="vvc-docs-page-surround-link vvc-docs-page-surround-link-next"
 			:href="next.path"
 		>
 			<span class="vvc-docs-page-surround-label">下一页</span>
 			<span class="vvc-docs-page-surround-title">{{ next.title }}</span>
-		</a>
+		</Link>
 	</nav>
 </template>
 
 <script lang="ts" setup>
 import { props as dprops, emits } from './ctx'
+import { Link } from '@vike-vue-content/components/link'
 
 const props = defineProps(dprops)
 const emit = defineEmits(emits)
