@@ -1,13 +1,17 @@
 {
-  "name": "docs",
+  "name": "@vike-vue-content/docs",
+  "private": true,
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev"
+    "build": "run-p build:es build:types",
+    "build:es": "vite build",
+    "build:types": "vue-tsc"
   },
   "dependencies": {
-    "@movk/nuxt-docs": "latest",
-    "better-sqlite3": "^12.10.0",
-    "nuxt": "^4.4.6",
-    "tailwindcss": "^4.3.0"
-  }
+    "@vike-vue-content/components": "workspace:*",
+    "@vike-vue-content/query": "workspace:*",
+    "vike": "^0.4.259",
+    "vike-vue": "^0.9.11",
+    "yaml": "^2.9.0"
+  },
+  "type": "module"
 }

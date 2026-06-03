@@ -1,6 +1,6 @@
 import type { Config } from 'vike/types'
 
-import type { DocsPageData, DocsPageOptions } from '@vike-vue-content/shared/types'
+import type { DocsPageOptions } from '@vike-vue-content/shared/types'
 
 export function defineDocsPageConfig(options: DocsPageOptions = {}): Config {
 	return {

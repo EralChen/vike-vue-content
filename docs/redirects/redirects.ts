@@ -7,9 +7,9 @@ import {
 	normalizeRoutePath,
 	resolveDocsPageOptions,
 	type ResolvedDocsPageOptions,
-} from './options'
-import { inferDocsBaseFromPageFile } from './page-file'
-import { fromCollectionPath } from './paths'
+} from '../config/options'
+import { inferDocsBaseFromPageFile } from '../utils/page-file'
+import { fromCollectionPath } from '../utils/paths'
 
 const CONTENT_DIRECTORY_CONFIG_FILE = '.config.yml'
 const FRONTMATTER_RE = /^---\s*\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/

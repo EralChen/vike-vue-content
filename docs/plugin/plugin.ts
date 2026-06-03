@@ -1,11 +1,11 @@
-import type { Plugin } from 'vite'
 
+import type { Plugin } from 'vite'
 import {
 	inferDocsBaseFromPageFile,
 	isDocsPrerenderFile,
 	isDocsRouteFile,
 	normalizeDocsRuntimeFileId,
-} from './page-file'
+} from '../utils/page-file'
 
 const ZERO_ARG_CREATE_DOCS_ROUTE_RE = /\bcreateDocsRoute\s*\(\s*\)/g
 const ZERO_ARG_CREATE_DOCS_PRERENDER_RE = /\bcreateDocsPrerender\s*\(\s*\)/g

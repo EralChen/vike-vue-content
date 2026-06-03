@@ -11,6 +11,7 @@ PACKAGES=(
 	"components"
 	"composables"
 	"shared"
+	"docs"
 )
 
 echo "[build] workspace: ${ROOT_DIR}"

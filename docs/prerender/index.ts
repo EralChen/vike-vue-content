@@ -2,9 +2,9 @@ import path from 'node:path'
 import { queryCollectionPaths } from '@vike-vue-content/query'
 import { getGlobalContext } from 'vike'
 
-import { resolveDocsBaseFromCaller } from '../caller'
-import { resolveDocsPageOptions } from '../options'
-import { fromCollectionPath } from '../paths'
+import { resolveDocsBaseFromCaller } from '../utils/caller'
+import { resolveDocsPageOptions } from '../config/options'
+import { fromCollectionPath } from '../utils/paths'
 import { getDocsRouteBaseFromRouteValue } from '../route'
 
 

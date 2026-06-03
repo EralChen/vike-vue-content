@@ -79,24 +79,44 @@
       "types": "./config/+config.d.ts"
     },
     "./docs": {
-      "default": "./config/docs/index.es.js",
-      "import": "./config/docs/index.es.js",
-      "types": "./config/docs/index.d.ts"
+      "default": "./docs/index.es.js",
+      "import": "./docs/index.es.js",
+      "types": "./docs/index.d.ts"
+    },
+    "./docs/config": {
+      "default": "./docs/config/index.es.js",
+      "import": "./docs/config/index.es.js",
+      "types": "./docs/config/index.d.ts"
     },
     "./docs/data": {
-      "default": "./config/docs/data/index.es.js",
-      "import": "./config/docs/data/index.es.js",
-      "types": "./config/docs/data/index.d.ts"
+      "default": "./docs/data/index.es.js",
+      "import": "./docs/data/index.es.js",
+      "types": "./docs/data/index.d.ts"
+    },
+    "./docs/plugin": {
+      "default": "./docs/plugin/index.es.js",
+      "import": "./docs/plugin/index.es.js",
+      "types": "./docs/plugin/index.d.ts"
     },
     "./docs/prerender": {
-      "default": "./config/docs/prerender/index.es.js",
-      "import": "./config/docs/prerender/index.es.js",
-      "types": "./config/docs/prerender/index.d.ts"
+      "default": "./docs/prerender/index.es.js",
+      "import": "./docs/prerender/index.es.js",
+      "types": "./docs/prerender/index.d.ts"
+    },
+    "./docs/redirects": {
+      "default": "./docs/redirects/index.es.js",
+      "import": "./docs/redirects/index.es.js",
+      "types": "./docs/redirects/index.d.ts"
     },
     "./docs/route": {
-      "default": "./config/docs/route/index.es.js",
-      "import": "./config/docs/route/index.es.js",
-      "types": "./config/docs/route/index.d.ts"
+      "default": "./docs/route/index.es.js",
+      "import": "./docs/route/index.es.js",
+      "types": "./docs/route/index.d.ts"
+    },
+    "./docs/utils": {
+      "default": "./docs/utils/index.es.js",
+      "import": "./docs/utils/index.es.js",
+      "types": "./docs/utils/index.d.ts"
     },
     "./index.css": {
       "import": "./index.css"

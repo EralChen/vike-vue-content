@@ -1,4 +1,4 @@
-import { normalizeRoutePath } from './options'
+import { normalizeRoutePath } from '../config/options'
 import { inferDocsBaseFromPageFile, normalizeDocsRuntimeFileId } from './page-file'
 
 type StackCallSite = {

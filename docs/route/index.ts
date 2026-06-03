@@ -1,8 +1,8 @@
 import type { PageContext } from 'vike/types'
 
-import { resolveDocsBaseFromCaller } from '../caller'
-import { normalizeRoutePath, resolveDocsPageOptions } from '../options'
-import { matchesDocsPath } from '../paths'
+import { resolveDocsBaseFromCaller } from '../utils/caller'
+import { normalizeRoutePath, resolveDocsPageOptions } from '../config/options'
+import { matchesDocsPath } from '../utils/paths'
 
 const DOCS_BASE_ROUTE_PARAM = '__docsBase'
 const DOCS_ROUTE_BASE_PROP = '__vikeVueContentDocsBase'

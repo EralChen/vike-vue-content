@@ -1,9 +1,9 @@
 import type { Config } from 'vike/types'
 import type _ from 'vike-vue/config'
 
-import type { DocsPageOptions } from './docs/+config'
-import { collectWorkspaceDocsRedirects } from './docs/redirects'
-import { docsRuntimeBasePlugin } from './docs/plugin'
+import type { DocsPageOptions } from '@vike-vue-content/docs/config'
+import { collectWorkspaceDocsRedirects } from '@vike-vue-content/docs/redirects'
+import { docsRuntimeBasePlugin } from '@vike-vue-content/docs/plugin'
 import { generateThemeInitScript } from '@vike-vue-content/composables/theme'
 
 const config = {
@@ -32,7 +32,7 @@ const config = {
       },
     },
   },
-} satisfies Config
+} satisfies Config 
 
 export default config
 

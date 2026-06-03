@@ -1,0 +1,1 @@
+export { defineDocsPageConfig } from './config'

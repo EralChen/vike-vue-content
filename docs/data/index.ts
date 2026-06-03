@@ -8,7 +8,7 @@ import path from 'node:path'
 import type { PageContextServer } from 'vike/types'
 import { useConfig } from 'vike-vue/useConfig'
 
-import { resolveDocsPageOptions } from '../options'
+import { resolveDocsPageOptions } from '../config/options'
 import { getDocsRouteBaseFromRouteParams } from '../route'
 import {
 	mapContentEntryPath,
@@ -16,7 +16,7 @@ import {
 	mapNavigationTree,
 	resolveNavigationItems,
 	toCollectionPath,
-} from '../paths'
+} from '../utils/paths'
 
 export type { DocsPageData } from '@vike-vue-content/shared/types'
 

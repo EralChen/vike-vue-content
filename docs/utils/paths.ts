@@ -1,6 +1,6 @@
 import type { ContentEntry, ContentNavigationItem } from '@vike-vue-content/shared/types'
 
-import { normalizeRoutePath, type ResolvedDocsPageOptions } from './options'
+import { normalizeRoutePath, type ResolvedDocsPageOptions } from '../config/options'
 
 export function matchesDocsPath(urlPathname: string, options: ResolvedDocsPageOptions): boolean {
 	const normalized = normalizeRoutePath(urlPathname)
