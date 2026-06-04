@@ -14,9 +14,21 @@ import {
   extractDescriptionFromMarkdown,
   extractHeadingMetadata,
   extractTitleFromMarkdown,
-} from './metadata'
+} from '../metadata'
+import type { ComarkPlugin } from 'comark'
 
-const parseMarkdown = createParse()
+const defaultParse = createParse()
+const parseCache = new Map<string, ReturnType<typeof createParse>>()
+
+function getParse(plugins?: unknown[]) {
+  if (!plugins?.length) return defaultParse
+  const key = plugins.map((_, i) => i).join(',')
+  if (!parseCache.has(key)) {
+    parseCache.set(key, createParse({ plugins: plugins as ComarkPlugin[] }))
+  }
+  return parseCache.get(key)!
+}
+
 const CONTENT_DIRECTORY_CONFIG_FILE = '.config.yml'
 
 export type ContentScanResult = {
@@ -60,9 +72,10 @@ export async function scanContentRoot(rootDir: string): Promise<ContentScanResul
   return { markdownFiles, directoryConfigs }
 }
 
-export async function readContentEntry(contentRoot: string, filePath: string): Promise<ContentEntry> {
+export async function readContentEntry(contentRoot: string, filePath: string, plugins?: unknown[]): Promise<ContentEntry> {
   const rawbody = await readFile(filePath, 'utf8')
-  const parsed = await parseMarkdown(rawbody) as ComarkTree
+  const parse = getParse(plugins)
+  const parsed = await parse(rawbody) as ComarkTree
   const frontmatter = asRecord(parsed.frontmatter)
   const relPath = toPosix(path.relative(contentRoot, filePath))
   const collection = relPath.split('/').filter(Boolean)[0] ?? 'content'

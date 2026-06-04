@@ -24,17 +24,19 @@ export async function data(pageContext: PageContextServer): Promise<DocsPageData
 	const config = useConfig()
 	const docsBase = getDocsRouteBaseFromRouteParams(pageContext.routeParams)
 	const options = resolveServerDocsOptions(readDocsConfig(pageContext.config), docsBase)
+	const plugins = readContentPlugins(pageContext.config)
 	const requestedPath = pageContext.routeParams.path ?? options.base
 	const collectionPath = toCollectionPath(requestedPath, options)
 
-	const page = await queryCollection(options.collection, { contentDir: options.contentDir })
+	const page = await queryCollection(options.collection, { contentDir: options.contentDir, plugins })
 		.path(collectionPath)
 		.first()
 
 	const [navigation, surroundings] = await Promise.all([
-		queryCollectionNavigation(options.collection, { contentDir: options.contentDir }),
+		queryCollectionNavigation(options.collection, { contentDir: options.contentDir, plugins }),
 		queryCollectionItemSurroundings(options.collection, collectionPath, {
 			contentDir: options.contentDir,
+			plugins,
 		}),
 	])
 
@@ -68,4 +70,9 @@ function resolveServerDocsOptions(value: unknown, docsBase: string) {
 
 function readDocsConfig(config: PageContextServer['config']): unknown {
 	return (config as { docs?: unknown }).docs
+}
+
+function readContentPlugins(config: PageContextServer['config']): unknown[] {
+	const content = (config as { content?: { plugins?: unknown[] } }).content
+	return content?.plugins ?? []
 }

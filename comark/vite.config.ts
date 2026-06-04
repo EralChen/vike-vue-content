@@ -13,14 +13,12 @@ export default defineConfig(async () => {
     build: {
       lib: {
         entry: buildLibEntry.reduce((entryObj, entry) => {
-          // Use directory path (without filename) as entry name
           const entryName = path.dirname(entry) === '.' ? 'index' : path.dirname(entry)
           entryObj[entryName] = entry
           return entryObj
         }, {} as Record<string, string>),
         formats: ['es'],
         fileName(format, entryName) {
-          // Handle root index entry
           if (entryName === 'index') {
             return `index.${format}.js`
           }
@@ -39,6 +37,10 @@ export default defineConfig(async () => {
           /^comark(\/.*)?$/,
           '@comark/vue',
           /^@comark\/vue(\/.*)?$/,
+          'shiki',
+          /^shiki(\/.*)?$/,
+          '@shikijs/themes',
+          /^@shikijs\/themes(\/.*)?$/,
         ],
       },
     },
@@ -47,7 +49,7 @@ export default defineConfig(async () => {
 })
 
 async function getBuildLibEntry() {
-  const buildLibEntry = ['index.ts']
+  const buildLibEntry: string[] = []
 
   for await (const entry of glob('*/index.{ts,tsx}')) {
     buildLibEntry.push(entry)

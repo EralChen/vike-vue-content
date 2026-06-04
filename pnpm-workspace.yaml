@@ -1,6 +1,7 @@
 packages:
   - internal
   - config
+  - comark
   - query
   - components
   - composables

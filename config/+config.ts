@@ -1,7 +1,7 @@
 import type { Config } from 'vike/types'
 import type _ from 'vike-vue/config'
 
-import type { DocsPageOptions } from '@vike-vue-content/docs/config'
+import type { ContentConfig, DocsPageOptions } from '@vike-vue-content/shared/types'
 import { collectWorkspaceDocsRedirects } from '@vike-vue-content/docs/redirects'
 import { docsRuntimeBasePlugin } from '@vike-vue-content/docs/plugin'
 import { generateThemeInitScript } from '@vike-vue-content/composables/theme'
@@ -18,6 +18,12 @@ const config = {
   // 在 head 开始位置注入主题初始化脚本，防止 FOUC
   headHtmlBegin: generateThemeInitScript(),
   meta: {
+    content: {
+      env: {
+        config: true,
+        server: true,
+      },
+    },
     docs: {
       env: {
         config: true,
@@ -39,9 +45,11 @@ export default config
 declare global {
   namespace Vike {
     interface Config {
+      content?: ContentConfig
       docs?: DocsPageOptions
     }
     interface ConfigResolved {
+      content?: ContentConfig
       docs?: DocsPageOptions
     }
   }

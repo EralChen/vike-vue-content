@@ -49,6 +49,19 @@ export type ContentNavigationItem = {
 export type QueryOptions = {
 	cwd?: string
 	contentDir?: string
+	/**
+	 * Comark plugins to use for parsing markdown.
+	 * @example import highlight from 'vike-vue-content/comark/highlight'
+	 */
+	plugins?: unknown[]
+}
+
+export type ContentConfig = {
+	/**
+	 * Comark plugins to use for parsing markdown.
+	 * @example import highlight from 'vike-vue-content/comark/highlight'
+	 */
+	plugins?: unknown[]
 }
 
 export type QueryOrderDirection = 'ASC' | 'DESC'

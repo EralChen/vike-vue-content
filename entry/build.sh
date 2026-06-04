@@ -7,6 +7,7 @@ ENTRY_DIR="${ROOT_DIR}/entry"
 
 PACKAGES=(
 	"config"
+	"comark"
 	"query"
 	"components"
 	"composables"

@@ -174,4 +174,24 @@ onUnmounted(() => {
   margin: 0 auto;
   width: 100%;
 }
+
+
+
+</style>
+
+<style>
+.shiki span.line.highlight {
+  background-color: rgba(255, 255, 0, 0.1);
+  display: inline-block;
+  width: calc(100% + 2rem);
+  margin: 0 -1rem;
+  padding: 0 1rem;
+}
+html.dark .shiki span {
+  color: var(--shiki-dark)!important;
+  background-color: var(--shiki-dark-bg)!important;
+  font-style: var(--shiki-dark-font-style)!important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
 </style>

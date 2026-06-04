@@ -18,6 +18,11 @@
     "stub": "echo entry"
   },
   "exports": {
+    "./comark/highlight": {
+      "default": "./comark/highlight/index.es.js",
+      "import": "./comark/highlight/index.es.js",
+      "types": "./comark/highlight/index.d.ts"
+    },
     "./components/content-renderer": {
       "default": "./components/content-renderer/index.es.js",
       "import": "./components/content-renderer/index.es.js",
@@ -131,6 +136,26 @@
       "import": "./query/index.es.js",
       "types": "./query/index.d.ts"
     },
+    "./query/content": {
+      "default": "./query/content/index.es.js",
+      "import": "./query/content/index.es.js",
+      "types": "./query/content/index.d.ts"
+    },
+    "./query/metadata": {
+      "default": "./query/metadata/index.es.js",
+      "import": "./query/metadata/index.es.js",
+      "types": "./query/metadata/index.d.ts"
+    },
+    "./query/navigation": {
+      "default": "./query/navigation/index.es.js",
+      "import": "./query/navigation/index.es.js",
+      "types": "./query/navigation/index.d.ts"
+    },
+    "./query/order": {
+      "default": "./query/order/index.es.js",
+      "import": "./query/order/index.es.js",
+      "types": "./query/order/index.d.ts"
+    },
     "./shared/types": {
       "default": "./shared/types/index.es.js",
       "import": "./shared/types/index.es.js",
@@ -139,8 +164,10 @@
   },
   "dependencies": {
     "@comark/vue": "^0.3.1",
+    "@shikijs/themes": "^4.2.0",
     "comark": "^0.3.2",
     "github-slugger": "^2.0.0",
+    "shiki": "^4.2.0",
     "vike": "^0.4.259",
     "vike-vue": "^0.9.11",
     "yaml": "^2.9.0"

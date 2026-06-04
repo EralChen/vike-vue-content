@@ -227,19 +227,6 @@ watch([requestedPath, tocLinks], async () => {
 	color: var(--vvc-color-primary-dark, #2563eb);
 }
 
-.vvc-docs-page-content pre {
-	background-color: var(--vvc-bg-muted, #1e293b);
-	padding: 1rem;
-	border-radius: var(--vvc-radius, 0.25rem);
-	overflow-x: auto;
-	margin-bottom: 1rem;
-}
-
-.vvc-docs-page-content pre code {
-	background-color: transparent;
-	padding: 0;
-	color: var(--vvc-text, #f1f5f9);
-}
 
 .vvc-docs-page-content ul,
 .vvc-docs-page-content ol {

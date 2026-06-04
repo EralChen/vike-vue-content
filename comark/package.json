@@ -1,0 +1,15 @@
+{
+  "name": "@vike-vue-content/comark",
+  "private": true,
+  "scripts": {
+    "build": "run-p build:es build:types",
+    "build:es": "vite build",
+    "build:types": "vue-tsc"
+  },
+  "dependencies": {
+    "@shikijs/themes": "^4.2.0",
+    "comark": "^0.3.2",
+    "shiki": "^4.2.0"
+  },
+  "type": "module"
+}

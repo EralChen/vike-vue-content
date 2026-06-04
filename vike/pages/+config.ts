@@ -11,4 +11,4 @@ export default {
   description: "Demo showcasing Vike",
   prerender: true,
   extends: [vikeVue, vikeVueContent],
-} as Config;
+} satisfies Config;

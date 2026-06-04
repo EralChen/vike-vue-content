@@ -27,9 +27,33 @@ import {
 import { buildNavigationTree, createNavigationQuery, flattenNavigation } from './navigation'
 import { compareEntries, type QueryOrder } from './order'
 
+export {
+  scanContentRoot,
+  readContentEntry,
+  hasEntryRedirect,
+  filterDirectoryConfigsByCollection,
+  normalizeRoutePath,
+  type ContentScanResult,
+} from './content'
+export {
+  buildNavigationTree,
+  flattenNavigation,
+} from './navigation'
+export {
+  compareEntries,
+} from './order'
+export {
+  extractTitleFromMarkdown,
+  extractDescriptionFromMarkdown,
+  extractHeadingMetadata,
+  buildToc,
+  attachContentMetadata,
+} from './metadata'
+
 export function queryCollection(collection: string, options: QueryOptions = {}): QueryBuilder {
   const cwd = options.cwd ?? process.cwd()
   const contentRoot = path.resolve(cwd, options.contentDir ?? 'content')
+  const plugins = options.plugins
   const targetCollection = collection.trim()
   let selectedPath: string | null = null
   const orders: QueryOrder[] = []
@@ -37,7 +61,7 @@ export function queryCollection(collection: string, options: QueryOptions = {}):
   const load = async () => {
     const { markdownFiles } = await scanContentRoot(contentRoot)
     const entries = await Promise.all(
-      markdownFiles.map((filePath) => readContentEntry(contentRoot, filePath)),
+      markdownFiles.map((filePath) => readContentEntry(contentRoot, filePath, plugins)),
     )
 
     return entries
@@ -79,13 +103,14 @@ export function queryCollectionNavigation(
 ): NavigationQueryBuilder {
   const cwd = options.cwd ?? process.cwd()
   const contentRoot = path.resolve(cwd, options.contentDir ?? 'content')
+  const plugins = options.plugins
   const targetCollection = collection.trim()
   const orders: QueryOrder[] = []
 
   const load = async () => {
     const { markdownFiles, directoryConfigs } = await scanContentRoot(contentRoot)
     const entries = await Promise.all(
-      markdownFiles.map((filePath) => readContentEntry(contentRoot, filePath)),
+      markdownFiles.map((filePath) => readContentEntry(contentRoot, filePath, plugins)),
     )
 
     const filteredEntries = entries
@@ -128,9 +153,10 @@ export async function queryCollectionPaths(
 ): Promise<string[]> {
   const cwd = options.cwd ?? process.cwd()
   const contentRoot = path.resolve(cwd, options.contentDir ?? 'content')
+  const plugins = options.plugins
   const { markdownFiles } = await scanContentRoot(contentRoot)
   const entries = await Promise.all(
-    markdownFiles.map((filePath) => readContentEntry(contentRoot, filePath)),
+    markdownFiles.map((filePath) => readContentEntry(contentRoot, filePath, plugins)),
   )
 
   return entries

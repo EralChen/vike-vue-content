@@ -7,7 +7,7 @@ import type {
   QueryOrderDirection,
 } from '@vike-vue-content/shared/types'
 
-import type { QueryOrder } from './order'
+import type { QueryOrder } from '../order'
 
 export function buildNavigationTree(
   entries: ContentEntry[],
