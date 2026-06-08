@@ -58,6 +58,11 @@
       "import": "./components/link/index.es.js",
       "types": "./components/link/index.d.ts"
     },
+    "./components/prose-a": {
+      "default": "./components/prose-a/index.es.js",
+      "import": "./components/prose-a/index.es.js",
+      "types": "./components/prose-a/index.d.ts"
+    },
     "./components/prose-code": {
       "default": "./components/prose-code/index.es.js",
       "import": "./components/prose-code/index.es.js",
@@ -168,13 +173,10 @@
     }
   },
   "dependencies": {
-    "@comark/vue": "^0.3.1",
     "@shikijs/themes": "^4.2.0",
     "comark": "^0.3.2",
     "github-slugger": "^2.0.0",
     "shiki": "^4.2.0",
-    "vike": "^0.4.259",
-    "vike-vue": "^0.9.11",
     "yaml": "^2.9.0"
   }
 }

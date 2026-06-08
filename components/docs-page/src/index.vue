@@ -16,7 +16,7 @@
 					</p>
 				</header>
 
-				<ContentRenderer :key="requestedPath" :tree="contentTree" @resolve="onContentResolve" />
+				<ContentRenderer :key="requestedPath" :tree="contentTree" :components="contentComponents" @resolve="onContentResolve" />
 
 				<DocsSurround :prev="prev" :next="next" />
 			</template>
@@ -31,9 +31,10 @@
 
 <script setup lang="ts">
 import type { ComarkTree } from 'comark'
-import type { ContentTocLink, DocsPageData } from '@vike-vue-content/shared/types'
+import type { ContentComponents, ContentConfig, ContentTocLink, DocsPageData } from '@vike-vue-content/shared/types'
 import { computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useData } from 'vike-vue/useData'
+import { usePageContext } from 'vike-vue/usePageContext'
 
 import ContentRenderer from '@vike-vue-content/components/content-renderer'
 import DocsNav from '@vike-vue-content/components/docs-nav'
@@ -42,6 +43,7 @@ import DocsSurround from '@vike-vue-content/components/docs-surround'
 import { useScrollspy } from '@vike-vue-content/composables/scrollspy'
 
 const docsData = useData<DocsPageData>() as DocsPageData
+const pageContext = usePageContext()
 
 const page = computed(() => docsData.page)
 const navigation = computed(() => docsData.navigation)
@@ -50,6 +52,10 @@ const next = computed(() => docsData.next)
 const requestedPath = computed(() => docsData.requestedPath)
 const contentTree = computed<ComarkTree | undefined>(() => page.value?.body as ComarkTree | undefined)
 const tocLinks = computed<ContentTocLink[]>(() => page.value?.toc ?? [])
+const contentComponents = computed<ContentComponents | undefined>(() => {
+	const config = pageContext.config as { content?: ContentConfig } 
+	return config?.content?.components
+})
 
 const { activeHeadings, updateHeadings } = useScrollspy()
 

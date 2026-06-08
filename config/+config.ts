@@ -22,6 +22,7 @@ const config = {
       env: {
         config: true,
         server: true,
+        client: true,
       },
     },
     docs: {

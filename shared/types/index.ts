@@ -1,3 +1,5 @@
+import type { Component } from 'vue'
+
 export type ContentEntry = {
 	id: string
 	collection: string
@@ -56,12 +58,20 @@ export type QueryOptions = {
 	plugins?: unknown[]
 }
 
+export type ContentComponents = Record<string, Component>
+
 export type ContentConfig = {
 	/**
 	 * Comark plugins to use for parsing markdown.
 	 * @example import highlight from 'vike-vue-content/comark/highlight'
 	 */
 	plugins?: unknown[]
+	/**
+	 * Tag-name to Vue component map forwarded to ContentRenderer.
+	 * @example import { Mermaid } from '@comark/vue/plugins/mermaid'
+	 * { mermaid: Mermaid }
+	 */
+	components?: ContentComponents
 }
 
 export type QueryOrderDirection = 'ASC' | 'DESC'

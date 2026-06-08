@@ -4,10 +4,5 @@
     "build": "run-p build:es build:types",
     "build:es": "vite build",
     "build:types": "vue-tsc"
-  },
-  "dependencies": {
-    "@comark/vue": "^0.3.1",
-    "comark": "^0.3.2",
-    "vike-vue": "^0.9.11"
   }
 }

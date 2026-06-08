@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@shikijs/themes": "^4.2.0",
-    "comark": "^0.3.2",
     "shiki": "^4.2.0"
   },
   "type": "module"

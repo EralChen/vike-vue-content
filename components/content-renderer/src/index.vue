@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { ComarkRenderer } from '@comark/vue'
-import Link from '@vike-vue-content/components/link'
+import ProseA from '@vike-vue-content/components/prose-a'
 import ProseCode from '@vike-vue-content/components/prose-code'
 import { props as dprops, emits } from './ctx'
 
@@ -11,7 +11,7 @@ const emit = defineEmits(emits)
 // markdown 链接被 comark 渲染为 `a` 标签。默认用 base 感知的 Link 替换，
 // 让站内绝对路径自动拼上 Vite base；消费端传入的 components 优先级更高。
 const resolvedComponents = computed(() => ({
-  a: Link,
+  a: ProseA,
   pre: ProseCode,
   ...props.components,
 }))

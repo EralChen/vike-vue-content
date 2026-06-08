@@ -9,8 +9,6 @@
   "dependencies": {
     "@vike-vue-content/components": "workspace:*",
     "@vike-vue-content/query": "workspace:*",
-    "vike": "^0.4.259",
-    "vike-vue": "^0.9.11",
     "yaml": "^2.9.0"
   },
   "type": "module"
