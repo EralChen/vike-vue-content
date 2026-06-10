@@ -1,9 +1,11 @@
 {
   "scripts": {
     "dev": "pnpm run vike:dev",
-    "build": "pnpm run -C entry build",
+    "lib": "pnpm run -C entry build",
+    "lib:publish": "cd entry && npm publish --registry https://registry.npmjs.org --access public",
     "vike:dev": "pnpm run -C vike dev",
-    "postinstall": "pnpm run -r --parallel stub"
+    "postinstall": "pnpm run -r --parallel stub",
+    "rm:nm": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +"
   },
   "dependencies": {
     "@comark/vue": "^0.3.1",
@@ -25,7 +27,7 @@
     "@types/node": "^25.9.2",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vitejs/plugin-vue-jsx": "^5.1.5",
-    "@vue/language-core": "^3.3.3",
+    "@vue/language-core": "^3.3.4",
     "@vue/tsconfig": "^0.9.1",
     "fast-glob": "^3.3.3",
     "npm-run-all2": "^9.0.1",
@@ -35,7 +37,7 @@
     "vike-vue": "^0.9.11",
     "vite": "^8.0.16",
     "vitest": "^4.1.8",
-    "vue-tsc": "^3.3.3"
+    "vue-tsc": "^3.3.4"
   },
   "type": "module"
 }

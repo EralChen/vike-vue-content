@@ -166,6 +166,11 @@
       "import": "./query/order/index.es.js",
       "types": "./query/order/index.d.ts"
     },
+    "./shared": {
+      "default": "./shared/index.es.js",
+      "import": "./shared/index.es.js",
+      "types": "./shared/index.d.ts"
+    },
     "./shared/types": {
       "default": "./shared/types/index.es.js",
       "import": "./shared/types/index.es.js",
