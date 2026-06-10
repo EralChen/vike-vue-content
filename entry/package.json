@@ -19,6 +19,10 @@
       "import": "./composables/hello/index.es.js",
       "types": "./composables/hello/index.d.ts"
     },
+    "./shared": {
+      "import": "./shared/index.es.js",
+      "types": "./shared/index.d.ts"
+    },
     "./shared/types": {
       "import": "./shared/types/index.es.js",
       "types": "./shared/types/index.d.ts"

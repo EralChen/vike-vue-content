@@ -146,15 +146,13 @@ const pkg = JSON.parse(fs.readFileSync(pkgFile, 'utf8'))
 const exportsMap = {}
 
 const entryIndexJs = path.join(entryDir, 'index.js')
+const entryIndexDts = path.join(entryDir, 'index.d.ts')
 if (fs.existsSync(entryIndexJs)) {
-	exportsMap['.'] = {
-		import: './index.js',
-	}
-
-	const entryIndexDts = path.join(entryDir, 'index.d.ts')
-	if (fs.existsSync(entryIndexDts)) {
-		exportsMap['.'].types = './index.d.ts'
-	}
+	exportsMap['.'] = exportsMap['.'] || {}
+	exportsMap['.'].import = './index.js'
+}
+if (fs.existsSync(entryIndexDts)) {
+	exportsMap['.'].types = './index.d.ts'
 }
 
 const entryIndexCss = path.join(entryDir, 'index.css')
@@ -188,6 +186,30 @@ for (const root of roots) {
 			exportsMap[exportKey].types = `./${typeRelFile}`
 		}
 	})
+
+	for (const root of roots) {
+		const rootDir = path.join(entryDir, root)
+		if (!fs.existsSync(rootDir)) {
+			continue
+		}
+
+		walk(rootDir, (fullPath) => {
+			if (!fullPath.endsWith('index.cjs.js')) {
+				return
+			}
+
+			const relFile = toPosix(path.relative(entryDir, fullPath))
+			const exportKey = `./${relFile.replace(/\/index\.cjs\.js$/, '')}`
+
+			if (exportsMap[exportKey]) {
+				exportsMap[exportKey].require = `./${relFile}`
+			} else {
+				exportsMap[exportKey] = {
+					require: `./${relFile}`,
+				}
+			}
+		})
+	}
 }
 
 pkg.exports = Object.fromEntries(

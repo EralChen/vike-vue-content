@@ -1,8 +1,10 @@
 {
   "scripts": {
-    "dev:vike": "pnpm run -C vike dev",
-    "dev:app": "pnpm run -C app dev",
-    "postinstall": "pnpm run -r --parallel stub"
+    "lib": "pnpm run -C entry build",
+    "vike:dev": "pnpm run -C vike dev",
+    "app:dev": "pnpm run -C app dev",
+    "postinstall": "pnpm run -r --parallel stub",
+    "rm:nm": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +"
   },
   "dependencies": {
     "@vunk/core": "^1.6.9",
