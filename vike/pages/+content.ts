@@ -3,7 +3,7 @@ import mermaid, { Mermaid } from '@comark/vue/plugins/mermaid'
 
 export default {
   plugins: [
-    highlight,
+    highlight(),
     mermaid(),
   ],
   components: {
