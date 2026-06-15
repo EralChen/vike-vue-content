@@ -181,6 +181,7 @@
     "@shikijs/themes": "^4.2.0",
     "comark": "^0.3.2",
     "github-slugger": "^2.0.0",
+    "oxc-parser": "^0.135.0",
     "shiki": "^4.2.0",
     "yaml": "^2.9.0"
   }

@@ -13,7 +13,14 @@ type DocsRoute = ((pageContext: PageContext) => false | {
 	[DOCS_ROUTE_BASE_PROP]?: string
 }
 
-export function createDocsRoute(base = '/docs'): DocsRoute {
+export function createDocsRoute(base?: string): DocsRoute
+export function createDocsRoute(pageContext: PageContext): false | { routeParams: Record<string, string> }
+export function createDocsRoute(baseOrPageContext?: string | PageContext): DocsRoute | false | { routeParams: Record<string, string> } {
+	if (typeof baseOrPageContext === 'object' && baseOrPageContext !== null && 'urlPathname' in baseOrPageContext) {
+		return createDocsRoute()(baseOrPageContext)
+	}
+
+	const base = baseOrPageContext as string | undefined
 	const options = resolveDocsPageOptions(
 		undefined,
 		'createDocsRoute()',

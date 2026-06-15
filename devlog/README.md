@@ -22,3 +22,4 @@
 22. [TOC Sticky 定位优化](22.toc-sticky-positioning.md)
 23. [Link 组件与 Vite base 前缀处理](23.link-component-and-base-handling.md)
 24. [content 配置：Markdown 插件与组件注入](24.content-config-plugins-and-components.md)
+25. [docs 插件 AST 化：支持 re-export 路由写法](25.ast-based-plugin-transforms.md)

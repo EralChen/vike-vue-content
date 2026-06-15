@@ -1,3 +1,1 @@
-import { createDocsRoute } from 'vike-vue-content/docs/route'
-
-export default createDocsRoute()
+export { createDocsRoute as default } from 'vike-vue-content/docs/route'

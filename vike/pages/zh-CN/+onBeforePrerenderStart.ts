@@ -1,3 +1,1 @@
-import { createDocsPrerender } from 'vike-vue-content/docs/prerender'
-
-export default createDocsPrerender()
+export { createDocsPrerender as default } from 'vike-vue-content/docs/prerender'

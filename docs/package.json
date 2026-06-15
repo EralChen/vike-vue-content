@@ -9,7 +9,11 @@
   "dependencies": {
     "@vike-vue-content/components": "workspace:*",
     "@vike-vue-content/query": "workspace:*",
+    "oxc-parser": "^0.135.0",
     "yaml": "^2.9.0"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@oxc-project/types": "^0.135.0"
+  }
 }
