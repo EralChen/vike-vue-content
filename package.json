@@ -20,6 +20,7 @@
     "@vunk/shared": "^0.9.2",
     "comark": "^0.3.2",
     "element-plus": "latest",
+    "fuse.js": "^7.4.2",
     "vue": "^3.5.38"
   },
   "devDependencies": {

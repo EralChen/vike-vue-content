@@ -1,12 +1,15 @@
 <template>
 	<div class="vvc-docs-page" :class="{ 'has-page-outline': tocLinks.length }">
-		<aside class="vvc-docs-page-sidebar">
+		<DocsAside position="left" class="vvc-docs-page-sidebar">
+			<template #top>
+				<SearchButton />
+			</template>
 			<DocsNav :items="navigation" :current-path="requestedPath" />
-		</aside>
+		</DocsAside>
 
-		<aside v-if="page && tocLinks.length" class="vvc-docs-page-outline">
+		<DocsAside v-if="page && tocLinks.length" position="right" class="vvc-docs-page-outline">
 			<DocsToc :links="tocLinks" :active="activeHeadings" @select="scrollToHeading" />
-		</aside>
+		</DocsAside>
 
 		<article class="vvc-docs-page-content">
 			<template v-if="page">
@@ -26,6 +29,8 @@
 				<p>找不到内容：{{ requestedPath }}</p>
 			</section>
 		</article>
+
+		<CommandPalette :items="searchItems" />
 	</div>
 </template>
 
@@ -36,17 +41,69 @@ import { computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useData } from 'vike-vue/useData'
 import { usePageContext } from 'vike-vue/usePageContext'
 
+import DocsAside from '@vike-vue-content/components/docs-aside'
 import ContentRenderer from '@vike-vue-content/components/content-renderer'
+import CommandPalette from '@vike-vue-content/components/command-palette'
 import DocsNav from '@vike-vue-content/components/docs-nav'
 import DocsToc from '@vike-vue-content/components/docs-toc'
 import DocsSurround from '@vike-vue-content/components/docs-surround'
+import SearchButton from '@vike-vue-content/components/search-button'
+import { useCommandPalette } from '@vike-vue-content/composables/command-palette'
 import { useScrollspy } from '@vike-vue-content/composables/scrollspy'
+
+interface SearchItem {
+	title: string
+	description?: string
+	path: string
+	group?: string
+	prefix?: string
+	level?: number
+}
 
 const docsData = useData<DocsPageData>() as DocsPageData
 const pageContext = usePageContext()
 
 const page = computed(() => docsData.page)
 const navigation = computed(() => docsData.navigation)
+
+function flattenNav(
+	items: typeof navigation.value,
+	group?: string,
+	prefix?: string,
+): SearchItem[] {
+	return items.flatMap((item) => {
+		if (item.children?.length) {
+			return flattenNav(
+				item.children,
+				group || item.title,
+				prefix ? `${prefix} > ${item.title}` : item.title,
+			)
+		}
+		return [{
+			title: item.title,
+			description: (item as { description?: string }).description,
+			path: item.path,
+			group: group || item.title,
+			prefix: prefix ? `${prefix} >` : undefined,
+				level: 1,
+		}]
+	})
+}
+
+const searchIndexMap = (pageContext as any)._searchIndexMap as Record<string, SearchItem[]> | undefined
+const { searchTerm } = useCommandPalette()
+
+const searchItems = computed<SearchItem[]>(() => {
+	if (searchTerm.value) {
+		// Search state: use full-text search index for better recall
+		const docsBase = docsData.docsBase
+		const index = searchIndexMap?.[docsBase]
+		if (index?.length) return index
+	}
+	// Empty state: use navigation tree for correct grouping structure
+	return flattenNav(navigation.value)
+})
+
 const prev = computed(() => docsData.prev)
 const next = computed(() => docsData.next)
 const requestedPath = computed(() => docsData.requestedPath)
@@ -146,6 +203,22 @@ watch([requestedPath, tocLinks], async () => {
 
 .vvc-docs-page-sidebar {
 	grid-area: sidebar;
+	position: sticky;
+	top: var(--vvc-toc-sticky-top, 80px);
+	max-height: calc(100vh - var(--vvc-toc-sticky-top, 80px) - 16px);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	scrollbar-width: thin;
+	scrollbar-color: var(--vvc-border, #e2e8f0) transparent;
+}
+
+.vvc-docs-page-sidebar .vvc-docs-aside-body {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--vvc-border, #e2e8f0) transparent;
 }
 
 .vvc-docs-page-outline {
@@ -292,6 +365,17 @@ watch([requestedPath, tocLinks], async () => {
 			'sidebar'
 			'outline'
 			'content';
+	}
+
+	.vvc-docs-page-sidebar {
+		position: static;
+		max-height: none;
+		overflow: visible;
+		display: block;
+	}
+
+	.vvc-docs-page-sidebar .vvc-docs-aside-body {
+		overflow-y: visible;
 	}
 
 	.vvc-docs-page-outline {

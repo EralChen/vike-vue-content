@@ -91,6 +91,7 @@ export type DocsPageOptions = {
 	collection?: string
 	contentDir?: string
 	title?: string
+	searchIndex?: boolean
 }
 
 export type ResolvedDocsPageOptions = {
@@ -99,6 +100,7 @@ export type ResolvedDocsPageOptions = {
 	collectionBase: string
 	contentDir: string
 	title: string
+	searchIndex: boolean
 }
 
 export type DocsPageData = {

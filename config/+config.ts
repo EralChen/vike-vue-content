@@ -15,6 +15,8 @@ const config = {
   vite: {
     plugins: [docsRuntimeBasePlugin()],
   },
+  onAfterRenderHtml: 'import:vike-vue-content/docs/search:onAfterRenderHtml',
+  passToClient: ['_searchIndexMap'],
   // 在 head 开始位置注入主题初始化脚本，防止 FOUC
   headHtmlBegin: generateThemeInitScript(),
   meta: {

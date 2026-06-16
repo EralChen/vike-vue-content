@@ -23,10 +23,20 @@
       "import": "./comark/highlight/index.es.js",
       "types": "./comark/highlight/index.d.ts"
     },
+    "./components/command-palette": {
+      "default": "./components/command-palette/index.es.js",
+      "import": "./components/command-palette/index.es.js",
+      "types": "./components/command-palette/index.d.ts"
+    },
     "./components/content-renderer": {
       "default": "./components/content-renderer/index.es.js",
       "import": "./components/content-renderer/index.es.js",
       "types": "./components/content-renderer/index.d.ts"
+    },
+    "./components/docs-aside": {
+      "default": "./components/docs-aside/index.es.js",
+      "import": "./components/docs-aside/index.es.js",
+      "types": "./components/docs-aside/index.d.ts"
     },
     "./components/docs-nav": {
       "default": "./components/docs-nav/index.es.js",
@@ -68,6 +78,11 @@
       "import": "./components/prose-code/index.es.js",
       "types": "./components/prose-code/index.d.ts"
     },
+    "./components/search-button": {
+      "default": "./components/search-button/index.es.js",
+      "import": "./components/search-button/index.es.js",
+      "types": "./components/search-button/index.d.ts"
+    },
     "./components/theme-settings": {
       "default": "./components/theme-settings/index.es.js",
       "import": "./components/theme-settings/index.es.js",
@@ -77,6 +92,11 @@
       "default": "./components/theme-toggle/index.es.js",
       "import": "./components/theme-toggle/index.es.js",
       "types": "./components/theme-toggle/index.d.ts"
+    },
+    "./composables/command-palette": {
+      "default": "./composables/command-palette/index.es.js",
+      "import": "./composables/command-palette/index.es.js",
+      "types": "./composables/command-palette/index.d.ts"
     },
     "./composables/hello": {
       "default": "./composables/hello/index.es.js",
@@ -132,6 +152,11 @@
       "default": "./docs/route/index.es.js",
       "import": "./docs/route/index.es.js",
       "types": "./docs/route/index.d.ts"
+    },
+    "./docs/search": {
+      "default": "./docs/search/index.es.js",
+      "import": "./docs/search/index.es.js",
+      "types": "./docs/search/index.d.ts"
     },
     "./docs/utils": {
       "default": "./docs/utils/index.es.js",

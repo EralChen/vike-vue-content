@@ -31,6 +31,7 @@ export function resolveDocsPageOptions(
 		collectionBase: normalizeRoutePath(`/${collection}`),
 		contentDir,
 		title,
+		searchIndex: options.searchIndex ?? false,
 	}
 }
 

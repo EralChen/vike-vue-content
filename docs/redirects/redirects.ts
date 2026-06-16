@@ -294,7 +294,9 @@ function readStaticDocsOptions(objectLiteral: string | undefined): DocsPageOptio
 			continue
 		}
 
-		options[key as keyof DocsPageOptions] = value
+		if (key === 'collection' || key === 'contentDir' || key === 'title') {
+			options[key] = value
+		}
 	}
 
 	return options
