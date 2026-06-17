@@ -1,24 +1,28 @@
 # vike-vue-content
 
-[Vike](https://vike.dev/) + [Vue](https://vuejs.org/) 的内容渲染框架，为文档站点提供开箱即用的主题系统、内容路由和文档组件。
+> A content rendering framework built on [Vike](https://vike.dev/) + [Vue](https://vuejs.org/) — zero boilerplate for docs sites.
 
-## 特性
+English | [中文](./README.zh-CN.md)
 
-- 🎨 **主题系统** - 17 种主色调、深色/浅色模式、圆角和字体自定义
-- 📄 **内容驱动路由** - Markdown 文件自动生成页面路由
-- 🔍 **内容查询** - 查询、排序、分页、上下页导航
-- 📑 **文档组件** - 导航栏、目录、内容渲染器等开箱即用
-- ⚡ **无 FOUC** - 内联脚本初始化主题，页面切换无闪烁
+## Features
 
-## 快速开始
+- **Vike native** — Ships as a Vike Config Extension. `docs.page`, `docs.data` and other hooks are mounted automatically. No `+Page.vue` to write.
+- **Content-driven routing** — Every `content/**/*.md` file becomes a page route automatically. No route table to maintain.
+- **Lightweight integration** — Page-level `defineDocsPageConfig` defines the content collection and directory without restructuring your project.
+- **Comark plugin system** — AST-level Markdown transformation pipeline. Supports Shiki code highlighting, Mermaid diagrams, custom component mappings, and more.
+- **Theme system** — 17 accent colors × neutral tones, dark/light mode, radius and font presets.
+- **Full-text search** — Search index built at build time, queried client-side.
+- **SSG / SSR** — Powered by Vike. The built-in `onBeforePrerenderStart` hook enumerates every content path. Compatible with Vite `base` configuration for full static export.
 
-### 1. 安装
+## Quick Start
+
+### 1. Install
 
 ```bash
 npm install vike-vue-content
 ```
 
-### 2. 配置 Vike
+### 2. Configure Vike
 
 ```ts
 // pages/+config.ts
@@ -31,22 +35,32 @@ export default {
 } satisfies Config
 ```
 
-### 3. 创建文档页面
+### 3. (Optional) Configure plugins & custom components
 
+```ts
+// pages/+content.ts
+import highlight from 'vike-vue-content/comark/highlight'
+
+export default {
+  plugins: [
+    highlight(),
+  ],
+  components: {
+    // Map HTML tags to Vue components — used by ContentRenderer
+  },
+}
 ```
-content/
-└── docs/
-    └── index.md        # 你的第一篇文档
-```
+
+### 4. Create a docs page
 
 ```ts
 // pages/docs/+config.ts
-export default {
-  docs: {
-    collection: 'docs',
-    contentDir: 'content',
-  },
-}
+import { defineDocsPageConfig } from 'vike-vue-content/docs'
+
+export default defineDocsPageConfig({
+  collection: 'docs',
+  contentDir: 'content',
+})
 
 // pages/docs/+route.ts
 export { createDocsRoute as default } from 'vike-vue-content/docs/route'
@@ -55,22 +69,29 @@ export { createDocsRoute as default } from 'vike-vue-content/docs/route'
 export { createDocsPrerender as default } from 'vike-vue-content/docs/prerender'
 ```
 
-`content/docs/` 下的 Markdown 文件会自动映射为 `/docs/**` 路由，`Page` 和 `data` 由 config 自动挂载，无需手写。
+### 5. Add Markdown content
 
-## 文档
+```
+content/
+└── docs/
+    ├── index.md               # → /docs/
+    ├── 1.getting-started.md   # → /docs/getting-started
+    └── guide/
+        └── routing.md         # → /docs/guide/routing
+```
 
-完整文档（主题系统、文档组件、内容查询等）见 `vike/` 示例站点的内容源：
+Start the dev server — `Page` and `data` are already wired by the config.
+
+## Documentation
+
+The full documentation (theme system, components, content queries, etc.) lives in the example site:
 
 ```bash
 pnpm install
-pnpm -C vike run dev    # 启动开发服务器，浏览在线文档
-pnpm -C vike run build  # 构建生产产物（含预渲染）
+pnpm run lib
+pnpm run vike:dev   # Open http://localhost:3000
 ```
 
-内容源位于 [`vike/content/`](vike/content/)，本身就是一份用 `vike-vue-content` 渲染的可运行文档。
+## License
 
-## 相关资源
-
-- [Vike](https://vike.dev/) - 框架
-- [vike-vue](https://github.com/vikejs/vike-vue) - Vue 集成
-- [ROADMAP.md](ROADMAP.md) - 开发路线图
+[MIT](LICENSE)

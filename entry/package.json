@@ -1,6 +1,6 @@
 {
   "name": "vike-vue-content",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Content rendering framework for Vike and Vue documentation sites",
   "author": "EralChen",
   "license": "MIT",

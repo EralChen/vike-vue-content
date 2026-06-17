@@ -317,7 +317,7 @@ const path = require('node:path')
 const rootDir = process.argv[2]
 const entryDir = process.argv[3]
 
-for (const file of ['README.md', 'LICENSE']) {
+for (const file of ['README.md', 'README.zh-CN.md','LICENSE']) {
 	const srcFile = path.join(rootDir, file)
 	const destFile = path.join(entryDir, file)
 
