@@ -8,7 +8,7 @@
     
     <p>
        <Link  href="/en-US" data-vike="false">
-        进入英文站点 →
+        Enter English site →
        </Link>
     </p>
   </section>
