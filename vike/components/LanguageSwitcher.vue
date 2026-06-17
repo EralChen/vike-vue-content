@@ -4,7 +4,6 @@
       aria-label="切换语言">
       <span class="lang-switcher-icon">🌐</span>
       <span class="lang-switcher-label">{{ localeMap[locale].label }}</span>
-      {{ !!localeRestPage }}
     </button>
     <Transition name="lang-menu">
       <ul v-if="isOpen" class="lang-switcher-menu">

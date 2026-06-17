@@ -2,7 +2,7 @@
   "name": "@vike-vue-content/comark",
   "private": true,
   "scripts": {
-    "build": "run-p build:es build:types",
+    "build": "run-s build:es build:types",
     "build:es": "vite build",
     "build:types": "vue-tsc"
   },
