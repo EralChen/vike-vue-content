@@ -17,4 +17,6 @@ allowBuilds:
   esbuild: true
   sharp: true
   vue-demi: true
+minimumReleaseAgeExclude:
+  - vike
 overrides:
