@@ -1,10 +1,10 @@
 <template>
-	<button class="vvc-search-button" @click="toggle" aria-label="搜索文档">
+	<button class="vvc-search-button" @click="toggle" :aria-label="t('search.buttonLabel')">
 		<svg class="vvc-search-button-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 			<circle cx="11" cy="11" r="8" />
 			<line x1="21" y1="21" x2="16.65" y2="16.65" />
 		</svg>
-		<span class="vvc-search-button-label">搜索文档...</span>
+		<span class="vvc-search-button-label">{{ t('search.buttonLabel') }}</span>
 		<kbd v-if="isMounted" class="vvc-search-button-kbd">{{ shortcutLabel }}</kbd>
 	</button>
 </template>
@@ -12,8 +12,10 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { useCommandPalette } from '@vike-vue-content/composables/command-palette'
+import { useLocale } from '@vike-vue-content/composables/locale'
 
 const { toggle } = useCommandPalette()
+const { t } = useLocale()
 
 const isMounted = ref(false)
 const shortcutLabel = ref('Ctrl+K')

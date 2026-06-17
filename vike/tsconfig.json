@@ -3,6 +3,10 @@
   "include": [
     "../env.d.ts",
     "app.d.ts",
+    "components/**/*.vue",
+    "components/**/*.ts",
+    "api/**/*.ts",
+    "i18n/**/*.ts",
     "pages/**/*.vue",
     "pages/**/*.ts"
   ],

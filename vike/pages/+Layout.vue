@@ -1,44 +1,54 @@
 <!-- https://vike.dev/Layout -->
 
 <template>
-  <div class="layout">
-    <header class="layout-header">
-      <div class="layout-header-inner">
-        <h1 class="layout-header-title">vike-vue-content</h1>
-        <div class="layout-header-actions">
-          <!-- 语言切换 -->
-          <LanguageSwitcher />
-          <!-- 主题设置按钮 -->
-          <div class="theme-picker-wrapper" ref="pickerRef">
-            <button class="theme-picker-trigger" @click="isPickerOpen = !isPickerOpen"
-              :class="{ 'is-open': isPickerOpen }" title="主题设置" aria-label="主题设置">
-              🎨
-            </button>
-            <Transition name="picker-panel">
-              <div v-if="isPickerOpen" class="theme-picker-panel">
-                <ThemeSettings />
-              </div>
-            </Transition>
+  <ConfigProvider :locale="currentContentLocale">
+    <div class="layout">
+      <header class="layout-header">
+        <div class="layout-header-inner">
+          <h1 class="layout-header-title">vike-vue-content</h1>
+          <div class="layout-header-actions">
+            <LanguageSwitcher />
+            <div class="theme-picker-wrapper" ref="pickerRef">
+              <button class="theme-picker-trigger" @click="isPickerOpen = !isPickerOpen"
+                :class="{ 'is-open': isPickerOpen }" title="主题设置" aria-label="主题设置">
+                🎨
+              </button>
+              <Transition name="picker-panel">
+                <div v-if="isPickerOpen" class="theme-picker-panel">
+                  <ThemeSettings />
+                </div>
+              </Transition>
+            </div>
+            <ThemeToggle />
           </div>
-          <!-- 颜色模式切换 -->
-          <ThemeToggle />
         </div>
-      </div>
-    </header>
-    <main class="layout-main">
-      <slot></slot>
-    </main>
-  </div>
+      </header>
+      <main class="layout-main">
+        <slot></slot>
+      </main>
+    </div>
+  </ConfigProvider>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import 'element-plus/dist/index.css';
 import 'vike-vue-content/index.css';
+import { ConfigProvider } from 'vike-vue-content/components/config-provider';
 import { ThemeToggle } from 'vike-vue-content/components/theme-toggle';
 import { ThemeSettings } from 'vike-vue-content/components/theme-settings';
 import { useTheme } from 'vike-vue-content/composables/theme';
 import LanguageSwitcher from '../components/LanguageSwitcher.vue';
+import { type DefineLocaleMessage } from 'vue-i18n'
+import { useI18n } from 'vue-i18n'
+import { type Locale, localeMap } from '../api/locale'
+
+const { locale } = useI18n<DefineLocaleMessage, Locale>()
+
+
+const currentContentLocale = computed(() => {
+  return localeMap[locale.value].contentLocale
+})
 
 // 初始化主题
 useTheme();
@@ -151,8 +161,4 @@ onUnmounted(() => {
   margin: 0 auto;
   width: 100%;
 }
-
-
-
 </style>
-

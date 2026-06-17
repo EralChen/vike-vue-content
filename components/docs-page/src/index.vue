@@ -26,7 +26,7 @@
 
 			<section v-else class="vvc-docs-page-not-found">
 				<h1>404</h1>
-				<p>找不到内容：{{ requestedPath }}</p>
+				<p>{{ t('page.notFound', { path: requestedPath }) }}</p>
 			</section>
 		</article>
 
@@ -49,6 +49,7 @@ import DocsToc from '@vike-vue-content/components/docs-toc'
 import DocsSurround from '@vike-vue-content/components/docs-surround'
 import SearchButton from '@vike-vue-content/components/search-button'
 import { useCommandPalette } from '@vike-vue-content/composables/command-palette'
+import { useLocale } from '@vike-vue-content/composables/locale'
 import { useScrollspy } from '@vike-vue-content/composables/scrollspy'
 
 interface SearchItem {
@@ -92,6 +93,7 @@ function flattenNav(
 
 const searchIndexMap = (pageContext as any)._searchIndexMap as Record<string, SearchItem[]> | undefined
 const { searchTerm } = useCommandPalette()
+const { t } = useLocale()
 
 const searchItems = computed<SearchItem[]>(() => {
 	if (searchTerm.value) {

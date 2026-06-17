@@ -1,16 +1,18 @@
 <template>
   <div class="lang-switcher" ref="rootRef">
-    <button class="lang-switcher-trigger" :class="{ 'is-open': isOpen }" @click="isOpen = !isOpen"
-      title="切换语言" aria-label="切换语言">
+    <button class="lang-switcher-trigger" :class="{ 'is-open': isOpen }" @click="isOpen = !isOpen" title="切换语言"
+      aria-label="切换语言">
       <span class="lang-switcher-icon">🌐</span>
-      <span class="lang-switcher-label">{{ currentLocale.label }}</span>
+      <span class="lang-switcher-label">{{ localeMap[locale].label }}</span>
+      {{ !!localeRestPage }}
     </button>
     <Transition name="lang-menu">
       <ul v-if="isOpen" class="lang-switcher-menu">
-        <li v-for="locale in locales" :key="locale.code">
-          <Link class="lang-switcher-item" :class="{ active: locale.code === currentLocale.code }"
-            :href="targetHref(locale.code)" keep-scroll-position @click="isOpen = false">
-            {{ locale.label }}
+        <li v-for="item in localeOptions" :key="item.value">
+          <Link class="lang-switcher-item" :class="{ active: item.value === locale }" :href="resolvePath(item.value)"
+          :data-vike="!!localeRestPage"
+            keep-scroll-position @click="switchLocale(item.value)">
+            {{ item.label }}
           </Link>
         </li>
       </ul>
@@ -19,29 +21,38 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { usePageContext } from 'vike-vue/usePageContext'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { Link } from 'vike-vue-content/components/link'
+import { useI18n, type DefineLocaleMessage } from 'vue-i18n'
+import { Locale, localeOptions, localeMap } from '../api/locale'
+import { usePageContext } from 'vike-vue/usePageContext'
 
-const locales = [
-  { code: 'zh-CN', label: '简体中文' },
-  { code: 'en-US', label: 'English' },
-] as const
-
+const { locale, availableLocales } = useI18n<DefineLocaleMessage, Locale>()
 const pageContext = usePageContext()
 const isOpen = ref(false)
 const rootRef = ref<HTMLElement | null>(null)
-
-const currentLocale = computed(() => {
-  const path = pageContext.urlPathname || '/'
-  return locales.find((l) => path.startsWith(`/${l.code}`)) ?? locales[0]
+const localeRestPage = computed<string | null>(() => {
+  const urlPathname = pageContext.urlPathname
+  let paths = urlPathname.split('/').filter(Boolean) // 分割路径为数组
+  const firstPath = paths[0] as never // 获取第一个路径段
+  if (availableLocales.includes(firstPath)) {
+    // 如果第一个路径段是语言代码，则返回剩余路径
+    paths.shift() // 移除第一个路径段
+    return '/' + paths.join('/') // 返回剩余路径
+  } else {
+    // 如果没有语言代码，则返回 null
+    return null
+  }
+  
 })
 
-// 把当前路径的语言前缀替换为目标语言，保留子路径。
-function targetHref(code: string): string {
-  const path = pageContext.urlPathname || '/'
-  const rest = path.replace(/^\/(zh-CN|en-US)/, '')
-  return `/${code}${rest}`
+function resolvePath(locale: Locale) {
+  return localeRestPage.value ? `/${locale}${localeRestPage.value}` : `/${locale}`
+}
+
+function switchLocale(code: Locale) {
+  isOpen.value = false
+  locale.value = code
 }
 
 function handleClickOutside(event: MouseEvent) {

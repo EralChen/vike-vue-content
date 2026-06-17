@@ -28,6 +28,11 @@
       "import": "./components/command-palette/index.es.js",
       "types": "./components/command-palette/index.d.ts"
     },
+    "./components/config-provider": {
+      "default": "./components/config-provider/index.es.js",
+      "import": "./components/config-provider/index.es.js",
+      "types": "./components/config-provider/index.d.ts"
+    },
     "./components/content-renderer": {
       "default": "./components/content-renderer/index.es.js",
       "import": "./components/content-renderer/index.es.js",
@@ -103,6 +108,11 @@
       "import": "./composables/hello/index.es.js",
       "types": "./composables/hello/index.d.ts"
     },
+    "./composables/locale": {
+      "default": "./composables/locale/index.es.js",
+      "import": "./composables/locale/index.es.js",
+      "types": "./composables/locale/index.d.ts"
+    },
     "./composables/scrollspy": {
       "default": "./composables/scrollspy/index.es.js",
       "import": "./composables/scrollspy/index.es.js",
@@ -165,6 +175,11 @@
     },
     "./index.css": {
       "import": "./index.css"
+    },
+    "./locale": {
+      "default": "./locale/index.es.js",
+      "import": "./locale/index.es.js",
+      "types": "./locale/index.d.ts"
     },
     "./query": {
       "default": "./query/index.es.js",

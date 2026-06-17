@@ -5,6 +5,7 @@ packages:
   - query
   - components
   - composables
+  - locale
   - shared
   - entry
   - vike

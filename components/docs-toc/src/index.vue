@@ -1,6 +1,6 @@
 <template>
-	<nav class="vvc-docs-page-toc" aria-label="本页目录" ref="tocRef">
-		<p class="vvc-docs-page-toc-heading">On this page</p>
+	<nav class="vvc-docs-page-toc" :aria-label="t('toc.heading')" ref="tocRef">
+		<p class="vvc-docs-page-toc-heading">{{ t('toc.heading') }}</p>
 		<div class="vvc-docs-page-toc-content">
 			<div
 				class="vvc-docs-page-toc-indicator"
@@ -18,10 +18,12 @@
 import { ref, computed } from 'vue'
 import { props as dprops, emits } from './ctx'
 import type { ContentTocLink } from './types'
+import { useLocale } from '@vike-vue-content/composables/locale'
 import DocsTocTree from './DocsTocTree.vue'
 
 const props = defineProps(dprops)
 const emit = defineEmits(emits)
+const { t } = useLocale()
 
 const tocRef = ref<HTMLElement | null>(null)
 

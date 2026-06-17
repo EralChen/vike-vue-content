@@ -10,8 +10,6 @@
     "dist",
     "vite.config.ts"
   ],
-
-  
   "compilerOptions": {
     "noEmit": false,
     "allowImportingTsExtensions": true,
@@ -19,9 +17,7 @@
     "declaration": true,
     "rootDir": "./",
     "outDir": "dist",
-    
-    // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking.
-    // Specified here to keep it out of the root directory.
-    // "tsBuildInfoFile": "../node_modules/.tmp/tsconfig.node.tsbuildinfo"
+    "noImplicitAny": false,
+    "tsBuildInfoFile": "../node_modules/.tmp/tsconfig.locale.tsbuildinfo"
   }
 }

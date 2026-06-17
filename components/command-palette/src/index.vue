@@ -1,7 +1,7 @@
 <template>
 	<Teleport v-if="isMounted" to="body">
 		<div v-if="open" class="vvc-cmd-overlay" @click.self="close" @keydown="onOverlayKeydown">
-			<div class="vvc-cmd-modal" role="dialog" aria-modal="true" aria-label="搜索文档">
+			<div class="vvc-cmd-modal" role="dialog" aria-modal="true" :aria-label="t('cmd.ariaLabel')">
 				<div class="vvc-cmd-input-wrapper">
 					<svg class="vvc-cmd-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<circle cx="11" cy="11" r="8" />
@@ -51,15 +51,15 @@
 						<p>{{ noResultsText }}</p>
 					</div>
 					<div v-else class="vvc-cmd-empty">
-						<p class="vvc-cmd-empty-hint">输入关键词搜索文档</p>
+						<p class="vvc-cmd-empty-hint">{{ t('cmd.emptyHint') }}</p>
 					</div>
 				</div>
 
 				<div class="vvc-cmd-footer">
 					<div class="vvc-cmd-footer-hints">
-						<span class="vvc-cmd-footer-hint"><kbd>↑↓</kbd> 导航</span>
-						<span class="vvc-cmd-footer-hint"><kbd>↵</kbd> 选择</span>
-						<span class="vvc-cmd-footer-hint"><kbd>Esc</kbd> 关闭</span>
+						<span class="vvc-cmd-footer-hint"><kbd>↑↓</kbd> {{ t('cmd.navHint') }}</span>
+						<span class="vvc-cmd-footer-hint"><kbd>↵</kbd> {{ t('cmd.selectHint') }}</span>
+						<span class="vvc-cmd-footer-hint"><kbd>Esc</kbd> {{ t('cmd.closeHint') }}</span>
 					</div>
 				</div>
 			</div>
@@ -74,12 +74,14 @@ import type { FuseResult } from 'fuse.js'
 import { props as dprops, emits } from './ctx'
 import type { SearchItem, CommandPaletteGroup } from './types'
 import { useCommandPalette } from '@vike-vue-content/composables/command-palette'
+import { useLocale } from '@vike-vue-content/composables/locale'
 import { Link } from '@vike-vue-content/components/link'
 
 const props = defineProps(dprops)
 defineEmits(emits)
 
 const { open, searchTerm, close } = useCommandPalette()
+const { t } = useLocale()
 
 const isMounted = ref(false)
 const inputRef = ref<HTMLInputElement | null>(null)
