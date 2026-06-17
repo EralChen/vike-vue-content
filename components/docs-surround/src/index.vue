@@ -5,7 +5,7 @@
 			class="vvc-docs-page-surround-link vvc-docs-page-surround-link-prev"
 			:href="prev.path"
 		>
-			<span class="vvc-docs-page-surround-label">上一页</span>
+			<span class="vvc-docs-page-surround-label">{{ t('surround.prev') }}</span>
 			<span class="vvc-docs-page-surround-title">{{ prev.title }}</span>
 		</Link>
 		<span v-else />
@@ -14,7 +14,7 @@
 			class="vvc-docs-page-surround-link vvc-docs-page-surround-link-next"
 			:href="next.path"
 		>
-			<span class="vvc-docs-page-surround-label">下一页</span>
+			<span class="vvc-docs-page-surround-label">{{ t('surround.next') }}</span>
 			<span class="vvc-docs-page-surround-title">{{ next.title }}</span>
 		</Link>
 	</nav>
@@ -23,9 +23,11 @@
 <script lang="ts" setup>
 import { props as dprops, emits } from './ctx'
 import { Link } from '@vike-vue-content/components/link'
+import { useLocale } from '@vike-vue-content/composables/locale'
 
 const props = defineProps(dprops)
 const emit = defineEmits(emits)
+const { t } = useLocale()
 </script>
 
 <style>

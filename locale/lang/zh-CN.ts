@@ -17,6 +17,10 @@ const zhCN = {
 		search: {
 			buttonLabel: '搜索文档...',
 		},
+		surround: {
+			prev: '上一页',
+			next: '下一页',
+		},
 		page: {
 			notFound: '找不到内容：{path}',
 		},

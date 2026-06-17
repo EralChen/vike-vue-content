@@ -18,6 +18,10 @@ const enUS: Language = {
 		search: {
 			buttonLabel: 'Search docs...',
 		},
+		surround: {
+			prev: 'Previous page',
+			next: 'Next page',
+		},
 		page: {
 			notFound: 'Page not found: {path}',
 		},
