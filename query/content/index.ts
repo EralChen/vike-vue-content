@@ -11,7 +11,6 @@ import { parse as parseYaml } from 'yaml'
 import {
   attachContentMetadata,
   buildToc,
-  extractDescriptionFromMarkdown,
   extractHeadingMetadata,
   extractTitleFromMarkdown,
 } from '../metadata'
@@ -87,7 +86,7 @@ export async function readContentEntry(contentRoot: string, filePath: string, pl
   const title = asString(frontmatter.title)
     ?? extractTitleFromMarkdown(rawbody)
     ?? buildFallbackTitleFromStem(routeStem)
-  const description = asString(frontmatter.description) ?? extractDescriptionFromMarkdown(rawbody)
+  const description = asString(frontmatter.description)
   const navigation = normalizePageNavigation(frontmatter.navigation, routePath)
 
   return {
@@ -192,19 +191,14 @@ function normalizeNavigationConfig(
   }
 
   const config = value as Record<string, unknown>
-  const title = asString(config.title)
   const label = asString(config.label)
   const description = asString(config.description)
   const icon = asString(config.icon)
   const hidden = config.hidden
   const flatten = config.flatten
   const extras = Object.fromEntries(
-    Object.entries(config).filter(([key]) => !['title', 'label', 'description', 'icon', 'hidden', 'flatten'].includes(key)),
+    Object.entries(config).filter(([key]) => !['label', 'description', 'icon', 'hidden', 'flatten'].includes(key)),
   )
-
-  if (config.title !== undefined && title === undefined) {
-    throw new Error(`Invalid ${source} at ${routePath}: navigation.title should be a string`)
-  }
 
   if (config.label !== undefined && label === undefined) {
     throw new Error(`Invalid ${source} at ${routePath}: navigation.label should be a string`)
@@ -227,8 +221,7 @@ function normalizeNavigationConfig(
   }
 
   if (
-    title === undefined
-    && label === undefined
+    label === undefined
     && description === undefined
     && icon === undefined
     && hidden === undefined
@@ -240,7 +233,6 @@ function normalizeNavigationConfig(
 
   return {
     ...extras,
-    title,
     label,
     description,
     icon,
@@ -252,13 +244,9 @@ function normalizeNavigationConfig(
 function normalizePageNavigation(
   value: unknown,
   routePath: string,
-): boolean | ContentNavigationConfig | undefined {
+): ContentNavigationConfig | undefined {
   if (value === undefined) {
     return undefined
-  }
-
-  if (typeof value === 'boolean') {
-    return value
   }
 
   return normalizeNavigationConfig(value, routePath, 'markdown frontmatter')

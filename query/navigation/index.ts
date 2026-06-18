@@ -16,10 +16,6 @@ export function buildNavigationTree(
   const root: ContentNavigationItem[] = []
 
   for (const entry of entries) {
-    if (entry.navigation === false) {
-      continue
-    }
-
     const segments = entry.path.split('/').filter(Boolean)
     let level = root
     let currentPath = ''
@@ -138,9 +134,8 @@ function applyPageNavigation(item: ContentNavigationItem, entry: ContentEntry): 
     item.description = entry.description
   }
 
-  const navigation = entry.navigation
-  if (navigation && typeof navigation === 'object') {
-    applyNavigationMetadata(item, navigation)
+  if (entry.navigation) {
+    applyNavigationMetadata(item, entry.navigation)
   }
 }
 
@@ -148,9 +143,8 @@ function applyNavigationMetadata(
   item: ContentNavigationItem,
   navigation: ContentNavigationConfig,
 ): void {
-  const title = navigation.label ?? navigation.title
-  if (title) {
-    item.title = title
+  if (navigation.label) {
+    item.title = navigation.label
   }
 
   Object.assign(item, navigation)

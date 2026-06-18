@@ -1,7 +1,10 @@
 <template>
   <section tyle="margin-top: 24px">
     <p>
-       <Link  href="/zh-CN" data-vike="false">
+       <Link  
+        href="/zh-CN" 
+        data-vike="false"
+       >
         进入中文站点 →
        </Link>
     </p>
@@ -16,5 +19,4 @@
 
 <script lang="ts" setup>
 import { Link } from 'vike-vue-content/components/link'
-
 </script>

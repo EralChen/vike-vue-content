@@ -21,34 +21,6 @@ export function extractTitleFromMarkdown(rawbody: string): string | undefined {
   return undefined
 }
 
-export function extractDescriptionFromMarkdown(rawbody: string): string | undefined {
-  const paragraph: string[] = []
-
-  for (const line of getMarkdownLines(rawbody)) {
-    const trimmed = line.trim()
-    if (!trimmed) {
-      if (paragraph.length) {
-        break
-      }
-      continue
-    }
-
-    if (!isParagraphLine(trimmed)) {
-      if (paragraph.length) {
-        break
-      }
-      continue
-    }
-
-    paragraph.push(trimmed)
-  }
-
-  if (!paragraph.length) {
-    return undefined
-  }
-
-  return cleanMarkdownText(paragraph.join(' '))
-}
 
 export function extractHeadingMetadata(rawbody: string): HeadingMeta[] {
   const nextSlug = createHeadingSlugger()

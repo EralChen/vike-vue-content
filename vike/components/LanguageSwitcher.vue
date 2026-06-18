@@ -9,7 +9,7 @@
       <ul v-if="isOpen" class="lang-switcher-menu">
         <li v-for="item in localeOptions" :key="item.value">
           <Link class="lang-switcher-item" :class="{ active: item.value === locale }" :href="resolvePath(item.value)"
-          :data-vike="!!localeRestPage"
+          :data-vike="!!urlLocaleInfo.restPath"
             keep-scroll-position @click="switchLocale(item.value)">
             {{ item.label }}
           </Link>
@@ -30,23 +30,29 @@ const { locale, availableLocales } = useI18n<DefineLocaleMessage, Locale>()
 const pageContext = usePageContext()
 const isOpen = ref(false)
 const rootRef = ref<HTMLElement | null>(null)
-const localeRestPage = computed<string | null>(() => {
-  const urlPathname = pageContext.urlPathname
-  let paths = urlPathname.split('/').filter(Boolean) // 分割路径为数组
+
+const urlLocaleInfo = computed(() => {
+  const paths = pageContext.urlPathname.split('/').filter(Boolean)
   const firstPath = paths[0] as never // 获取第一个路径段
+  let locale: Locale = Locale.enUS
+  let restPath = ''
   if (availableLocales.includes(firstPath)) {
-    // 如果第一个路径段是语言代码，则返回剩余路径
-    paths.shift() // 移除第一个路径段
-    return '/' + paths.join('/') // 返回剩余路径
-  } else {
-    // 如果没有语言代码，则返回 null
-    return null
+    locale = firstPath as Locale
+    restPath = '/' + paths.slice(1).join('/') // 获取剩余路径
   }
-  
+  return {
+    locale,
+    restPath
+  }
+
+})
+onMounted(() => {
+  // 在组件挂载时，将当前的 locale 设置为 URL 中的 locale
+  locale.value = urlLocaleInfo.value.locale
 })
 
 function resolvePath(locale: Locale) {
-  return localeRestPage.value ? `/${locale}${localeRestPage.value}` : `/${locale}`
+  return `/${locale}${urlLocaleInfo.value.restPath}`
 }
 
 function switchLocale(code: Locale) {

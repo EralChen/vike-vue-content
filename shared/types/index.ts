@@ -8,7 +8,7 @@ export type ContentEntry = {
 	title?: string
 	description?: string
 	toc?: ContentTocLink[]
-	navigation?: boolean | ContentNavigationConfig
+	navigation?: ContentNavigationConfig
 	body: unknown
 	rawbody: string
 	frontmatter: Record<string, unknown>
@@ -23,13 +23,12 @@ export type ContentTocLink = {
 }
 
 export type ContentNavigationConfig = {
-	title?: string
-	label?: string
-	description?: string
-	icon?: string
-	hidden?: boolean
-	flatten?: boolean
-	[key: string]: unknown
+  label?: string
+  description?: string
+  icon?: string
+  hidden?: boolean
+  flatten?: boolean
+  [key: string]: unknown
 }
 
 export type ContentDirectoryConfig = {

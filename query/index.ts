@@ -44,7 +44,6 @@ export {
 } from './order'
 export {
   extractTitleFromMarkdown,
-  extractDescriptionFromMarkdown,
   extractHeadingMetadata,
   buildToc,
   attachContentMetadata,
