@@ -30,12 +30,18 @@ function getParse(plugins?: unknown[]) {
 
 const CONTENT_DIRECTORY_CONFIG_FILE = '.config.yml'
 
+const scanCache = new Map<string, ContentScanResult>()
+const entryCache = new Map<string, ContentEntry>()
+
 export type ContentScanResult = {
   markdownFiles: string[]
   directoryConfigs: Map<string, ContentDirectoryConfig>
 }
 
 export async function scanContentRoot(rootDir: string): Promise<ContentScanResult> {
+  const cached = scanCache.get(rootDir)
+  if (cached) return cached
+
   const markdownFiles: string[] = []
   const directoryConfigs = new Map<string, ContentDirectoryConfig>()
 
@@ -68,10 +74,15 @@ export async function scanContentRoot(rootDir: string): Promise<ContentScanResul
   }
 
   await visit(rootDir)
-  return { markdownFiles, directoryConfigs }
+  const result = { markdownFiles, directoryConfigs }
+  scanCache.set(rootDir, result)
+  return result
 }
 
 export async function readContentEntry(contentRoot: string, filePath: string, plugins?: unknown[]): Promise<ContentEntry> {
+  const cached = entryCache.get(filePath)
+  if (cached) return cached
+
   const rawbody = await readFile(filePath, 'utf8')
   const parse = getParse(plugins)
   const parsed = await parse(rawbody) as ComarkTree
@@ -89,7 +100,7 @@ export async function readContentEntry(contentRoot: string, filePath: string, pl
   const description = asString(frontmatter.description)
   const navigation = normalizePageNavigation(frontmatter.navigation, routePath)
 
-  return {
+  const entry: ContentEntry = {
     id: relPath,
     collection,
     path: routePath,
@@ -103,6 +114,9 @@ export async function readContentEntry(contentRoot: string, filePath: string, pl
     frontmatter,
     meta: asRecord(parsed.meta),
   }
+
+  entryCache.set(filePath, entry)
+  return entry
 }
 
 export function hasEntryRedirect(entry: ContentEntry): boolean {

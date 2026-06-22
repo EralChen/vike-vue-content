@@ -3,16 +3,20 @@ import { computed } from 'vue'
 import { ComarkRenderer } from '@comark/vue'
 import ProseA from '@vike-vue-content/components/prose-a'
 import ProseCode from '@vike-vue-content/components/prose-code'
+import CodeGroup from '@vike-vue-content/components/code-group'
+import CodePreview from '@vike-vue-content/components/code-preview'
 import { props as dprops, emits } from './ctx'
 
 const props = defineProps(dprops)
 const emit = defineEmits(emits)
 
-// markdown 链接被 comark 渲染为 `a` 标签。默认用 base 感知的 Link 替换，
-// 让站内绝对路径自动拼上 Vite base；消费端传入的 components 优先级更高。
+// 内置组件：a/pre 替换为 prose 版本，code-group/code-preview 提供代码预览能力。
+// 消费端传入的 components 优先级更高。
 const resolvedComponents = computed(() => ({
   a: ProseA,
   pre: ProseCode,
+  'code-group': CodeGroup,
+  'code-preview': CodePreview,
   ...props.components,
 }))
 </script>

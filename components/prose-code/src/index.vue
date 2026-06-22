@@ -20,7 +20,7 @@ function copyCode() {
 
 <template>
 	<div class="vvc-prose-code-wrapper group">
-		<div v-if="props.filename" class="vvc-prose-code-header">
+		<div v-if="props.filename && !props.hideHeader" class="vvc-prose-code-header">
 			<span class="vvc-prose-code-filename">{{ props.filename }}</span>
 		</div>
 

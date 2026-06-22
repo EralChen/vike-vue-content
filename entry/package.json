@@ -23,6 +23,16 @@
       "import": "./comark/highlight/index.es.js",
       "types": "./comark/highlight/index.d.ts"
     },
+    "./components/code-group": {
+      "default": "./components/code-group/index.es.js",
+      "import": "./components/code-group/index.es.js",
+      "types": "./components/code-group/index.d.ts"
+    },
+    "./components/code-preview": {
+      "default": "./components/code-preview/index.es.js",
+      "import": "./components/code-preview/index.es.js",
+      "types": "./components/code-preview/index.d.ts"
+    },
     "./components/command-palette": {
       "default": "./components/command-palette/index.es.js",
       "import": "./components/command-palette/index.es.js",

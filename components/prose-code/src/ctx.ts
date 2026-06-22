@@ -25,6 +25,10 @@ export const props = {
 		type: [String, Object, Array] as PropType<any>,
 		default: undefined,
 	},
+	hideHeader: {
+		type: Boolean as PropType<boolean>,
+		default: false,
+	},
 }
 
 export const emits = {
