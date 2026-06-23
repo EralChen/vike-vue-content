@@ -1,6 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
-import { createParse, type ComarkTree } from 'comark'
+import type { ComarkTree } from 'comark'
 import type {
   ContentDirectoryConfig,
   ContentEntry,
@@ -14,24 +14,9 @@ import {
   extractHeadingMetadata,
   extractTitleFromMarkdown,
 } from '../metadata'
-import type { ComarkPlugin } from 'comark'
-
-const defaultParse = createParse()
-const parseCache = new Map<string, ReturnType<typeof createParse>>()
-
-function getParse(plugins?: unknown[]) {
-  if (!plugins?.length) return defaultParse
-  const key = plugins.map((p) => (p as { name?: string })?.name ?? String(p)).join(',')
-  if (!parseCache.has(key)) {
-    parseCache.set(key, createParse({ plugins: [...plugins] as ComarkPlugin[] }))
-  }
-  return parseCache.get(key)!
-}
+import type { createParse } from 'comark'
 
 const CONTENT_DIRECTORY_CONFIG_FILE = '.config.yml'
-
-const scanCache = new Map<string, ContentScanResult>()
-const entryCache = new Map<string, ContentEntry>()
 
 export type ContentScanResult = {
   markdownFiles: string[]
@@ -39,9 +24,6 @@ export type ContentScanResult = {
 }
 
 export async function scanContentRoot(rootDir: string): Promise<ContentScanResult> {
-  const cached = scanCache.get(rootDir)
-  if (cached) return cached
-
   const markdownFiles: string[] = []
   const directoryConfigs = new Map<string, ContentDirectoryConfig>()
 
@@ -74,17 +56,15 @@ export async function scanContentRoot(rootDir: string): Promise<ContentScanResul
   }
 
   await visit(rootDir)
-  const result = { markdownFiles, directoryConfigs }
-  scanCache.set(rootDir, result)
-  return result
+  return { markdownFiles, directoryConfigs }
 }
 
-export async function readContentEntry(contentRoot: string, filePath: string, plugins?: unknown[]): Promise<ContentEntry> {
-  const cached = entryCache.get(filePath)
-  if (cached) return cached
-
+export async function readContentEntry(
+  contentRoot: string,
+  filePath: string,
+  parse: ReturnType<typeof createParse>,
+): Promise<ContentEntry> {
   const rawbody = await readFile(filePath, 'utf8')
-  const parse = getParse(plugins)
   const parsed = await parse(rawbody) as ComarkTree
   const frontmatter = asRecord(parsed.frontmatter)
   const relPath = toPosix(path.relative(contentRoot, filePath))
@@ -100,7 +80,7 @@ export async function readContentEntry(contentRoot: string, filePath: string, pl
   const description = asString(frontmatter.description)
   const navigation = normalizePageNavigation(frontmatter.navigation, routePath)
 
-  const entry: ContentEntry = {
+  return {
     id: relPath,
     collection,
     path: routePath,
@@ -114,9 +94,6 @@ export async function readContentEntry(contentRoot: string, filePath: string, pl
     frontmatter,
     meta: asRecord(parsed.meta),
   }
-
-  entryCache.set(filePath, entry)
-  return entry
 }
 
 export function hasEntryRedirect(entry: ContentEntry): boolean {

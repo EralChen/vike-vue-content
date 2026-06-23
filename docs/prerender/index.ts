@@ -14,7 +14,6 @@ export function createDocsPrerender(routeOrBase?: unknown) {
 	return async function onBeforePrerenderStart(): Promise<string[]> {
 		const globalContext = await getGlobalContext()
 		const urls = new Set<string>()
-		// Public globalContext.pages omits custom page config values such as docs.
 		const pageConfigs = globalContext.dangerouslyUseInternals._pageConfigs as Array<{
 			configValues?: Record<string, { value: unknown }>
 		}>
@@ -31,7 +30,9 @@ export function createDocsPrerender(routeOrBase?: unknown) {
 			}
 
 			const options = resolveServerDocsOptions(docsConfig, docsBase)
-			const paths = await queryCollectionPaths(options.collection, { contentDir: options.contentDir })
+			const contentConfig = pageConfig.configValues?.content?.value as { plugins?: unknown[] } | undefined
+			const plugins = contentConfig?.plugins ?? []
+			const paths = await queryCollectionPaths(options.collection, { contentDir: options.contentDir, plugins })
 			for (const entryPath of paths) {
 				urls.add(fromCollectionPath(entryPath, options))
 			}

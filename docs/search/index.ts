@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import type { ComarkElement, ComarkNode, ComarkTree } from 'comark'
 
-import { queryCollection } from '@vike-vue-content/query'
+import { getContentIndex } from '@vike-vue-content/query'
 import { resolveDocsPageOptions } from '../config/options'
 import { inferDocsBaseFromPageFile } from '../utils/page-file'
 import { fromCollectionPath } from '../utils/paths'
@@ -194,7 +194,8 @@ export async function buildSearchIndex(rootDir = process.cwd()): Promise<SearchS
 	const allSections: SearchSection[] = []
 
 	for (const { options, contentDir } of configs) {
-		const entries = await queryCollection(options.collection, { contentDir }).all()
+		const index = await getContentIndex(contentDir)
+		const entries = index.getByCollection(options.collection)
 		for (const entry of entries) {
 			const urlPath = fromCollectionPath(entry.path, options)
 			const sections = splitMarkdownSections(
@@ -233,7 +234,8 @@ async function buildAllSearchIndexes(): Promise<Record<string, SearchSection[]>>
 	const result: Record<string, SearchSection[]> = {}
 
 	for (const { options, contentDir } of configs) {
-		const entries = await queryCollection(options.collection, { contentDir }).all()
+		const index = await getContentIndex(contentDir)
+		const entries = index.getByCollection(options.collection)
 		const sections: SearchSection[] = []
 		for (const entry of entries) {
 			const urlPath = fromCollectionPath(entry.path, options)
