@@ -1,8 +1,6 @@
 import {
-	flattenNavigation,
-	normalizeRoutePath,
-	queryCollection,
-	queryCollectionNavigation,
+	configureContentPlugins,
+	getContentIndex,
 } from '@vike-vue-content/query'
 import type { DocsPageData } from '@vike-vue-content/shared/types'
 import path from 'node:path'
@@ -29,19 +27,12 @@ export async function data(pageContext: PageContextServer): Promise<DocsPageData
 	const requestedPath = pageContext.routeParams.path ?? options.base
 	const collectionPath = toCollectionPath(requestedPath, options)
 
-	const [page, navigation] = await Promise.all([
-		queryCollection(options.collection, { contentDir: options.contentDir, plugins })
-			.path(collectionPath)
-			.first(),
-		queryCollectionNavigation(options.collection, { contentDir: options.contentDir, plugins }),
-	])
+	configureContentPlugins(plugins)
+	const index = await getContentIndex(options.contentDir)
 
-	// 从已构建的导航树直接计算 prev/next，避免重复扫描+解析
-	const flat = flattenNavigation(navigation)
-	const target = normalizeRoutePath(collectionPath)
-	const index = flat.findIndex((item) => item.path === target)
-	const prevRaw = index > 0 ? flat[index - 1] ?? null : null
-	const nextRaw = index >= 0 ? flat[index + 1] ?? null : null
+	const page = index.getByPath(collectionPath) ?? null
+	const navigation = index.getNavigationTree(options.collection)
+	const [prevRaw, nextRaw] = index.getSurroundings(options.collection, collectionPath)
 
 	config({
 		title: page?.title ?? options.title,
