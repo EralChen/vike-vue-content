@@ -21,9 +21,9 @@ const parseCache = new Map<string, ReturnType<typeof createParse>>()
 
 function getParse(plugins?: unknown[]) {
   if (!plugins?.length) return defaultParse
-  const key = plugins.map((_, i) => i).join(',')
+  const key = plugins.map((p) => (p as { name?: string })?.name ?? String(p)).join(',')
   if (!parseCache.has(key)) {
-    parseCache.set(key, createParse({ plugins: plugins as ComarkPlugin[] }))
+    parseCache.set(key, createParse({ plugins: [...plugins] as ComarkPlugin[] }))
   }
   return parseCache.get(key)!
 }
