@@ -48,6 +48,11 @@
       "import": "./components/content-renderer/index.es.js",
       "types": "./components/content-renderer/index.d.ts"
     },
+    "./components/demo": {
+      "default": "./components/demo/index.es.js",
+      "import": "./components/demo/index.es.js",
+      "types": "./components/demo/index.d.ts"
+    },
     "./components/docs-aside": {
       "default": "./components/docs-aside/index.es.js",
       "import": "./components/docs-aside/index.es.js",
@@ -113,6 +118,11 @@
       "import": "./composables/command-palette/index.es.js",
       "types": "./composables/command-palette/index.d.ts"
     },
+    "./composables/demos": {
+      "default": "./composables/demos/index.es.js",
+      "import": "./composables/demos/index.es.js",
+      "types": "./composables/demos/index.d.ts"
+    },
     "./composables/hello": {
       "default": "./composables/hello/index.es.js",
       "import": "./composables/hello/index.es.js",
@@ -127,6 +137,11 @@
       "default": "./composables/scrollspy/index.es.js",
       "import": "./composables/scrollspy/index.es.js",
       "types": "./composables/scrollspy/index.d.ts"
+    },
+    "./composables/sources": {
+      "default": "./composables/sources/index.es.js",
+      "import": "./composables/sources/index.es.js",
+      "types": "./composables/sources/index.d.ts"
     },
     "./composables/theme": {
       "default": "./composables/theme/index.es.js",
@@ -220,6 +235,11 @@
       "default": "./shared/index.es.js",
       "import": "./shared/index.es.js",
       "types": "./shared/index.d.ts"
+    },
+    "./shared/symbols": {
+      "default": "./shared/symbols/index.es.js",
+      "import": "./shared/symbols/index.es.js",
+      "types": "./shared/symbols/index.d.ts"
     },
     "./shared/types": {
       "default": "./shared/types/index.es.js",

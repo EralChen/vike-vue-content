@@ -8,7 +8,8 @@
     "api/**/*.ts",
     "i18n/**/*.ts",
     "pages/**/*.vue",
-    "pages/**/*.ts"
+    "pages/**/*.ts",
+    "content/**/*.md"
   ],
   "exclude": [
     "dist",
