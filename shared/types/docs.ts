@@ -3,6 +3,7 @@ import type { ContentEntry, ContentNavigationItem } from './content'
 export type DocsPageOptions = {
 	collection?: string
 	contentDir?: string
+	demosDir?: string
 	title?: string
 	searchIndex?: boolean
 }
@@ -12,6 +13,7 @@ export type ResolvedDocsPageOptions = {
 	collection: string
 	collectionBase: string
 	contentDir: string
+	demosDir: string
 	title: string
 	searchIndex: boolean
 }

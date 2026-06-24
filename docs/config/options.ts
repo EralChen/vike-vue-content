@@ -23,6 +23,7 @@ export function resolveDocsPageOptions(
 	const options = (value ?? {}) as DocsPageOptions
 	const collection = normalizeCollection(options.collection ?? 'docs', definedAt)
 	const contentDir = normalizeContentDir(options.contentDir)
+	const demosDir = normalizeDemosDir(options.demosDir)
 	const title = normalizeTitle(options.title)
 
 	return {
@@ -30,6 +31,7 @@ export function resolveDocsPageOptions(
 		collection,
 		collectionBase: normalizeRoutePath(`/${collection}`),
 		contentDir,
+		demosDir,
 		title,
 		searchIndex: options.searchIndex ?? false,
 	}
@@ -45,6 +47,10 @@ function normalizeCollection(value: string, definedAt: string): string {
 
 function normalizeContentDir(value: string | undefined): string {
 	return value?.trim() || 'content'
+}
+
+function normalizeDemosDir(value: string | undefined): string {
+	return value?.trim() || ''
 }
 
 function normalizeTitle(value: string | undefined): string {

@@ -37,8 +37,8 @@
 <script setup lang="ts">
 import type { ComarkTree } from 'comark'
 import type { ContentComponents, ContentConfig, ContentTocLink, DocsPageData } from '@vike-vue-content/shared/types'
-import { demos as autoDemos } from 'virtual:vvc-demos'
-import { sources as autoSources } from 'virtual:vvc-demo-sources'
+import { demosByDir as autoDemos } from 'virtual:vvc-demos'
+import { sourcesByDir as autoSources } from 'virtual:vvc-demo-sources'
 import { computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useData } from 'vike-vue/useData'
 import { usePageContext } from 'vike-vue/usePageContext'
@@ -118,8 +118,21 @@ const contentComponents = computed<ContentComponents | undefined>(() => {
 	return config?.content?.components
 })
 
-const contentDemos = computed(() => autoDemos)
-const contentSources = computed(() => autoSources)
+const demosDir = computed(() => {
+	const docs = pageContext.config as { docs?: { demosDir?: string } }
+	return docs?.docs?.demosDir
+})
+
+const contentDemos = computed(() => {
+	const dir = demosDir.value
+	if (!dir) return {}
+	return autoDemos[dir] ?? {}
+})
+const contentSources = computed(() => {
+	const dir = demosDir.value
+	if (!dir) return {}
+	return autoSources[dir] ?? {}
+})
 
 const { activeHeadings, updateHeadings } = useScrollspy()
 

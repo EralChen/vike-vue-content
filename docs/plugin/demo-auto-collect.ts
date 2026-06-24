@@ -1,69 +1,127 @@
 import type { Plugin, ResolvedConfig } from 'vite'
 import path from 'node:path'
 import { glob } from 'tinyglobby'
+import { getVikeConfig } from 'vike/plugin'
 
-const VIRTUAL_ID = '\0virtual:vvc-demos'
-const VIRTUAL_ID_SOURCES = '\0virtual:vvc-demo-sources'
+const VIRTUAL_DEMOS = '\0virtual:vvc-demos'
+const VIRTUAL_SOURCES = '\0virtual:vvc-demo-sources'
+
+interface DemoEntry {
+  dir: string
+  name: string
+  path: string
+}
 
 export function demoAutoCollectPlugin(): Plugin {
   let config: ResolvedConfig
+  let collected = false
+  const demosByDir: Record<string, { name: string; path: string }[]> = {}
+  const sourcesByDir: Record<string, { name: string; path: string }[]> = {}
 
   return {
     name: 'vike-vue-content-demo-auto-collect',
-    configResolved: {
-      async handler(config_) {
-        config = config_
-      },
+    configResolved(config_) {
+      config = config_
     },
     resolveId(id) {
-      if (id === 'virtual:vvc-demos') return VIRTUAL_ID
-      if (id === 'virtual:vvc-demo-sources') return VIRTUAL_ID_SOURCES
+      if (id === 'virtual:vvc-demos') return VIRTUAL_DEMOS
+      if (id === 'virtual:vvc-demo-sources') return VIRTUAL_SOURCES
     },
     async load(id) {
-      if (id === VIRTUAL_ID) return await generateDemoModule()
-      if (id === VIRTUAL_ID_SOURCES) return await generateSourceModule()
+      if (id === VIRTUAL_DEMOS) {
+        await collect()
+        return generateDemoModule()
+      }
+      if (id === VIRTUAL_SOURCES) {
+        await collect()
+        return generateSourceModule()
+      }
     },
   }
 
-  async function scanDemos() {
+  async function collect() {
+    if (collected) return
+    collected = true
+
     const root = config.root
-    const demosDir = path.join(root, 'demos')
-    const files = await glob(['**/*.vue'], { cwd: demosDir, absolute: true })
-    return files.map(file => {
-      const relative = path.relative(demosDir, file).replace(/\\/g, '/')
-      const posixPath = file.split(path.sep).join('/')
-      return { name: relative, path: posixPath }
-    })
+    const vikeConfig = getVikeConfig()
+
+    const demosDirSet = new Set<string>()
+    for (const page of Object.values(vikeConfig.pages)) {
+      const docs = page.config as Record<string, unknown> | undefined
+      const docsConfig = docs?.docs as { demosDir?: string } | undefined
+      const dir = docsConfig?.demosDir
+      if (dir) demosDirSet.add(dir)
+    }
+
+    for (const dir of demosDirSet) {
+      const absDir = path.isAbsolute(dir) ? dir : path.resolve(root, dir)
+
+      const vueFiles = await glob(['**/*.vue'], { cwd: absDir, absolute: true })
+      demosByDir[dir] = vueFiles.map((file) => ({
+        name: path.relative(absDir, file).replace(/\\/g, '/'),
+        path: file.split(path.sep).join('/'),
+      }))
+
+      const allFiles = await glob(['**/*'], { cwd: absDir, absolute: true })
+      const filtered = allFiles.filter((file) => {
+        const rel = path.relative(absDir, file)
+        return !rel.startsWith('.') && !file.endsWith(path.sep)
+      })
+      sourcesByDir[dir] = filtered.map((file) => ({
+        name: path.relative(absDir, file).replace(/\\/g, '/'),
+        path: file.split(path.sep).join('/'),
+      }))
+    }
   }
 
-  async function scanSources() {
-    const root = config.root
-    const demosDir = path.join(root, 'demos')
-    const files = await glob(['**/*'], { cwd: demosDir, absolute: true })
-    const filtered = files.filter(file => {
-      const rel = path.relative(demosDir, file)
-      return !rel.startsWith('.') && !file.endsWith(path.sep)
-    })
-    return filtered.map(file => {
-      const relative = path.relative(demosDir, file).replace(/\\/g, '/')
-      const posixPath = file.split(path.sep).join('/')
-      return { name: relative, path: posixPath }
-    })
+  function generateDemoModule(): string {
+    const entries: DemoEntry[] = []
+    for (const [dir, demos] of Object.entries(demosByDir)) {
+      for (const d of demos) {
+        entries.push({ dir, name: d.name, path: d.path })
+      }
+    }
+
+    if (entries.length === 0) return 'export const demosByDir = {};'
+
+    const imports = entries.map((e, i) => `import Demo_${i} from '${e.path}'`).join('\n')
+
+    const dirMap: Record<string, string[]> = {}
+    for (let i = 0; i < entries.length; i++) {
+      const e = entries[i]
+      ;(dirMap[e.dir] ??= []).push(`'${e.name}': Demo_${i}`)
+    }
+
+    const dirEntries = Object.entries(dirMap).map(
+      ([dir, items]) => `'${dir}': {\n${items.join(',\n')}\n}`,
+    )
+
+    return `${imports}\n\nexport const demosByDir = {\n${dirEntries.join(',\n')}\n}`
   }
 
-  async function generateDemoModule() {
-    const demos = await scanDemos()
-    if (demos.length === 0) return 'export const demos = {};'
-    const imports = demos.map((d, i) => `import Demo_${i} from '${d.path}'`).join('\n')
-    const map = demos.map((d, i) => `'${d.name}': Demo_${i}`).join(',\n')
-    return `${imports}\n\nexport const demos = {\n${map}\n}`
-  }
+  function generateSourceModule(): string {
+    const entries: DemoEntry[] = []
+    for (const [dir, sources] of Object.entries(sourcesByDir)) {
+      for (const s of sources) {
+        entries.push({ dir, name: s.name, path: s.path })
+      }
+    }
 
-  async function generateSourceModule() {
-    const sources = await scanSources()
-    if (sources.length === 0) return 'export const sources = {};'
-    const imports = sources.map((s, i) => `import Source_${i} from '${s.path}?raw'`).join('\n')
-    const map = sources.map((s, i) => `'${s.name}': Source_${i}`).join(',\n')
-    return `${imports}\n\nexport const sources = {\n${map}\n}`
+    if (entries.length === 0) return 'export const sourcesByDir = {};'
+
+    const imports = entries.map((e, i) => `import Source_${i} from '${e.path}?raw'`).join('\n')
+
+    const dirMap: Record<string, string[]> = {}
+    for (let i = 0; i < entries.length; i++) {
+      const e = entries[i]
+      ;(dirMap[e.dir] ??= []).push(`'${e.name}': Source_${i}`)
+    }
+
+    const dirEntries = Object.entries(dirMap).map(
+      ([dir, items]) => `'${dir}': {\n${items.join(',\n')}\n}`,
+    )
+
+    return `${imports}\n\nexport const sourcesByDir = {\n${dirEntries.join(',\n')}\n}`
   }
 }
