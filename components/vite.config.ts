@@ -17,6 +17,7 @@ export default defineConfig(async () => {
           /^@comark\/vue(\/.*)?$/,
           'comark',
           /^comark(\/.*)?$/,
+          /^virtual:vvc-/,
         ],
       },
     },

@@ -9,6 +9,7 @@
     "i18n/**/*.ts",
     "pages/**/*.vue",
     "pages/**/*.ts",
+    "demos/**/*.vue",
     "content/**/*.md"
   ],
   "exclude": [

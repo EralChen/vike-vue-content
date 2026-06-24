@@ -56,10 +56,9 @@ export type ContentSources = Record<string, string>
 export type ContentConfig = {
 	plugins?: unknown[]
 	components?: ContentComponents
-	demos?: ContentDemos
-	sources?: ContentSources
 }
 
 export type ContentBody = import('comark').ComarkTree
 
 export type ContentData = Record<string, unknown>
+

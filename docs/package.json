@@ -10,6 +10,7 @@
     "@vike-vue-content/components": "workspace:*",
     "@vike-vue-content/query": "workspace:*",
     "oxc-parser": "^0.135.0",
+    "tinyglobby": "^0.2.0",
     "yaml": "^2.9.0"
   },
   "type": "module",

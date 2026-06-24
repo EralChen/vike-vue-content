@@ -29,7 +29,7 @@
     "@lib/internal": "workspace:*",
     "@ts-macro/tsc": "^0.3.7",
     "@tsconfig/node24": "^24.0.4",
-    "@types/node": "^25.9.3",
+    "@types/node": "^25.9.4",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vitejs/plugin-vue-jsx": "^5.1.5",
     "@vue/language-core": "^3.3.5",
