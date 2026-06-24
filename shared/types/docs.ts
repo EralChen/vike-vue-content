@@ -20,6 +20,7 @@ export type ResolvedDocsPageOptions = {
 
 export type DocsPageData = {
 	docsBase: string
+	demosDir: string
 	page: ContentEntry | null
 	navigation: ContentNavigationItem[]
 	prev: ContentNavigationItem | null

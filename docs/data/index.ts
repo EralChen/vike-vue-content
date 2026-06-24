@@ -42,6 +42,7 @@ export async function data(pageContext: PageContextServer): Promise<DocsPageData
 
 	return {
 		docsBase: options.base,
+		demosDir: options.demosDir,
 		page: page ? mapContentEntryPath(page, options) : null,
 		navigation: resolveNavigationItems(mappedNavigation, requestedPath),
 		prev: mapNavigationItem(prevRaw, options),

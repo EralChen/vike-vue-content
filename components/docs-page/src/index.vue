@@ -118,10 +118,7 @@ const contentComponents = computed<ContentComponents | undefined>(() => {
 	return config?.content?.components
 })
 
-const demosDir = computed(() => {
-	const docs = pageContext.config as { docs?: { demosDir?: string } }
-	return docs?.docs?.demosDir
-})
+const demosDir = computed(() => docsData.demosDir || '')
 
 const contentDemos = computed(() => {
 	const dir = demosDir.value
