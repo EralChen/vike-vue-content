@@ -11,8 +11,8 @@ import { contentDemosKey, contentSourcesKey } from '@vike-vue-content/shared/sym
 const props = defineProps(dprops)
 const emit = defineEmits(emits)
 
-provide(contentDemosKey, props.demos)
-provide(contentSourcesKey, props.sources)
+provide(contentDemosKey, computed(() => props.demos))
+provide(contentSourcesKey, computed(() => props.sources))
 
 // 内置组件：a/pre 替换为 prose 版本，code-group/code-preview 提供源码展示能力。
 // 消费端传入的 components 优先级更高。

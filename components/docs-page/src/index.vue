@@ -19,7 +19,7 @@
 					</p>
 				</header>
 
-				<ContentRenderer :key="requestedPath" :tree="contentTree" :components="contentComponents" :demos="contentDemos" :sources="contentSources" @resolve="onContentResolve" />
+				<ContentRenderer :key="`${requestedPath}:${demosDir}`" :tree="contentTree" :components="contentComponents" :demos="contentDemos" :sources="contentSources" @resolve="onContentResolve" />
 
 				<DocsSurround :prev="prev" :next="next" />
 			</template>

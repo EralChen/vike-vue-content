@@ -1,8 +1,6 @@
-import { inject } from 'vue'
-import type { ContentDemos } from '@vike-vue-content/shared/types'
+import { inject, computed, type ComputedRef } from 'vue'
 import { contentDemosKey } from '@vike-vue-content/shared/symbols'
 
-export function useDemos(): ContentDemos {
-	const demos = inject(contentDemosKey, {})
-	return demos ?? {}
+export function useDemos(): ComputedRef<Record<string, any>> {
+	return inject(contentDemosKey, computed(() => ({})))!
 }
