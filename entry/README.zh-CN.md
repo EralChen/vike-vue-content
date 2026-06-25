@@ -1,4 +1,4 @@
-# vike-vue-content
+# <img src="./assets/logo.svg" width="48" alt="vike-vue-content logo" style="vertical-align:middle;margin-right:8px"/>vike-vue-content
 
 > 基于 [Vike](https://vike.dev/) + [Vue](https://vuejs.org/) 的内容文档框架 — 零模板即可构建文档站点。
 

@@ -1,4 +1,4 @@
-# vike-vue-content
+# <img src="./assets/logo.svg" width="48" alt="vike-vue-content logo" style="vertical-align:middle;margin-right:8px"/>vike-vue-content
 
 > A content rendering framework built on [Vike](https://vike.dev/) + [Vue](https://vuejs.org/) — zero boilerplate for docs sites.
 

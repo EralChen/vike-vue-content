@@ -7,7 +7,7 @@ description: Bind a registered live preview to registered source blocks.
 
 `demo` is a higher-level wrapper built on top of `code-preview`.
 
-Place `.vue` files in the `demos/` directory for automatic registration — no manual imports. One Markdown declaration renders everything.
+Place `.vue` files in the configured `demosDir` directory (empty by default, not enabled). They are auto-registered — no manual imports. One Markdown declaration renders everything.
 
 ## Quick Start
 
@@ -25,9 +25,9 @@ export default defineDocsPageConfig({
 })
 ```
 
-Place `.vue` files in `vike/demos/` — they are auto-registered with their relative path (including `.vue` extension) as the demo key.
+Place `.vue` files in the project root's `demosDir` directory (`demos/` in the example above). They are auto-registered with their relative path (including `.vue` extension) as the demo key.
 
-For example, `vike/demos/hello/index.vue` is registered as `hello/index.vue`. Then reference it in markdown:
+For example, `demos/hello/index.vue` is registered as `hello/index.vue`. Then reference it in markdown:
 
 ````md
 :::demo{preview="hello/index.vue"}
@@ -84,8 +84,8 @@ Source area shows only `hello/data.txt`.
 ## Data Flow
 
 ```
-demos/ directory ──→ Vite plugin scan ──→ virtual:vvc-demos ──→ contentDemos
-sources/ directory ──→ Vite plugin scan ──→ virtual:vvc-demo-sources ──→ contentSources
+{demosDir} ──→ Vite plugin scan ──→ virtual:vvc-demos ──→ contentDemos
+{demosDir} ──→ Vite plugin scan ──→ virtual:vvc-demo-sources ──→ contentSources
                                                           ──→ contentParsedSources (comark parsed)
 
 Markdown (:::demo) ──→ Comark parse ──→ ContentRenderer ──→ Demo component
