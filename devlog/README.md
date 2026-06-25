@@ -23,3 +23,5 @@
 23. [Link 组件与 Vite base 前缀处理](23.link-component-and-base-handling.md)
 24. [content 配置：Markdown 插件与组件注入](24.content-config-plugins-and-components.md)
 25. [docs 插件 AST 化：支持 re-export 路由写法](25.ast-based-plugin-transforms.md)
+26. [Demo 组件切换到 preview/source 数组 API](26.demo-preview-source-array.md)
+27. [拆分 CodePreview 基础组件与 Demo 高层封装](27.code-preview-and-demo-split.md)

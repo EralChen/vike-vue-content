@@ -3,7 +3,7 @@ import type _ from 'vike-vue/config'
 
 import type { ContentConfig, DocsPageOptions } from '@vike-vue-content/shared/types'
 import { collectWorkspaceDocsRedirects } from '@vike-vue-content/docs/redirects'
-import { docsRuntimeBasePlugin } from '@vike-vue-content/docs/plugin'
+import { docsRuntimeBasePlugin, demoAutoCollectPlugin } from '@vike-vue-content/docs/plugin'
 import { generateThemeInitScript } from '@vike-vue-content/composables/theme'
 
 const config = {
@@ -13,11 +13,10 @@ const config = {
   },
   redirects: collectWorkspaceDocsRedirects(),
   vite: {
-    plugins: [docsRuntimeBasePlugin()],
+    plugins: [docsRuntimeBasePlugin(), demoAutoCollectPlugin()],
   },
   onAfterRenderHtml: 'import:vike-vue-content/docs/search:onAfterRenderHtml',
   passToClient: ['_searchIndexMap'],
-  // 在 head 开始位置注入主题初始化脚本，防止 FOUC
   headHtmlBegin: generateThemeInitScript(),
   meta: {
     content: {

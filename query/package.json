@@ -7,7 +7,6 @@
     "build:types": "vue-tsc"
   },
   "dependencies": {
-    "comark": "^0.3.2",
     "github-slugger": "^2.0.0",
     "yaml": "^2.9.0"
   },

@@ -49,6 +49,6 @@ const page = await queryCollection('docs').path('/docs/getting-started').first()
 | `a` | `ProseA` | base 感知链接（自动拼接 base，外链自动新窗口打开）。 |
 | `pre` | `ProseCode` | 带复制按钮和可选文件名头的代码块。 |
 | `code-group` | `CodeGroup` | 标签页式代码块。 |
-| `code-preview` | `CodePreview` | 在源码旁展示实时渲染预览。 |
+| `code-preview` | `CodePreview` | 带 `#source` 插槽的实时预览容器。 |
 
 用户传入的 `components` 优先级更高，可覆盖以上任意组件。

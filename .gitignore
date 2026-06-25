@@ -1,6 +1,7 @@
 # ai client
 .pi
 .agents
+.workbuddy
 
 # Source
 .dev/

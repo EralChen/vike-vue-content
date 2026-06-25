@@ -19,7 +19,7 @@
 					</p>
 				</header>
 
-				<ContentRenderer :key="requestedPath" :tree="contentTree" :components="contentComponents" @resolve="onContentResolve" />
+				<ContentRenderer :key="`${requestedPath}:${demosDir}`" :tree="contentTree" :components="contentComponents" :demos="contentDemos" :sources="contentSources" :parsedSources="contentParsedSources" @resolve="onContentResolve" />
 
 				<DocsSurround :prev="prev" :next="next" />
 			</template>
@@ -37,6 +37,8 @@
 <script setup lang="ts">
 import type { ComarkTree } from 'comark'
 import type { ContentComponents, ContentConfig, ContentTocLink, DocsPageData } from '@vike-vue-content/shared/types'
+import { demosByDir as autoDemos } from 'virtual:vvc-demos'
+import { sourcesByDir as autoSources } from 'virtual:vvc-demo-sources'
 import { computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useData } from 'vike-vue/useData'
 import { usePageContext } from 'vike-vue/usePageContext'
@@ -115,6 +117,20 @@ const contentComponents = computed<ContentComponents | undefined>(() => {
 	const config = pageContext.config as { content?: ContentConfig } 
 	return config?.content?.components
 })
+
+const demosDir = computed(() => docsData.demosDir || '')
+
+const contentDemos = computed(() => {
+	const dir = demosDir.value
+	if (!dir) return {}
+	return autoDemos[dir] ?? {}
+})
+const contentSources = computed(() => {
+	const dir = demosDir.value
+	if (!dir) return {}
+	return autoSources[dir] ?? {}
+})
+const contentParsedSources = computed(() => docsData.parsedSources ?? {})
 
 const { activeHeadings, updateHeadings } = useScrollspy()
 

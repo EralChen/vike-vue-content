@@ -48,6 +48,11 @@
       "import": "./components/content-renderer/index.es.js",
       "types": "./components/content-renderer/index.d.ts"
     },
+    "./components/demo": {
+      "default": "./components/demo/index.es.js",
+      "import": "./components/demo/index.es.js",
+      "types": "./components/demo/index.d.ts"
+    },
     "./components/docs-aside": {
       "default": "./components/docs-aside/index.es.js",
       "import": "./components/docs-aside/index.es.js",
@@ -98,6 +103,26 @@
       "import": "./components/search-button/index.es.js",
       "types": "./components/search-button/index.d.ts"
     },
+    "./components/tabs-content": {
+      "default": "./components/tabs-content/index.es.js",
+      "import": "./components/tabs-content/index.es.js",
+      "types": "./components/tabs-content/index.d.ts"
+    },
+    "./components/tabs-list": {
+      "default": "./components/tabs-list/index.es.js",
+      "import": "./components/tabs-list/index.es.js",
+      "types": "./components/tabs-list/index.d.ts"
+    },
+    "./components/tabs-root": {
+      "default": "./components/tabs-root/index.es.js",
+      "import": "./components/tabs-root/index.es.js",
+      "types": "./components/tabs-root/index.d.ts"
+    },
+    "./components/tabs-trigger": {
+      "default": "./components/tabs-trigger/index.es.js",
+      "import": "./components/tabs-trigger/index.es.js",
+      "types": "./components/tabs-trigger/index.d.ts"
+    },
     "./components/theme-settings": {
       "default": "./components/theme-settings/index.es.js",
       "import": "./components/theme-settings/index.es.js",
@@ -112,6 +137,11 @@
       "default": "./composables/command-palette/index.es.js",
       "import": "./composables/command-palette/index.es.js",
       "types": "./composables/command-palette/index.d.ts"
+    },
+    "./composables/content-renderer": {
+      "default": "./composables/content-renderer/index.es.js",
+      "import": "./composables/content-renderer/index.es.js",
+      "types": "./composables/content-renderer/index.d.ts"
     },
     "./composables/hello": {
       "default": "./composables/hello/index.es.js",
@@ -221,6 +251,11 @@
       "import": "./shared/index.es.js",
       "types": "./shared/index.d.ts"
     },
+    "./shared/symbols": {
+      "default": "./shared/symbols/index.es.js",
+      "import": "./shared/symbols/index.es.js",
+      "types": "./shared/symbols/index.d.ts"
+    },
     "./shared/types": {
       "default": "./shared/types/index.es.js",
       "import": "./shared/types/index.es.js",
@@ -229,10 +264,10 @@
   },
   "dependencies": {
     "@shikijs/themes": "^4.2.0",
-    "comark": "^0.3.2",
     "github-slugger": "^2.0.0",
     "oxc-parser": "^0.135.0",
     "shiki": "^4.2.0",
+    "tinyglobby": "^0.2.0",
     "yaml": "^2.9.0"
   }
 }

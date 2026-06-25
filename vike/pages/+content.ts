@@ -1,3 +1,4 @@
+import type { ContentConfig } from '@vike-vue-content/shared/types'
 import highlight from "vike-vue-content/comark/highlight";
 import mermaid, { Mermaid } from '@comark/vue/plugins/mermaid'
 import Alert from '../components/Alert.vue'
@@ -9,8 +10,8 @@ export default {
     mermaid(),
   ],
   components: {
-    mermaid: Mermaid,
+    Mermaid,
     Alert,
     Badge,
-  }
-};
+  },
+} satisfies ContentConfig

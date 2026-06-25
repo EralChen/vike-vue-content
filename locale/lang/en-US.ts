@@ -1,6 +1,4 @@
-import type { Language } from '../types'
-
-const enUS: Language = {
+const enUS = {
 	name: 'en-US',
 	vvc: {
 		cmd: {
@@ -24,6 +22,14 @@ const enUS: Language = {
 		},
 		page: {
 			notFound: 'Page not found: {path}',
+		},
+		codePreview: {
+			showSource: 'View source',
+			hideSource: 'Hide source',
+		},
+		demo: {
+			showSource: 'View source',
+			hideSource: 'Hide source',
 		},
 	},
 }

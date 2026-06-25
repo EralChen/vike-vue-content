@@ -24,8 +24,12 @@ This machine has critical limitations for SQLite access:
 
 ## Database Location
 
-```
-C:/Users/97900/.local/share/mimocode/mimocode.db
+Dynamically resolved from home directory:
+
+```javascript
+const os = require('os');
+const path = require('path');
+const DB_PATH = path.join(os.homedir(), '.local', 'share', 'mimocode', 'mimocode.db');
 ```
 
 ## Setup (Required Before First Query)
@@ -47,10 +51,13 @@ Write a `.cjs` file (CommonJS required for `require()`) and run it with `node`:
 ```javascript
 const initSqlJs = require('sql.js');
 const fs = require('fs');
+const os = require('os');
+const path = require('path');
 
 async function main() {
   const SQL = await initSqlJs();
-  const buf = fs.readFileSync('C:/Users/97900/.local/share/mimocode/mimocode.db');
+  const dbPath = path.join(os.homedir(), '.local', 'share', 'mimocode', 'mimocode.db');
+  const buf = fs.readFileSync(dbPath);
   const db = new SQL.Database(buf);
 
   // === YOUR QUERIES HERE ===
@@ -152,5 +159,5 @@ ORDER BY n DESC;
 ## Validation
 
 - Confirm `sql.js` is installed: `ls /tmp/trajectory-query/node_modules/sql.js/package.json`
-- Confirm DB file exists: `ls C:/Users/97900/.local/share/mimocode/mimocode.db`
+- Confirm DB file exists: `ls ~/.local/share/mimocode/mimocode.db`
 - Confirm query produces output (non-empty JSON arrays from `db.exec()`)

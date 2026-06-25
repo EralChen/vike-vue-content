@@ -24,6 +24,14 @@ const zhCN = {
 		page: {
 			notFound: '找不到内容：{path}',
 		},
+		codePreview: {
+			showSource: '查看源代码',
+			hideSource: '隐藏源代码',
+		},
+		demo: {
+			showSource: '查看源代码',
+			hideSource: '隐藏源代码',
+		},
 	},
 }
 

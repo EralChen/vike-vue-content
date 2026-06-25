@@ -63,6 +63,48 @@ export function configureContentPlugins(plugins: unknown[]) {
   indexInstance = null
 }
 
+export function getContentPlugins(): unknown[] | undefined {
+  return contentPlugins
+}
+
+// ─── Demo source parsing ────────────────────────────────────
+
+function getLanguageFromExtension(filename: string): string {
+  const ext = filename.split('.').pop()?.toLowerCase()
+  switch (ext) {
+    case 'vue': return 'vue'
+    case 'ts': case 'mts': case 'cts': return 'typescript'
+    case 'tsx': return 'tsx'
+    case 'js': case 'mjs': case 'cjs': return 'javascript'
+    case 'jsx': return 'jsx'
+    case 'json': return 'json'
+    case 'yaml': case 'yml': return 'yaml'
+    case 'css': return 'css'
+    case 'scss': return 'scss'
+    case 'html': return 'html'
+    case 'md': return 'markdown'
+    case 'sh': case 'bash': return 'bash'
+    default: return 'text'
+  }
+}
+
+export async function parseDemoSources(
+  sources: Record<string, string>,
+): Promise<Record<string, import('comark').ComarkTree>> {
+  const parse = contentPlugins?.length
+    ? createParse({ plugins: [...contentPlugins] as ComarkPlugin[] })
+    : createParse()
+
+  const trees: Record<string, import('comark').ComarkTree> = {}
+  for (const [key, source] of Object.entries(sources)) {
+    const lang = getLanguageFromExtension(key)
+    const label = key.split('/').pop() || key
+    const md = '```' + lang + ' [' + label + ']\n' + source + '\n```'
+    trees[key] = await parse(md)
+  }
+  return trees
+}
+
 // ─── ContentIndex ────────────────────────────────────────────
 
 export class ContentIndex {

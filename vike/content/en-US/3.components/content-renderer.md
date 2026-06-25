@@ -49,6 +49,6 @@ const page = await queryCollection('docs').path('/docs/getting-started').first()
 | `a` | `ProseA` | Base-aware link (auto base prefix, external links open in new tab). |
 | `pre` | `ProseCode` | Code block with copy button and optional filename header. |
 | `code-group` | `CodeGroup` | Tabbed code blocks. |
-| `code-preview` | `CodePreview` | Live preview alongside source code. |
+| `code-preview` | `CodePreview` | Live preview container with a `#source` slot. |
 
 User-provided `components` take higher priority and can override any of these.

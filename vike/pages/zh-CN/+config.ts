@@ -3,5 +3,6 @@ import { defineDocsPageConfig } from 'vike-vue-content/docs'
 export default defineDocsPageConfig({
     collection: 'zh-CN',
     contentDir: 'content',
+    demosDir: 'demos_zh',
     searchIndex: true,
 })
