@@ -1,11 +1,13 @@
 import {
 	configureContentPlugins,
 	getContentIndex,
+	parseDemoSources,
 } from '@vike-vue-content/query'
 import type { DocsPageData } from '@vike-vue-content/shared/types'
 import path from 'node:path'
 import type { PageContextServer } from 'vike/types'
 import { useConfig } from 'vike-vue/useConfig'
+import { sourcesByDir } from 'virtual:vvc-demo-sources'
 
 import { resolveDocsPageOptions } from '../config/options'
 import { getDocsRouteBaseFromRouteParams } from '../route'
@@ -40,6 +42,12 @@ export async function data(pageContext: PageContextServer): Promise<DocsPageData
 
 	const mappedNavigation = mapNavigationTree(navigation, options)
 
+	// Parse demo sources through the same Comark pipeline
+	const dirSources = sourcesByDir[options.demosDir] ?? {}
+	const parsedSources = Object.keys(dirSources).length > 0
+		? await parseDemoSources(dirSources)
+		: {}
+
 	return {
 		docsBase: options.base,
 		demosDir: options.demosDir,
@@ -48,6 +56,7 @@ export async function data(pageContext: PageContextServer): Promise<DocsPageData
 		prev: mapNavigationItem(prevRaw, options),
 		next: mapNavigationItem(nextRaw, options),
 		requestedPath,
+		parsedSources,
 	}
 }
 

@@ -44,6 +44,7 @@ export default defineConfig(async () => {
           'oxc-parser',
           /^oxc-parser(\/.*)?$/,
           /^@oxc-parser(\/.*)?$/,
+          /^virtual:vvc-/,
         ],
       },
     },

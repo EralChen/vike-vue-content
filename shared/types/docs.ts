@@ -1,3 +1,4 @@
+import type { ComarkTree } from 'comark'
 import type { ContentEntry, ContentNavigationItem } from './content'
 
 export type DocsPageOptions = {
@@ -26,4 +27,5 @@ export type DocsPageData = {
 	prev: ContentNavigationItem | null
 	next: ContentNavigationItem | null
 	requestedPath: string
+	parsedSources?: Record<string, ComarkTree>
 }

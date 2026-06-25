@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import type { ContentBody, ContentComponents, ContentDemos, ContentSources, ContentData } from './types'
+import type { ContentBody, ContentComponents, ContentDemos, ContentSources, ContentParsedSources, ContentData } from './types'
 
 export const props = {
   tree: {
@@ -16,6 +16,10 @@ export const props = {
   },
   sources: {
     type: Object as PropType<ContentSources>,
+    default: () => ({}),
+  },
+  parsedSources: {
+    type: Object as PropType<ContentParsedSources>,
     default: () => ({}),
   },
   data: {

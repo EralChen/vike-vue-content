@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-import { ref, computed, useSlots, cloneVNode } from 'vue'
+import { computed, useSlots } from 'vue'
 import { props as dprops } from './ctx'
+import TabsRoot from '@vike-vue-content/components/tabs-root'
+import TabsList from '@vike-vue-content/components/tabs-list'
+import TabsTrigger from '@vike-vue-content/components/tabs-trigger'
+import TabsContent from '@vike-vue-content/components/tabs-content'
 
 const props = defineProps(dprops)
 const slots = useSlots()
-
-const activeIndex = ref(parseInt(props.defaultValue) || 0)
 
 interface TabItem {
 	label: string
@@ -13,52 +15,56 @@ interface TabItem {
 }
 
 const tabs = computed<TabItem[]>(() => {
-	const children = slots.default?.() || []
-	return children
-		.flatMap((child: any) => {
-			if (child.type?.toString?.() === 'Symbol(Fragment)' || child.type === Symbol.for('v-fgt')) {
-				return child.children || []
-			}
-			return [child]
-		})
-		.filter((child: any) => child && child.type)
-		.map((child: any, index: number) => ({
-			label: child.props?.filename || child.props?.label || `Tab ${index + 1}`,
-			vnode: child,
-		}))
+	const items = slots.default?.()?.flatMap(transformSlot) ?? []
+	return items.filter((item): item is TabItem => item !== null)
 })
 
-function selectTab(index: number) {
-	activeIndex.value = index
+function transformSlot(slot: any, index: number): TabItem | (TabItem | null)[] | null {
+	if (typeof slot.type === 'symbol') {
+		const children = (slot.children || []).map((child: any) => transformSlot(child, index))
+		return children.filter((item: TabItem | null): item is TabItem => item !== null)
+	}
+	if (!slot || !slot.type) return null
+	return {
+		label: slot.props?.filename || slot.props?.label || `Tab ${index + 1}`,
+		vnode: slot,
+	}
 }
 </script>
 
 <template>
 	<div class="vvc-code-group">
-		<div class="vvc-code-group-tabs" role="tablist">
-			<button
-				v-for="(tab, index) in tabs"
-				:key="index"
-				role="tab"
-				class="vvc-code-group-tab"
-				:class="{ 'is-active': activeIndex === index }"
-				:aria-selected="activeIndex === index"
-				@click="selectTab(index)"
-			>
-				{{ tab.label }}
-			</button>
-		</div>
-		<div class="vvc-code-group-content">
-			<component
-				v-if="tabs[activeIndex]"
-				:is="cloneVNode(tabs[activeIndex].vnode, { hideHeader: true, tabindex: '-1' })"
-				:key="activeIndex"
-			/>
-		</div>
+		<TabsRoot :default-value="props.defaultValue" :unmount-on-hide="false">
+			<TabsList class="vvc-code-group-tabs">
+				<TabsTrigger
+					v-for="(tab, index) in tabs"
+					:key="tab.label"
+					:value="String(index)"
+					class="vvc-code-group-tab"
+				>
+					{{ tab.label }}
+				</TabsTrigger>
+			</TabsList>
+			<div class="vvc-code-group-content">
+				<TabsContent
+					v-for="(tab, index) in tabs"
+					:key="tab.label"
+					:value="String(index)"
+				>
+					<component :is="tab.vnode"  />
+				</TabsContent>
+			</div>
+		</TabsRoot>
 	</div>
 </template>
 
 <style>
+
+/* 已经在 Tab 中展示 */
+.vvc-code-group-content .vvc-prose-code-header{
+	display: none;
+}
+
 .vvc-code-group {
 	border: 1px solid var(--vvc-border, #e2e8f0);
 	border-radius: var(--vvc-radius, 8px);
@@ -108,13 +114,13 @@ function selectTab(index: number) {
 	background-color: var(--vvc-bg-elevated, #334155);
 }
 
-.vvc-code-group-tab.is-active {
+.vvc-code-group-tab[data-state="active"] {
 	color: var(--vvc-text, #1e293b);
 	background-color: var(--vvc-bg, #fff);
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.dark .vvc-code-group-tab.is-active {
+.dark .vvc-code-group-tab[data-state="active"] {
 	color: var(--vvc-text, #e2e8f0);
 	background-color: var(--vvc-bg-elevated, #334155);
 }

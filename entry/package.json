@@ -103,6 +103,26 @@
       "import": "./components/search-button/index.es.js",
       "types": "./components/search-button/index.d.ts"
     },
+    "./components/tabs-content": {
+      "default": "./components/tabs-content/index.es.js",
+      "import": "./components/tabs-content/index.es.js",
+      "types": "./components/tabs-content/index.d.ts"
+    },
+    "./components/tabs-list": {
+      "default": "./components/tabs-list/index.es.js",
+      "import": "./components/tabs-list/index.es.js",
+      "types": "./components/tabs-list/index.d.ts"
+    },
+    "./components/tabs-root": {
+      "default": "./components/tabs-root/index.es.js",
+      "import": "./components/tabs-root/index.es.js",
+      "types": "./components/tabs-root/index.d.ts"
+    },
+    "./components/tabs-trigger": {
+      "default": "./components/tabs-trigger/index.es.js",
+      "import": "./components/tabs-trigger/index.es.js",
+      "types": "./components/tabs-trigger/index.d.ts"
+    },
     "./components/theme-settings": {
       "default": "./components/theme-settings/index.es.js",
       "import": "./components/theme-settings/index.es.js",
@@ -118,10 +138,10 @@
       "import": "./composables/command-palette/index.es.js",
       "types": "./composables/command-palette/index.d.ts"
     },
-    "./composables/demos": {
-      "default": "./composables/demos/index.es.js",
-      "import": "./composables/demos/index.es.js",
-      "types": "./composables/demos/index.d.ts"
+    "./composables/content-renderer": {
+      "default": "./composables/content-renderer/index.es.js",
+      "import": "./composables/content-renderer/index.es.js",
+      "types": "./composables/content-renderer/index.d.ts"
     },
     "./composables/hello": {
       "default": "./composables/hello/index.es.js",
@@ -137,11 +157,6 @@
       "default": "./composables/scrollspy/index.es.js",
       "import": "./composables/scrollspy/index.es.js",
       "types": "./composables/scrollspy/index.d.ts"
-    },
-    "./composables/sources": {
-      "default": "./composables/sources/index.es.js",
-      "import": "./composables/sources/index.es.js",
-      "types": "./composables/sources/index.d.ts"
     },
     "./composables/theme": {
       "default": "./composables/theme/index.es.js",

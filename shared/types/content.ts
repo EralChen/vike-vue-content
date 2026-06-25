@@ -53,6 +53,8 @@ export type ContentDemos = Record<string, Component>
 
 export type ContentSources = Record<string, string>
 
+export type ContentParsedSources = Record<string, import('comark').ComarkTree>
+
 export type ContentConfig = {
 	plugins?: unknown[]
 	components?: ContentComponents

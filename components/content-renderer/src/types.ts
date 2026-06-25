@@ -1,1 +1,1 @@
-export type { ContentBody, ContentComponents, ContentDemos, ContentSources, ContentData } from '@vike-vue-content/shared/types'
+export type { ContentBody, ContentComponents, ContentDemos, ContentSources, ContentParsedSources, ContentData } from '@vike-vue-content/shared/types'

@@ -19,7 +19,7 @@
 					</p>
 				</header>
 
-				<ContentRenderer :key="`${requestedPath}:${demosDir}`" :tree="contentTree" :components="contentComponents" :demos="contentDemos" :sources="contentSources" @resolve="onContentResolve" />
+				<ContentRenderer :key="`${requestedPath}:${demosDir}`" :tree="contentTree" :components="contentComponents" :demos="contentDemos" :sources="contentSources" :parsedSources="contentParsedSources" @resolve="onContentResolve" />
 
 				<DocsSurround :prev="prev" :next="next" />
 			</template>
@@ -130,6 +130,7 @@ const contentSources = computed(() => {
 	if (!dir) return {}
 	return autoSources[dir] ?? {}
 })
+const contentParsedSources = computed(() => docsData.parsedSources ?? {})
 
 const { activeHeadings, updateHeadings } = useScrollspy()
 
