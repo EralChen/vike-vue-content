@@ -2,7 +2,7 @@
 
 > A content rendering framework built on [Vike](https://vike.dev/) + [Vue](https://vuejs.org/) — zero boilerplate for docs sites.
 
-English | [中文](./README.zh-CN.md)
+English | [中文](https://github.com/EralChen/vike-vue-content/blob/master/README.zh-CN.md)
 
 ## Features
 
