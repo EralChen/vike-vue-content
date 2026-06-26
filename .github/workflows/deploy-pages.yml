@@ -37,13 +37,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build entry package
-        run: pnpm -C entry run build
-
-      - name: Refresh lockfile
-        run: pnpm install --lockfile-only
-
-      - name: Refresh file dependency in vike app
-        run: pnpm --filter @vike-vue-content/vike update vike-vue-content
+        run: pnpm run lib
 
       - name: Build vike app
         run: pnpm run vike:build
