@@ -36,6 +36,7 @@ const config = {
         return {
           Page: 'import:vike-vue-content/components/docs-page:default',
           data: 'import:vike-vue-content/docs/data:data',
+          title: 'import:vike-vue-content/docs/title:title',
         }
       },
     },

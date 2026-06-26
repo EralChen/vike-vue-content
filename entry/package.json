@@ -216,6 +216,11 @@
       "import": "./docs/search/index.es.js",
       "types": "./docs/search/index.d.ts"
     },
+    "./docs/title": {
+      "default": "./docs/title/index.es.js",
+      "import": "./docs/title/index.es.js",
+      "types": "./docs/title/index.d.ts"
+    },
     "./docs/utils": {
       "default": "./docs/utils/index.es.js",
       "import": "./docs/utils/index.es.js",

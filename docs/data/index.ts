@@ -6,7 +6,6 @@ import {
 import type { DocsPageData } from '@vike-vue-content/shared/types'
 import path from 'node:path'
 import type { PageContextServer } from 'vike/types'
-import { useConfig } from 'vike-vue/useConfig'
 import { sourcesByDir } from 'virtual:vvc-demo-sources'
 
 import { resolveDocsPageOptions } from '../config/options'
@@ -22,7 +21,6 @@ import {
 export type { DocsPageData } from '@vike-vue-content/shared/types'
 
 export async function data(pageContext: PageContextServer): Promise<DocsPageData> {
-	const config = useConfig()
 	const docsBase = getDocsRouteBaseFromRouteParams(pageContext.routeParams)
 	const options = resolveServerDocsOptions(readDocsConfig(pageContext.config), docsBase)
 	const plugins = readContentPlugins(pageContext.config)
@@ -35,10 +33,7 @@ export async function data(pageContext: PageContextServer): Promise<DocsPageData
 	const page = index.getByPath(collectionPath) ?? null
 	const navigation = index.getNavigationTree(options.collection)
 	const [prevRaw, nextRaw] = index.getSurroundings(options.collection, collectionPath)
-
-	config({
-		title: page?.title ?? options.title,
-	})
+	const title = page?.title ?? options.title
 
 	const mappedNavigation = mapNavigationTree(navigation, options)
 
@@ -51,6 +46,7 @@ export async function data(pageContext: PageContextServer): Promise<DocsPageData
 	return {
 		docsBase: options.base,
 		demosDir: options.demosDir,
+		title,
 		page: page ? mapContentEntryPath(page, options) : null,
 		navigation: resolveNavigationItems(mappedNavigation, requestedPath),
 		prev: mapNavigationItem(prevRaw, options),
