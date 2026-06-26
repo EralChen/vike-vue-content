@@ -13,6 +13,7 @@ English | [中文](https://github.com/EralChen/vike-vue-content/blob/master/READ
 - **Content-driven routing** — Every `content/**/*.md` file becomes a page route automatically. No route table to maintain.
 - **Lightweight integration** — Page-level `defineDocsPageConfig` defines the content collection and directory without restructuring your project.
 - **Comark plugin system** — AST-level Markdown transformation pipeline. Supports Shiki code highlighting, Mermaid diagrams, custom component mappings, and more.
+- **Live demos** — Auto-register `.vue` demos from `demosDir` and render live previews with source tabs from a single Markdown declaration.
 - **Theme system** — 17 accent colors × neutral tones, dark/light mode, radius and font presets.
 - **Full-text search** — Search index built at build time, queried client-side.
 - **SSG / SSR** — Powered by Vike. The built-in `onBeforePrerenderStart` hook enumerates every content path. Compatible with Vite `base` configuration for full static export.
