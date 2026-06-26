@@ -1,6 +1,6 @@
 {
   "name": "vike-vue-content",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Content rendering framework for Vike and Vue documentation sites",
   "author": "EralChen",
   "license": "MIT",
@@ -282,5 +282,9 @@
     "shiki": "^4.2.0",
     "tinyglobby": "^0.2.0",
     "yaml": "^2.9.0"
+  },
+  "peerDependencies": {
+    "@comark/vue": "^0.4.0",
+    "comark": "^0.4.0"
   }
 }
