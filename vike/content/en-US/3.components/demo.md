@@ -7,13 +7,27 @@ description: Bind a registered live preview to registered source blocks.
 
 `demo` is a higher-level wrapper built on top of `code-preview`.
 
-Place `.vue` files in the `demos/` directory for automatic registration — no manual imports. One Markdown declaration renders everything.
+Place `.vue` files in the configured `demosDir` directory (empty by default, not enabled). They are auto-registered — no manual imports. One Markdown declaration renders everything.
 
 ## Quick Start
 
-Place a `.vue` file in the `demos/` directory (e.g., `demos_en/hello/index.vue`). Files are auto-registered — the full path (with `.vue` extension) becomes the demo key.
+### Configure demos directory
 
-For example, `demos_en/hello/index.vue` is registered as `hello/index.vue`. Then reference it in markdown:
+Specify `demosDir` in the page config. Each DocsPage can have its own configuration:
+
+```ts
+// vike/pages/en-US/+config.ts
+import { defineDocsPageConfig } from 'vike-vue-content/docs'
+
+export default defineDocsPageConfig({
+    collection: 'en-US',
+    demosDir: 'demos',  // multiple pages can share the same demos directory
+})
+```
+
+Place `.vue` files in the project root's `demosDir` directory (`demos/` in the example above). They are auto-registered with their relative path (including `.vue` extension) as the demo key.
+
+For example, `demos/hello/index.vue` is registered as `hello/index.vue`. Then reference it in markdown:
 
 ````md
 :::demo{preview="hello/index.vue"}
@@ -40,6 +54,9 @@ Minimal usage: when `source` is omitted, the source code for the `preview` key i
 
 Renders `hello/index.vue` as the live preview and shows its source code automatically.
 
+:::demo{preview="hello/index.vue"}
+:::
+
 ### Multiple source files
 
 ````md
@@ -51,6 +68,9 @@ Renders `hello/index.vue` as the live preview and shows its source code automati
 - `:source='["hello/index.vue", "hello/data.txt"]'` — source area shows both files, switchable via CodeGroup tabs
 
 The leading `:` before `source` is MDC's JS expression binding syntax, so the value is a real array.
+
+:::demo{preview="hello/index.vue", :source='["hello/index.vue", "hello/data.txt"]'}
+:::
 
 ### Single string source
 
@@ -64,8 +84,8 @@ Source area shows only `hello/data.txt`.
 ## Data Flow
 
 ```
-demos/ directory ──→ Vite plugin scan ──→ virtual:vvc-demos ──→ contentDemos
-sources/ directory ──→ Vite plugin scan ──→ virtual:vvc-demo-sources ──→ contentSources
+{demosDir} ──→ Vite plugin scan ──→ virtual:vvc-demos ──→ contentDemos
+{demosDir} ──→ Vite plugin scan ──→ virtual:vvc-demo-sources ──→ contentSources
                                                           ──→ contentParsedSources (comark parsed)
 
 Markdown (:::demo) ──→ Comark parse ──→ ContentRenderer ──→ Demo component

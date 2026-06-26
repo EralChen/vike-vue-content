@@ -1,4 +1,7 @@
-# vike-vue-content
+<h1>
+  <img src="./assets/logo.svg" width="42" alt="vike-vue-content logo" align="center">
+  vike-vue-content
+</h1>
 
 > 基于 [Vike](https://vike.dev/) + [Vue](https://vuejs.org/) 的内容文档框架 — 零模板即可构建文档站点。
 
@@ -10,6 +13,7 @@
 - **内容驱动路由** — `content/**/*.md` 文件自动映射为页面路由，无需维护路由表
 - **轻量级集成** — 页面级 `defineDocsPageConfig` 定义内容集合和目录，无需调整项目架构
 - **Comark 插件系统** — AST 级 Markdown 转换管线，支持 Shiki 代码高亮、Mermaid 图表、自定义组件映射等
+- **实时 Demo** — 自动注册 `demosDir` 下的 `.vue` 示例，通过一条 Markdown 声明渲染实时预览和源码 Tab
 - **主题系统** — 17 种主色调 × 中性色组合、暗色/亮色模式、圆角和字体预设
 - **全文搜索** — 构建时生成搜索索引，客户端检索
 - **SSG / SSR 双模式** — 基于 Vike，内置 `onBeforePrerenderStart` 钩子枚举所有内容路径，兼容 vite `base` 配置，支持完整静态导出
