@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "vike dev",
     "build": "vike build",
-    "preview": "vike preview"
+    "preview": "vike preview",
+    "http-preview": "node -e \"const fs=require('fs'); fs.rmSync('dist/vike-vue-content',{recursive:true,force:true}); fs.cpSync('dist/client','dist/vike-vue-content',{recursive:true});\" && cd dist && npx http-server ./"
   },
   "dependencies": {
     "beautiful-mermaid": "^1.1.3",
@@ -13,6 +14,7 @@
   "type": "module",
   "devDependencies": {
     "@intlify/core-base": "^11.4.5",
-    "@intlify/unplugin-vue-i18n": "^11.2.3"
+    "@intlify/unplugin-vue-i18n": "^11.2.3",
+    "http-server": "^14.1.1"
   }
 }
