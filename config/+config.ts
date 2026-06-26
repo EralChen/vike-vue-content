@@ -14,6 +14,9 @@ const config = {
   redirects: collectWorkspaceDocsRedirects(),
   vite: {
     plugins: [docsRuntimeBasePlugin(), demoAutoCollectPlugin()],
+    ssr: {
+      noExternal: ['vike-vue-content'],
+    },
   },
   onAfterRenderHtml: 'import:vike-vue-content/docs/search:onAfterRenderHtml',
   passToClient: ['_searchIndexMap'],
