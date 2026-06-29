@@ -8,20 +8,22 @@ export {
   type ThemeTokens,
   type ColorMode,
   type ColorValue,
-  type NeutralThemeVars,
+} from './types'
+
+export type {
+  NeutralThemeVars
+} from './types'
+
+export {
   defaultAppearance,
-  defaultTheme,
-  primaryColors,
-  neutralColors,
-  radiusPresets,
-  fontPresets,
-  colorModes,
-  colorMap,
-  neutralColorMap,
+  defaultTheme
+} from './default'
+
+export {
   defineTheme,
-  themeToVars,
-  themeToCss,
-  themeToAppearanceCss,
+} from './defineTheme'
+
+export {
   isHexColor,
   normalizeHexColor,
   createColorRamp,
@@ -29,7 +31,23 @@ export {
   resolveNeutralVars,
   getColorValue,
   getNeutralColorValue
-} from './core'
+} from './utils'
+
+export {
+  themeToVars,
+  themeToCss,
+  themeToAppearanceCss,
+} from './compile'
+
+export {
+  primaryColors,
+  neutralColors,
+  radiusPresets,
+  fontPresets,
+  colorModes,
+  colorMap,
+  neutralColorMap
+} from './presets'
 
 export {
   generateThemeInitScript,

@@ -279,10 +279,20 @@
       "import": "./theme/index.es.js",
       "types": "./theme/index.d.ts"
     },
-    "./theme/core": {
-      "default": "./theme/core/index.es.js",
-      "import": "./theme/core/index.es.js",
-      "types": "./theme/core/index.d.ts"
+    "./theme/compile": {
+      "default": "./theme/compile/index.es.js",
+      "import": "./theme/compile/index.es.js",
+      "types": "./theme/compile/index.d.ts"
+    },
+    "./theme/default": {
+      "default": "./theme/default/index.es.js",
+      "import": "./theme/default/index.es.js",
+      "types": "./theme/default/index.d.ts"
+    },
+    "./theme/defineTheme": {
+      "default": "./theme/defineTheme/index.es.js",
+      "import": "./theme/defineTheme/index.es.js",
+      "types": "./theme/defineTheme/index.d.ts"
     },
     "./theme/export": {
       "default": "./theme/export/index.es.js",
@@ -294,10 +304,25 @@
       "import": "./theme/headHtmlBegin/index.es.js",
       "types": "./theme/headHtmlBegin/index.d.ts"
     },
+    "./theme/presets": {
+      "default": "./theme/presets/index.es.js",
+      "import": "./theme/presets/index.es.js",
+      "types": "./theme/presets/index.d.ts"
+    },
     "./theme/script": {
       "default": "./theme/script/index.es.js",
       "import": "./theme/script/index.es.js",
       "types": "./theme/script/index.d.ts"
+    },
+    "./theme/types": {
+      "default": "./theme/types/index.es.js",
+      "import": "./theme/types/index.es.js",
+      "types": "./theme/types/index.d.ts"
+    },
+    "./theme/utils": {
+      "default": "./theme/utils/index.es.js",
+      "import": "./theme/utils/index.es.js",
+      "types": "./theme/utils/index.d.ts"
     }
   },
   "dependencies": {

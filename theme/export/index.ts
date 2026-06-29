@@ -1,9 +1,9 @@
 import {
-  defaultAppearance,
-  defineTheme,
-  themeToAppearanceCss
-} from '../core'
-import type { Appearance, Theme, ThemeTokens } from '../core'
+  defaultAppearance
+} from '../default'
+import { defineTheme } from '../defineTheme'
+import { themeToAppearanceCss } from '../compile'
+import type { Appearance, Theme, ThemeTokens } from '../types'
 
 function cleanModeTokens(tokens: Record<string, string>): Record<string, string> {
   const { primarySource, neutral, ...cleaned } = tokens

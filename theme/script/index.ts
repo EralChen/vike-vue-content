@@ -1,10 +1,10 @@
 import {
   defaultAppearance,
-  defaultTheme,
-  defineTheme,
-  themeToVars
-} from '../core'
-import type { Appearance, Theme, ThemeState, ThemeTokens } from '../core'
+  defaultTheme
+} from '../default'
+import { defineTheme } from '../defineTheme'
+import { themeToVars } from '../compile'
+import type { Appearance, Theme, ThemeState, ThemeTokens } from '../types'
 
 function varsToScript(vars: Record<string, string>): string {
   return Object.entries(vars)
@@ -12,7 +12,8 @@ function varsToScript(vars: Record<string, string>): string {
     .join(';')
 }
 
-// Minimal first-paint script. Runtime useTheme() applies the full localStorage theme.
+// First-paint flow:
+// page config -> resolveThemeConfig() -> defineTheme() -> themeToVars() -> inline CSS vars.
 export function generateThemeInitScript(theme: Theme | ThemeTokens = defaultTheme, appearance: Appearance = defaultAppearance): string {
   const resolvedTheme = defineTheme(theme)
   const lightVars = varsToScript(themeToVars(resolvedTheme, 'light'))
