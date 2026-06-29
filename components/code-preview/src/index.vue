@@ -55,23 +55,23 @@ function toggleSource() {
 
 <style>
 .vvc-code-preview {
-	border: 1px solid var(--vvc-border, #e2e8f0);
-	border-radius: var(--vvc-radius, 8px);
+	border: 1px solid var(--color-border, #e2e8f0);
+	border-radius: var(--radius, 8px);
 	margin: 1.25rem 0;
 }
 
 .dark .vvc-code-preview {
-	border-color: var(--vvc-border, #334155);
+	border-color: var(--color-border, #334155);
 }
 
 .vvc-code-preview-render {
 	padding: 1.5rem;
-	background-color: var(--vvc-bg, #fff);
+	background-color: var(--color-bg, #fff);
 	overflow: auto;
 }
 
 .dark .vvc-code-preview-render {
-	background-color: var(--vvc-bg-elevated, #1e293b);
+	background-color: var(--color-surface-elevated, #1e293b);
 }
 
 .vvc-code-preview-toolbar {
@@ -80,11 +80,11 @@ function toggleSource() {
 	align-items: center;
 	justify-content: flex-end;
 	height: 2.5rem;
-	border-top: 1px solid var(--vvc-border, #e2e8f0);
+	border-top: 1px solid var(--color-border, #e2e8f0);
 }
 
 .dark .vvc-code-preview-toolbar {
-	border-top-color: var(--vvc-border, #334155);
+	border-top-color: var(--color-border, #334155);
 }
 
 .vvc-code-preview-toggle {
@@ -93,7 +93,7 @@ function toggleSource() {
 	justify-content: center;
 	padding: 4px;
 	cursor: pointer;
-	color: var(--vvc-text-muted, #94a3b8);
+	color: var(--color-text-muted, #94a3b8);
 	background: transparent;
 	border: none;
 	border-radius: 4px;
@@ -101,11 +101,11 @@ function toggleSource() {
 }
 
 .vvc-code-preview-toggle:hover {
-	color: var(--vvc-text, #1e293b);
+	color: var(--color-text, #1e293b);
 }
 
 .dark .vvc-code-preview-toggle:hover {
-	color: var(--vvc-text, #e2e8f0);
+	color: var(--color-text, #e2e8f0);
 }
 
 .vvc-code-preview-source-grid {
@@ -140,7 +140,7 @@ function toggleSource() {
 }
 
 .vvc-code-preview-source .vvc-code-group-tabs.vvc-code-group-tabs {
-	border-bottom-color: var(--vvc-border, #e2e8f0);
+	border-bottom-color: var(--color-border, #e2e8f0);
 }
 
 .vvc-code-preview-float-control {
@@ -150,9 +150,9 @@ function toggleSource() {
 	gap: 8px;
 	height: 44px;
 	margin-top: -1px;
-	border-top: 1px solid var(--vvc-border, #e2e8f0);
-	background-color: var(--vvc-bg, #fff);
-	color: var(--vvc-text-muted, #94a3b8);
+	border-top: 1px solid var(--color-border, #e2e8f0);
+	background-color: var(--color-bg, #fff);
+	color: var(--color-text-muted, #94a3b8);
 	cursor: pointer;
 	font-size: 14px;
 	position: sticky;
@@ -162,15 +162,15 @@ function toggleSource() {
 }
 
 .dark .vvc-code-preview-float-control {
-	border-top-color: var(--vvc-border, #334155);
-	background-color: var(--vvc-bg-elevated, #1e293b);
+	border-top-color: var(--color-border, #334155);
+	background-color: var(--color-surface-elevated, #1e293b);
 }
 
 .vvc-code-preview-float-control:hover {
-	color: var(--vvc-brand, #3b82f6);
+	color: var(--color-primary, #3b82f6);
 }
 
 .dark .vvc-code-preview-float-control:hover {
-	color: var(--vvc-brand, #60a5fa);
+	color: var(--color-primary, #60a5fa);
 }
 </style>

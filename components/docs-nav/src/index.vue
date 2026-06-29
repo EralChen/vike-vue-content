@@ -48,25 +48,25 @@ const emit = defineEmits(emits)
 .vvc-docs-nav-link {
 	display: block;
 	padding: 4px 8px;
-	border-radius: var(--vvc-radius, 4px);
-	color: var(--vvc-text-muted, #64748b);
+	border-radius: var(--radius, 4px);
+	color: var(--color-text-muted, #64748b);
 	text-decoration: none;
 	transition: all 0.2s;
 }
 
 .vvc-docs-nav-link:hover {
-	color: var(--vvc-text, #0f172a);
-	background-color: var(--vvc-bg-elevated, #f1f5f9);
+	color: var(--color-text, #0f172a);
+	background-color: var(--color-surface-elevated, #f1f5f9);
 }
 
 .vvc-docs-nav-link.is-active {
-	color: var(--vvc-color-primary, #3b82f6);
-	background-color: var(--vvc-bg-muted, #f8fafc);
+	color: var(--color-primary, #3b82f6);
+	background-color: var(--color-surface, #f8fafc);
 	font-weight: 600;
 }
 
 .dark .vvc-docs-nav-link:hover {
-	color: var(--vvc-text, #f1f5f9);
+	color: var(--color-text, #f1f5f9);
 }
 
 .vvc-docs-nav-group {
@@ -75,6 +75,6 @@ const emit = defineEmits(emits)
 	font-size: 12px;
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
-	color: var(--vvc-text-dimmed, #94a3b8);
+	color: var(--color-text-dimmed, #94a3b8);
 }
 </style>

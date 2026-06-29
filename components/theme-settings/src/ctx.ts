@@ -4,6 +4,7 @@ export const props = {
   primaryColors: {
     type: Array as PropType<string[]>,
     default: () => [
+      'black',
       'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal',
       'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose'
     ]

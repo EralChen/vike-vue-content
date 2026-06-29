@@ -11,6 +11,7 @@ PACKAGES=(
 	"query"
 	"components"
 	"composables"
+	"theme"
 	"locale"
 	"shared"
 	"docs"

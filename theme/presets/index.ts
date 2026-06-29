@@ -1,30 +1,15 @@
-import type { ThemeConfig, ColorValue } from './types'
+import type { ColorMode, ColorValue } from '../types'
 
-// 默认主题配置
-export const defaultTheme: ThemeConfig = {
-  colors: {
-    primary: 'blue',
-    neutral: 'slate'
-  },
-  radius: 0.25,
-  font: 'Inter',
-  colorMode: 'system',
-  blackAsPrimary: false
-}
-
-// 主色调预设
 export const primaryColors = [
+  'black',
   'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal',
   'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose'
 ]
 
-// 中性色预设
 export const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone']
 
-// 圆角预设
 export const radiusPresets = [0, 0.125, 0.25, 0.375, 0.5]
 
-// 字体预设
 export const fontPresets = [
   'Inter',
   'system-ui',
@@ -36,15 +21,14 @@ export const fontPresets = [
   'Raleway'
 ]
 
-// 颜色模式预设
-export const colorModes = [
-  { label: 'light' as const, icon: '☀️' },
-  { label: 'dark' as const, icon: '🌙' },
-  { label: 'system' as const, icon: '💻' }
+export const colorModes: { label: ColorMode, icon: string }[] = [
+  { label: 'light', icon: '☀️' },
+  { label: 'dark', icon: '🌙' },
+  { label: 'system', icon: '💻' }
 ]
 
-// 主色调映射表
 export const colorMap: Record<string, ColorValue> = {
+  black:   { 500: '#000000', 400: '#334155', 600: '#000000' },
   red:     { 500: '#ef4444', 400: '#f87171', 600: '#dc2626' },
   orange:  { 500: '#f97316', 400: '#fb923c', 600: '#ea580c' },
   amber:   { 500: '#f59e0b', 400: '#fbbf24', 600: '#d97706' },
@@ -64,20 +48,14 @@ export const colorMap: Record<string, ColorValue> = {
   rose:    { 500: '#f43f5e', 400: '#fb7185', 600: '#e11d48' },
 }
 
-// 中性色映射表
+export const darkColorMap: Partial<Record<string, ColorValue>> = {
+  black: { 500: '#ffffff', 400: '#e2e8f0', 600: '#cbd5e1' }
+}
+
 export const neutralColorMap: Record<string, ColorValue> = {
   slate:   { 500: '#64748b', 400: '#94a3b8', 600: '#475569' },
   gray:    { 500: '#6b7280', 400: '#9ca3af', 600: '#4b5563' },
   zinc:    { 500: '#71717a', 400: '#a1a1aa', 600: '#52525b' },
   neutral: { 500: '#737373', 400: '#a3a3a3', 600: '#525252' },
   stone:   { 500: '#78716c', 400: '#a8a29e', 600: '#57534e' },
-}
-
-// 获取颜色值的工具函数
-export function getColorValue(color: string): string {
-  return colorMap[color]?.[500] || '#6b7280'
-}
-
-export function getNeutralColorValue(color: string): string {
-  return neutralColorMap[color]?.[500] || '#6b7280'
 }
