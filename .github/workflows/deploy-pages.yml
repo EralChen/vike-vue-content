@@ -39,6 +39,9 @@ jobs:
       - name: Build entry package
         run: pnpm run lib
 
+      - name: Refresh vike file dependency
+        run: pnpm --filter @vike-vue-content/vike update vike-vue-content
+
       - name: Build vike app
         run: pnpm run vike:build
 

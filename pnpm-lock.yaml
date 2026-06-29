@@ -79,11 +79,11 @@ importers:
         specifier: ^3.6.1
         version: 3.6.1(typescript@6.0.3)(vue-tsc@3.3.5(typescript@6.0.3))(vue@3.5.39(typescript@6.0.3))
       vike:
-        specifier: 0.4.259-commit-ac2142e
-        version: 0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))
+        specifier: ^0.4.260
+        version: 0.4.260(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))
       vike-vue:
         specifier: ^0.9.12
-        version: 0.9.12(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3))
+        version: 0.9.12(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.260(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3))
       vite:
         specifier: ^8.1.0
         version: 8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)
@@ -112,7 +112,7 @@ importers:
         version: link:../theme
       vike-vue:
         specifier: ^0.9.11
-        version: 0.9.11(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3))
+        version: 0.9.12(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.260(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3))
 
   config:
     dependencies:
@@ -182,7 +182,7 @@ importers:
         version: 0.2.17
       vike-vue:
         specifier: ^0.9.11
-        version: 0.9.11(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3))
+        version: 0.9.12(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.260(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3))
       yaml:
         specifier: ^2.9.0
         version: 2.9.0
@@ -219,7 +219,7 @@ importers:
         version: 1.1.3
       vike-vue-content:
         specifier: file:../entry
-        version: file:entry(@comark/vue@0.4.0(beautiful-mermaid@1.1.3)(shiki@4.3.0)(vue@3.5.39(typescript@6.0.3)))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(comark@0.4.0(beautiful-mermaid@1.1.3)(shiki@4.3.0))(vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3))
+        version: link:../entry
       vue-i18n:
         specifier: ^11.4.5
         version: 11.4.6(vue@3.5.39(typescript@6.0.3))
@@ -229,7 +229,7 @@ importers:
         version: 11.4.6
       '@intlify/unplugin-vue-i18n':
         specifier: ^11.2.3
-        version: 11.2.4(@vue/compiler-dom@3.5.39)(eslint@10.5.0(jiti@2.7.0))(rollup@4.62.2)(typescript@6.0.3)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))(vue-i18n@11.4.6(vue@3.5.39(typescript@6.0.3)))(vue@3.5.39(typescript@6.0.3))
+        version: 11.2.4(@vue/compiler-dom@3.5.39)(eslint@10.6.0(jiti@2.7.0))(rollup@4.62.2)(typescript@6.0.3)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))(vue-i18n@11.4.6(vue@3.5.39(typescript@6.0.3)))(vue@3.5.39(typescript@6.0.3))
       http-server:
         specifier: ^14.1.1
         version: 14.1.1
@@ -2087,8 +2087,8 @@ packages:
     resolution: {integrity: sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  eslint@10.5.0:
-    resolution: {integrity: sha512-1y+7C+vi12bUK1IpZeaV3gsH9fHLBmPvYmPx42pvT/E9yG0IC8g3PUZZgp0+JLJl7ZDK0flc2gc+Aw9dpCvIsQ==}
+  eslint@10.6.0:
+    resolution: {integrity: sha512-6lVbcqSodALYo+4ELD0heG6lFiFxnLMuLkiMi2qV8LMp54N8tE8FT1GMH+ev4Ti00nFjNze2+Su6DsV5OQW3Dg==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     hasBin: true
     peerDependencies:
@@ -3195,26 +3195,14 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vike-vue-content@file:entry:
-    resolution: {directory: entry, type: directory}
-    peerDependencies:
-      '@comark/vue': ^0.4.0
-      comark: ^0.4.0
-
-  vike-vue@0.9.11:
-    resolution: {integrity: sha512-Ujcu7NG/ZFsiAgEomA0PtuHFg0J/BMcol/QHiDzaIlov2JSiDfapyBLidrPVTrHwLHvmeCnxa4ruVqG+/Vj1XA==}
-    peerDependencies:
-      vike: '>=0.4.191'
-      vue: '>=3.0.0'
-
   vike-vue@0.9.12:
     resolution: {integrity: sha512-8Wp6p2KGd8Avw9Cm2L0fTE3FXRIDfkVhamkYmxxfAZGFYTWyN3dWBl3M5vUU+u6zJEmWRNnkizRpqbGG3u/cYw==}
     peerDependencies:
       vike: '>=0.4.191'
       vue: '>=3.0.0'
 
-  vike@0.4.259-commit-ac2142e:
-    resolution: {integrity: sha512-h9ymtgi01zZKOsjJXKXOFDJrt9UYj2e/BGciQ4FuBzBMmIl1iWaiiRxXS/q9PcsITwA/UscVPG1hUM2LaIQjIw==}
+  vike@0.4.260:
+    resolution: {integrity: sha512-9HMYNO3ZZw21W/FpP6eqgRd+yz+fgRW16KGhrG2BlYjW23gAZTGx4vtx8sDQXRKKnspSsQsUSA2POsJqfxEZ2g==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -3771,9 +3759,9 @@ snapshots:
   '@esbuild/win32-x64@0.28.1':
     optional: true
 
-  '@eslint-community/eslint-utils@4.9.1(eslint@10.5.0(jiti@2.7.0))':
+  '@eslint-community/eslint-utils@4.9.1(eslint@10.6.0(jiti@2.7.0))':
     dependencies:
-      eslint: 10.5.0(jiti@2.7.0)
+      eslint: 10.6.0(jiti@2.7.0)
       eslint-visitor-keys: 3.4.3
 
   '@eslint-community/regexpp@4.12.2': {}
@@ -3860,9 +3848,9 @@ snapshots:
 
   '@intlify/shared@11.4.6': {}
 
-  '@intlify/unplugin-vue-i18n@11.2.4(@vue/compiler-dom@3.5.39)(eslint@10.5.0(jiti@2.7.0))(rollup@4.62.2)(typescript@6.0.3)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))(vue-i18n@11.4.6(vue@3.5.39(typescript@6.0.3)))(vue@3.5.39(typescript@6.0.3))':
+  '@intlify/unplugin-vue-i18n@11.2.4(@vue/compiler-dom@3.5.39)(eslint@10.6.0(jiti@2.7.0))(rollup@4.62.2)(typescript@6.0.3)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))(vue-i18n@11.4.6(vue@3.5.39(typescript@6.0.3)))(vue@3.5.39(typescript@6.0.3))':
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@10.5.0(jiti@2.7.0))
+      '@eslint-community/eslint-utils': 4.9.1(eslint@10.6.0(jiti@2.7.0))
       '@intlify/bundle-utils': 11.2.4(vue-i18n@11.4.6(vue@3.5.39(typescript@6.0.3)))
       '@intlify/shared': 11.4.6
       '@intlify/vue-i18n-extensions': 8.0.0(@intlify/shared@11.4.6)(@vue/compiler-dom@3.5.39)(vue-i18n@11.4.6(vue@3.5.39(typescript@6.0.3)))(vue@3.5.39(typescript@6.0.3))
@@ -5043,9 +5031,9 @@ snapshots:
 
   eslint-visitor-keys@5.0.1: {}
 
-  eslint@10.5.0(jiti@2.7.0):
+  eslint@10.6.0(jiti@2.7.0):
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@10.5.0(jiti@2.7.0))
+      '@eslint-community/eslint-utils': 4.9.1(eslint@10.6.0(jiti@2.7.0))
       '@eslint-community/regexpp': 4.12.2
       '@eslint/config-array': 0.23.5
       '@eslint/config-helpers': 0.6.0
@@ -6233,47 +6221,18 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vike-vue-content@file:entry(@comark/vue@0.4.0(beautiful-mermaid@1.1.3)(shiki@4.3.0)(vue@3.5.39(typescript@6.0.3)))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(comark@0.4.0(beautiful-mermaid@1.1.3)(shiki@4.3.0))(vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3)):
-    dependencies:
-      '@comark/vue': 0.4.0(beautiful-mermaid@1.1.3)(shiki@4.3.0)(vue@3.5.39(typescript@6.0.3))
-      '@shikijs/themes': 4.3.0
-      chroma-js: 3.2.0
-      comark: 0.4.0(beautiful-mermaid@1.1.3)(shiki@4.3.0)
-      github-slugger: 2.0.0
-      oxc-parser: 0.135.0
-      shiki: 4.3.0
-      tinyglobby: 0.2.17
-      vike-vue: 0.9.12(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3))
-      yaml: 2.9.0
-    transitivePeerDependencies:
-      - '@emnapi/core'
-      - '@emnapi/runtime'
-      - vike
-      - vue
-
-  vike-vue@0.9.11(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3)):
+  vike-vue@0.9.12(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.260(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3)):
     dependencies:
       magic-string: 0.30.21
       oxc-parser: 0.104.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)
       oxc-walker: 0.6.0(oxc-parser@0.104.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1))
-      vike: 0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))
+      vike: 0.4.260(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))
       vue: 3.5.39(typescript@6.0.3)
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  vike-vue@0.9.12(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3)):
-    dependencies:
-      magic-string: 0.30.21
-      oxc-parser: 0.104.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)
-      oxc-walker: 0.6.0(oxc-parser@0.104.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1))
-      vike: 0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))
-      vue: 3.5.39(typescript@6.0.3)
-    transitivePeerDependencies:
-      - '@emnapi/core'
-      - '@emnapi/runtime'
-
-  vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)):
+  vike@0.4.260(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)):
     dependencies:
       '@babel/core': 7.29.7
       '@babel/types': 7.29.7
