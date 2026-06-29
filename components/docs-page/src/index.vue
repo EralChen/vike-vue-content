@@ -122,13 +122,11 @@ const demosDir = computed(() => docsData.demosDir || '')
 
 const contentDemos = computed(() => {
 	const dir = demosDir.value
-	if (!dir) return {}
-	return autoDemos[dir] ?? {}
+	return autoDemos[dir]
 })
 const contentSources = computed(() => {
 	const dir = demosDir.value
-	if (!dir) return {}
-	return autoSources[dir] ?? {}
+	return autoSources[dir]
 })
 const contentParsedSources = computed(() => docsData.parsedSources ?? {})
 
