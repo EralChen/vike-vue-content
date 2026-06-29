@@ -10,6 +10,7 @@
     "@vike-vue-content/components": "workspace:*",
     "@vike-vue-content/docs": "workspace:*",
     "@vike-vue-content/query": "workspace:*",
+    "@vike-vue-content/theme": "workspace:*",
     "yaml": "^2.9.0"
   },
   "type": "module"

@@ -247,10 +247,10 @@ onBeforeUnmount(() => {
 	width: 100%;
 	max-width: 640px;
 	max-height: 70vh;
-	background: var(--vvc-bg, #fff);
+	background: var(--color-bg, #fff);
 	border-radius: 12px;
 	box-shadow:
-		0 0 0 1px var(--vvc-border, rgba(0, 0, 0, 0.08)),
+		0 0 0 1px var(--color-border, rgba(0, 0, 0, 0.08)),
 		0 16px 70px rgba(0, 0, 0, 0.2);
 	display: flex;
 	flex-direction: column;
@@ -261,12 +261,12 @@ onBeforeUnmount(() => {
 	display: flex;
 	align-items: center;
 	padding: 0 16px;
-	border-bottom: 1px solid var(--vvc-border, #e2e8f0);
+	border-bottom: 1px solid var(--color-border, #e2e8f0);
 }
 
 .vvc-cmd-search-icon {
 	flex-shrink: 0;
-	color: var(--vvc-text-muted, #94a3b8);
+	color: var(--color-text-muted, #94a3b8);
 }
 
 .vvc-cmd-input {
@@ -275,23 +275,23 @@ onBeforeUnmount(() => {
 	border: none;
 	background: transparent;
 	font-size: 16px;
-	color: var(--vvc-text, #0f172a);
+	color: var(--color-text, #0f172a);
 	outline: none;
 }
 
 .vvc-cmd-input::placeholder {
-	color: var(--vvc-text-muted, #94a3b8);
+	color: var(--color-text-muted, #94a3b8);
 }
 
 .vvc-cmd-esc-kbd {
 	flex-shrink: 0;
 	padding: 2px 6px;
-	border: 1px solid var(--vvc-border, #e2e8f0);
+	border: 1px solid var(--color-border, #e2e8f0);
 	border-radius: 4px;
 	font-size: 11px;
 	font-family: inherit;
-	color: var(--vvc-text-muted, #94a3b8);
-	background: var(--vvc-bg-elevated, #f1f5f9);
+	color: var(--color-text-muted, #94a3b8);
+	background: var(--color-surface-elevated, #f1f5f9);
 }
 
 .vvc-cmd-results {
@@ -307,12 +307,12 @@ onBeforeUnmount(() => {
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
-	color: var(--vvc-text-muted, #94a3b8);
+	color: var(--color-text-muted, #94a3b8);
 }
 
 .vvc-cmd-group-label:not(:first-child) {
 	margin-top: 4px;
-	border-top: 1px solid var(--vvc-border, rgba(0, 0, 0, 0.06));
+	border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.06));
 	padding-top: 12px;
 }
 
@@ -323,26 +323,26 @@ onBeforeUnmount(() => {
 	padding: 8px 12px;
 	border-radius: 8px;
 	text-decoration: none;
-	color: var(--vvc-text, #0f172a);
+	color: var(--color-text, #0f172a);
 	cursor: pointer;
 	transition: background 0.1s;
 }
 
 .vvc-cmd-item:hover,
 .vvc-cmd-item.is-highlighted {
-	background: var(--vvc-bg-elevated, #f1f5f9);
+	background: var(--color-surface-elevated, #f1f5f9);
 }
 
 .vvc-cmd-item-icon {
 	flex-shrink: 0;
 	margin-top: 2px;
-	color: var(--vvc-text-muted, #94a3b8);
+	color: var(--color-text-muted, #94a3b8);
 	opacity: 0.6;
 }
 
 .vvc-cmd-item.is-highlighted .vvc-cmd-item-icon {
 	opacity: 1;
-	color: var(--vvc-color-primary, #3b82f6);
+	color: var(--color-primary, #3b82f6);
 }
 
 .vvc-cmd-item-body {
@@ -359,7 +359,7 @@ onBeforeUnmount(() => {
 
 .vvc-cmd-item-prefix {
 	font-size: 13px;
-	color: var(--vvc-text-muted, #94a3b8);
+	color: var(--color-text-muted, #94a3b8);
 	flex-shrink: 0;
 }
 
@@ -373,7 +373,7 @@ onBeforeUnmount(() => {
 
 .vvc-cmd-item-title mark,
 .vvc-cmd-item-desc mark {
-	color: var(--vvc-color-primary, #3b82f6);
+	color: var(--color-primary, #3b82f6);
 	background: transparent;
 	font-weight: 600;
 }
@@ -381,7 +381,7 @@ onBeforeUnmount(() => {
 .vvc-cmd-item-desc {
 	display: block;
 	font-size: 12px;
-	color: var(--vvc-text-muted, #64748b);
+	color: var(--color-text-muted, #64748b);
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -400,11 +400,11 @@ onBeforeUnmount(() => {
 .vvc-cmd-empty p {
 	margin: 0;
 	font-size: 14px;
-	color: var(--vvc-text-muted, #94a3b8);
+	color: var(--color-text-muted, #94a3b8);
 }
 
 .vvc-cmd-empty-icon {
-	color: var(--vvc-text-muted, #cbd5e1);
+	color: var(--color-text-muted, #cbd5e1);
 	margin-bottom: 8px;
 }
 
@@ -414,8 +414,8 @@ onBeforeUnmount(() => {
 
 .vvc-cmd-footer {
 	padding: 8px 16px;
-	border-top: 1px solid var(--vvc-border, #e2e8f0);
-	background: var(--vvc-bg-elevated, #f8fafc);
+	border-top: 1px solid var(--color-border, #e2e8f0);
+	background: var(--color-surface-elevated, #f8fafc);
 }
 
 .vvc-cmd-footer-hints {
@@ -428,16 +428,16 @@ onBeforeUnmount(() => {
 	align-items: center;
 	gap: 4px;
 	font-size: 12px;
-	color: var(--vvc-text-muted, #94a3b8);
+	color: var(--color-text-muted, #94a3b8);
 }
 
 .vvc-cmd-footer-hint kbd {
 	padding: 1px 5px;
-	border: 1px solid var(--vvc-border, #e2e8f0);
+	border: 1px solid var(--color-border, #e2e8f0);
 	border-radius: 3px;
 	font-size: 11px;
 	font-family: inherit;
-	background: var(--vvc-bg, #fff);
+	background: var(--color-bg, #fff);
 }
 
 @media (max-width: 640px) {

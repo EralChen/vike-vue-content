@@ -6,5 +6,9 @@
     "build:es": "vite build",
     "build:types": "vue-tsc"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@vike-vue-content/theme": "workspace:*",
+    "vike-vue": "^0.9.11"
+  }
 }

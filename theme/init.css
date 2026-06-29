@@ -1,0 +1,18 @@
+body {
+  font-family: var(--font-sans, 'Inter', system-ui, -apple-system, sans-serif);
+  background-color: var(--color-bg, #ffffff);
+  color: var(--color-text, #0f172a);
+}
+
+a {
+  color: var(--color-primary, #3b82f6);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary-dark, #2563eb);
+}
+
+.dark a:hover {
+  color: var(--color-primary-light, #60a5fa);
+}

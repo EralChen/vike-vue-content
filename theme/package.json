@@ -1,0 +1,16 @@
+{
+  "name": "@vike-vue-content/theme",
+  "private": true,
+  "scripts": {
+    "build": "run-s build:es build:types",
+    "build:es": "vite build",
+    "build:types": "vue-tsc"
+  },
+  "type": "module",
+  "dependencies": {
+    "chroma-js": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/chroma-js": "^3.1.2"
+  }
+}

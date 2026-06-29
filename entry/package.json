@@ -273,14 +273,66 @@
       "default": "./shared/types/index.es.js",
       "import": "./shared/types/index.es.js",
       "types": "./shared/types/index.d.ts"
+    },
+    "./theme": {
+      "default": "./theme/index.es.js",
+      "import": "./theme/index.es.js",
+      "types": "./theme/index.d.ts"
+    },
+    "./theme/compile": {
+      "default": "./theme/compile/index.es.js",
+      "import": "./theme/compile/index.es.js",
+      "types": "./theme/compile/index.d.ts"
+    },
+    "./theme/default": {
+      "default": "./theme/default/index.es.js",
+      "import": "./theme/default/index.es.js",
+      "types": "./theme/default/index.d.ts"
+    },
+    "./theme/defineTheme": {
+      "default": "./theme/defineTheme/index.es.js",
+      "import": "./theme/defineTheme/index.es.js",
+      "types": "./theme/defineTheme/index.d.ts"
+    },
+    "./theme/export": {
+      "default": "./theme/export/index.es.js",
+      "import": "./theme/export/index.es.js",
+      "types": "./theme/export/index.d.ts"
+    },
+    "./theme/headHtmlBegin": {
+      "default": "./theme/headHtmlBegin/index.es.js",
+      "import": "./theme/headHtmlBegin/index.es.js",
+      "types": "./theme/headHtmlBegin/index.d.ts"
+    },
+    "./theme/presets": {
+      "default": "./theme/presets/index.es.js",
+      "import": "./theme/presets/index.es.js",
+      "types": "./theme/presets/index.d.ts"
+    },
+    "./theme/script": {
+      "default": "./theme/script/index.es.js",
+      "import": "./theme/script/index.es.js",
+      "types": "./theme/script/index.d.ts"
+    },
+    "./theme/types": {
+      "default": "./theme/types/index.es.js",
+      "import": "./theme/types/index.es.js",
+      "types": "./theme/types/index.d.ts"
+    },
+    "./theme/utils": {
+      "default": "./theme/utils/index.es.js",
+      "import": "./theme/utils/index.es.js",
+      "types": "./theme/utils/index.d.ts"
     }
   },
   "dependencies": {
     "@shikijs/themes": "^4.2.0",
+    "chroma-js": "^3.2.0",
     "github-slugger": "^2.0.0",
     "oxc-parser": "^0.135.0",
     "shiki": "^4.2.0",
     "tinyglobby": "^0.2.0",
+    "vike-vue": "^0.9.11",
     "yaml": "^2.9.0"
   },
   "peerDependencies": {

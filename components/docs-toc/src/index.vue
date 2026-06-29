@@ -117,7 +117,7 @@ const circuitMaskStyle = computed(() => {
 	font-size: 14px;
 	font-weight: 600;
 	line-height: 1.4;
-	color: var(--vvc-text, #0f172a);
+	color: var(--color-text, #0f172a);
 }
 
 .vvc-docs-page-toc-content {
@@ -143,7 +143,7 @@ const circuitMaskStyle = computed(() => {
 .vvc-docs-page-toc-indicator-line {
 	position: absolute;
 	inset: 0;
-	background: var(--vvc-border, rgba(15, 23, 42, 0.16));
+	background: var(--color-border, rgba(15, 23, 42, 0.16));
 }
 
 /* 绿色 active 段：高度随 active 项数、位移随首个 active 项移动 */
@@ -152,7 +152,7 @@ const circuitMaskStyle = computed(() => {
 	inset-inline: 0;
 	height: var(--vvc-toc-indicator-size, 0);
 	transform: translateY(var(--vvc-toc-indicator-position, 0));
-	background: var(--vvc-color-primary, #22c55e);
+	background: var(--color-primary, #22c55e);
 	transition: transform 0.2s ease, height 0.2s ease;
 }
 
@@ -187,7 +187,7 @@ const circuitMaskStyle = computed(() => {
 	height: 1.75rem;
 	font-size: 14px;
 	line-height: 1.45;
-	color: var(--vvc-text-muted, rgba(15, 23, 42, 0.64));
+	color: var(--color-text-muted, rgba(15, 23, 42, 0.64));
 	text-decoration: none;
 	transition: color 0.2s ease;
 }
@@ -201,11 +201,11 @@ const circuitMaskStyle = computed(() => {
 
 .vvc-docs-page-toc-link:hover,
 .vvc-docs-page-toc-link.is-active {
-	color: var(--vvc-text, #111827);
+	color: var(--color-text, #111827);
 }
 
 .vvc-docs-page-toc-link.is-active {
-	color: var(--vvc-color-primary, #16a34a);
+	color: var(--color-primary, #16a34a);
 	font-weight: 600;
 }
 

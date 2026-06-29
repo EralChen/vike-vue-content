@@ -36,18 +36,18 @@ onMounted(() => {
 	gap: 8px;
 	width: 100%;
 	padding: 6px 10px;
-	border: 1px solid var(--vvc-border, #e2e8f0);
-	border-radius: var(--vvc-radius, 4px);
-	background: var(--vvc-bg-elevated, #f8fafc);
-	color: var(--vvc-text-muted, #94a3b8);
+	border: 1px solid var(--color-border, #e2e8f0);
+	border-radius: var(--radius, 4px);
+	background: var(--color-surface-elevated, #f8fafc);
+	color: var(--color-text-muted, #94a3b8);
 	font-size: 14px;
 	cursor: pointer;
 	transition: border-color 0.2s, background 0.2s;
 }
 
 .vvc-search-button:hover {
-	border-color: var(--vvc-color-primary, #3b82f6);
-	background: var(--vvc-bg, #fff);
+	border-color: var(--color-primary, #3b82f6);
+	background: var(--color-bg, #fff);
 }
 
 .vvc-search-button-icon {
@@ -62,11 +62,11 @@ onMounted(() => {
 .vvc-search-button-kbd {
 	flex-shrink: 0;
 	padding: 1px 5px;
-	border: 1px solid var(--vvc-border, #e2e8f0);
+	border: 1px solid var(--color-border, #e2e8f0);
 	border-radius: 3px;
 	font-size: 11px;
 	font-family: inherit;
-	color: var(--vvc-text-muted, #94a3b8);
-	background: var(--vvc-bg, #fff);
+	color: var(--color-text-muted, #94a3b8);
+	background: var(--color-bg, #fff);
 }
 </style>
