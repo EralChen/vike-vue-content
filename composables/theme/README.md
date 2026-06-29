@@ -38,6 +38,8 @@ const { theme, isDark, toggleDarkMode, setPrimaryColor, resetTheme } = useTheme(
 | `setRadius(radius)` | `(radius: number) => void` | 设置圆角大小 |
 | `setFont(font)` | `(font: string) => void` | 设置字体 |
 | `resetTheme()` | `() => void` | 重置为默认主题 |
+| `exportConfig()` | `() => string` | 导出当前主题配置 JSON |
+| `exportVikeThemeConfig(name?)` | `(name?: string) => string` | 导出 vike-themes 兼容的 theme JSON |
 
 ### `useThemeStorage()`
 
@@ -87,3 +89,15 @@ interface ThemeConfig {
 ## 存储
 
 主题配置使用 `localStorage` 存储，键名为 `vvc-theme`。
+
+## vike-themes 互通
+
+`exportVikeThemeConfig()` 会把当前主题转换成 vike-themes 的 theme 结构，适合复制到一个 theme package 或 `+config.js` 中继续使用：
+
+```ts
+const { exportVikeThemeConfig } = useTheme()
+
+const json = exportVikeThemeConfig('acme')
+```
+
+导出的 JSON 会包含 `name`、`fonts`、`radius`、`light`、`dark`，并使用 `--color-*` 对应的 token 名称，例如 `primary`、`primary-light`、`bg`、`surface`、`text`、`muted`、`border`。

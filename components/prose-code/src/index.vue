@@ -39,21 +39,21 @@ function copyCode() {
 
 <style>
 .vvc-prose-code-wrapper {
-	background-color: var(--vvc-bg-elevated, #f1f5f9);
-	border: 1px solid var(--vvc-border, #e2e8f0);
-	border-radius: var(--vvc-radius, 8px);
+	background-color: var(--color-surface-elevated, #f1f5f9);
+	border: 1px solid var(--color-border, #e2e8f0);
+	border-radius: var(--radius, 8px);
 	margin: 1.25rem 0;
 	position: relative;
 	overflow: hidden;
 }
 
 .dark .vvc-prose-code-wrapper {
-	background-color: var(--vvc-bg-muted, #1e293b);
-	border-color: var(--vvc-border, #334155);
+	background-color: var(--color-surface, #1e293b);
+	border-color: var(--color-border, #334155);
 }
 
 .vvc-prose-code-header {
-	border-bottom: 1px solid var(--vvc-border, #e2e8f0);
+	border-bottom: 1px solid var(--color-border, #e2e8f0);
 	align-items: center;
 	gap: 8px;
 	padding: 8px 16px;
@@ -61,11 +61,11 @@ function copyCode() {
 }
 
 .dark .vvc-prose-code-header {
-	border-color: var(--vvc-border, #334155);
+	border-color: var(--color-border, #334155);
 }
 
 .vvc-prose-code-filename {
-	color: var(--vvc-text-muted, #64748b);
+	color: var(--color-text-muted, #64748b);
 	font-family: monospace;
 	font-size: 12px;
 }
@@ -73,8 +73,8 @@ function copyCode() {
 .vvc-prose-code-copy {
 	opacity: 0;
 	cursor: pointer;
-	background-color: var(--vvc-bg, #fff);
-	border: 1px solid var(--vvc-border, #e2e8f0);
+	background-color: var(--color-bg, #fff);
+	border: 1px solid var(--color-border, #e2e8f0);
 	border-radius: 6px;
 	justify-content: center;
 	align-items: center;
@@ -89,8 +89,8 @@ function copyCode() {
 }
 
 .dark .vvc-prose-code-copy {
-	background-color: var(--vvc-bg-elevated, #334155);
-	border-color: var(--vvc-border, #334155);
+	background-color: var(--color-surface-elevated, #334155);
+	border-color: var(--color-border, #334155);
 }
 
 .vvc-prose-code-wrapper:hover .vvc-prose-code-copy,

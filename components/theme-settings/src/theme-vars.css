@@ -1,78 +1,78 @@
-/* 主题 CSS 变量 - 全局使用 */
+/* Theme CSS variables - global contract aligned with vike-themes */
 :root {
-  /* 主色调 */
-  --vvc-color-primary: #3b82f6;
-  --vvc-color-primary-light: #60a5fa;
-  --vvc-color-primary-dark: #2563eb;
+  /* Primary color */
+  --color-primary: #3b82f6;
+  --color-primary-light: #60a5fa;
+  --color-primary-dark: #2563eb;
 
-  /* 中性色 */
-  --vvc-color-neutral: #64748b;
-  --vvc-color-neutral-light: #94a3b8;
-  --vvc-color-neutral-dark: #475569;
+  /* Neutral color */
+  --color-muted: #64748b;
+  --color-muted-light: #94a3b8;
+  --color-muted-dark: #475569;
 
-  /* 圆角 */
-  --vvc-radius: 0.25rem;
+  /* Radius */
+  --radius: 0.25rem;
 
-  /* 字体 */
-  --vvc-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Font */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
-  /* 背景色 */
-  --vvc-bg: #ffffff;
-  --vvc-bg-muted: #f8fafc;
-  --vvc-bg-elevated: #f1f5f9;
+  /* Background colors */
+  --color-bg: #ffffff;
+  --color-surface: #f8fafc;
+  --color-surface-elevated: #f1f5f9;
 
-  /* 文本色 */
-  --vvc-text: #0f172a;
-  --vvc-text-muted: #64748b;
-  --vvc-text-dimmed: #94a3b8;
+  /* Text colors */
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+  --color-text-dimmed: #94a3b8;
 
-  /* 边框色 */
-  --vvc-border: #e2e8f0;
-  --vvc-border-muted: #f1f5f9;
+  /* Border colors */
+  --color-border: #e2e8f0;
+  --color-border-muted: #f1f5f9;
 }
 
 .dark {
-  /* 主色调 - 深色模式下稍亮 */
-  --vvc-color-primary: #60a5fa;
-  --vvc-color-primary-light: #93bbfd;
-  --vvc-color-primary-dark: #3b82f6;
+  /* Primary color - slightly brighter in dark mode */
+  --color-primary: #60a5fa;
+  --color-primary-light: #93bbfd;
+  --color-primary-dark: #3b82f6;
 
-  /* 背景色 */
-  --vvc-bg: #0f172a;
-  --vvc-bg-muted: #1e293b;
-  --vvc-bg-elevated: #334155;
+  /* Background colors */
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-surface-elevated: #334155;
 
-  /* 文本色 */
-  --vvc-text: #f1f5f9;
-  --vvc-text-muted: #94a3b8;
-  --vvc-text-dimmed: #64748b;
+  /* Text colors */
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-text-dimmed: #64748b;
 
-  /* 边框色 */
-  --vvc-border: #334155;
-  --vvc-border-muted: #1e293b;
+  /* Border colors */
+  --color-border: #334155;
+  --color-border-muted: #1e293b;
 }
 
-/* 全局基础样式 */
+/* Global base styles */
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: var(--vvc-font-family);
-  background-color: var(--vvc-bg);
-  color: var(--vvc-text);
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
   transition: background-color 0.3s, color 0.3s;
 }
 
 a {
-  color: var(--vvc-color-primary);
+  color: var(--color-primary);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--vvc-color-primary-dark);
+  color: var(--color-primary-dark);
 }
 
 .dark a:hover {
-  color: var(--vvc-color-primary-light);
+  color: var(--color-primary-light);
 }

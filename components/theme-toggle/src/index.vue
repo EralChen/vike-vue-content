@@ -15,7 +15,7 @@
 import { ref, nextTick } from 'vue'
 import { useTheme } from '@vike-vue-content/composables/theme'
 
-const { isDark, theme } = useTheme()
+const { isDark, mode } = useTheme()
 const buttonRef = ref<HTMLButtonElement>()
 
 function handleToggle() {
@@ -77,7 +77,7 @@ function handleToggle() {
 }
 
 function toggle() {
-  theme.value.colorMode = isDark.value ? 'light' : 'dark'
+  mode.value = isDark.value ? 'light' : 'dark'
 }
 </script>
 
@@ -114,13 +114,13 @@ function toggle() {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--vvc-radius);
+  border-radius: var(--radius);
   transition: all 0.2s ease;
-  color: var(--vvc-text-muted);
+  color: var(--color-text-muted);
 }
 
 .vvc-color-mode-button:hover {
-  background-color: var(--vvc-bg-elevated);
+  background-color: var(--color-surface-elevated);
 }
 
 .vvc-color-mode-icon {

@@ -1,15 +1,18 @@
-import type { ThemeConfig, ColorValue } from './types'
+import chroma from 'chroma-js'
+import type { Appearance, ColorValue, Theme, ThemeConfig, ThemeTokens } from './types'
 
-// 默认主题配置
-export const defaultTheme: ThemeConfig = {
-  colors: {
-    primary: 'blue',
-    neutral: 'slate'
-  },
-  radius: 0.25,
-  font: 'Inter',
-  colorMode: 'system',
-  blackAsPrimary: false
+export interface NeutralThemeVars {
+  muted: string
+  mutedLight: string
+  mutedDark: string
+  bg: string
+  surface: string
+  surfaceElevated: string
+  text: string
+  textMuted: string
+  textDimmed: string
+  border: string
+  borderMuted: string
 }
 
 // 主色调预设
@@ -73,11 +76,207 @@ export const neutralColorMap: Record<string, ColorValue> = {
   stone:   { 500: '#78716c', 400: '#a8a29e', 600: '#57534e' },
 }
 
-// 获取颜色值的工具函数
+const HEX_COLOR_RE = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i
+
+export function isHexColor(color: string): boolean {
+  return HEX_COLOR_RE.test(color.trim())
+}
+
+export function normalizeHexColor(color: string): string {
+  const value = color.trim().toLowerCase()
+
+  return isHexColor(value) ? chroma(value).hex() : value
+}
+
+export function createColorRamp(color: string): ColorValue {
+  const base = normalizeHexColor(color)
+
+  return {
+    500: base,
+    400: chroma.mix(base, '#ffffff', 0.22, 'rgb').hex(),
+    600: chroma.mix(base, '#000000', 0.14, 'rgb').hex()
+  }
+}
+
+export function resolveColorRamp(color: string, fallback: ColorValue = colorMap.blue): ColorValue {
+  if (colorMap[color]) {
+    return colorMap[color]
+  }
+
+  if (isHexColor(color)) {
+    return createColorRamp(color)
+  }
+
+  return fallback
+}
+
+function mixNeutral(base: string, target: string, weight: number): string {
+  return chroma.mix(base, target, weight, 'rgb').hex()
+}
+
+export function resolveNeutralVars(color: string, isDark = false): NeutralThemeVars {
+  const ramp = neutralColorMap[color] || neutralColorMap.slate
+  const base = ramp[500]
+
+  if (isDark) {
+    return {
+      muted: ramp[400],
+      mutedLight: mixNeutral(base, '#ffffff', 0.7),
+      mutedDark: ramp[500],
+      bg: mixNeutral(base, '#000000', 0.82),
+      surface: mixNeutral(base, '#000000', 0.68),
+      surfaceElevated: mixNeutral(base, '#000000', 0.52),
+      text: mixNeutral(base, '#ffffff', 0.9),
+      textMuted: ramp[400],
+      textDimmed: ramp[500],
+      border: mixNeutral(base, '#000000', 0.52),
+      borderMuted: mixNeutral(base, '#000000', 0.68)
+    }
+  }
+
+  return {
+    muted: ramp[500],
+    mutedLight: ramp[400],
+    mutedDark: ramp[600],
+    bg: '#ffffff',
+    surface: mixNeutral(base, '#ffffff', 0.94),
+    surfaceElevated: mixNeutral(base, '#ffffff', 0.88),
+    text: mixNeutral(base, '#000000', 0.78),
+    textMuted: ramp[500],
+    textDimmed: ramp[400],
+    border: mixNeutral(base, '#ffffff', 0.78),
+    borderMuted: mixNeutral(base, '#ffffff', 0.9)
+  }
+}
+
 export function getColorValue(color: string): string {
-  return colorMap[color]?.[500] || '#6b7280'
+  return resolveColorRamp(color, colorMap.blue)[500]
 }
 
 export function getNeutralColorValue(color: string): string {
   return neutralColorMap[color]?.[500] || '#6b7280'
+}
+
+function expandModeTokens(tokens: Record<string, string> = {}, isDark = false): Record<string, string> {
+  const expanded = { ...tokens }
+
+  if (tokens.primary || tokens.primarySource) {
+    const primarySource = tokens.primarySource || tokens.primary
+    const primary = resolveColorRamp(primarySource)
+    expanded.primarySource = primarySource
+    expanded.primary = primary[500]
+    expanded['primary-light'] = primary[400]
+    expanded['primary-dark'] = primary[600]
+  }
+
+  if (tokens.neutral) {
+    const neutral = resolveNeutralVars(tokens.neutral, isDark)
+    expanded.muted ??= neutral.muted
+    expanded['muted-light'] ??= neutral.mutedLight
+    expanded['muted-dark'] ??= neutral.mutedDark
+    expanded.bg ??= neutral.bg
+    expanded.surface ??= neutral.surface
+    expanded['surface-elevated'] ??= neutral.surfaceElevated
+    expanded.text ??= neutral.text
+    expanded['text-muted'] ??= neutral.textMuted
+    expanded['text-dimmed'] ??= neutral.textDimmed
+    expanded.border ??= neutral.border
+    expanded['border-muted'] ??= neutral.borderMuted
+  }
+
+  return expanded
+}
+
+export function defineTheme(tokens: ThemeTokens = {}): Theme {
+  const { name = 'theme', fonts = {}, radius, spacing = {}, light, dark, colors } = tokens
+  const lightTokens = light || colors || {}
+  const darkTokens = dark || colors || lightTokens
+
+  return {
+    name,
+    fonts,
+    radius,
+    spacing,
+    light: expandModeTokens(lightTokens),
+    dark: expandModeTokens(darkTokens, true)
+  }
+}
+
+export const defaultTheme = defineTheme({
+  name: 'default',
+  fonts: {
+    sans: "'Inter', system-ui, -apple-system, sans-serif"
+  },
+  radius: '0.25rem',
+  light: {
+    primary: 'blue',
+    neutral: 'slate'
+  },
+  dark: {
+    primary: 'blue',
+    neutral: 'slate'
+  }
+})
+
+export const defaultThemeState: ThemeConfig = {
+  theme: defaultTheme,
+  appearance: 'system',
+  blackAsPrimary: false
+}
+
+const VAR_GROUPS = {
+  colors: 'color',
+  fonts: 'font',
+  radius: 'radius',
+  spacing: 'space'
+}
+
+function flatten(groups: { colors?: Record<string, string>, fonts?: Record<string, string>, radius?: string, spacing?: Record<string, string> }): Record<string, string> {
+  const vars: Record<string, string> = {}
+
+  for (const [group, prefix] of Object.entries(VAR_GROUPS)) {
+    const value = groups[group as keyof typeof groups]
+    if (value == null) continue
+
+    if (typeof value === 'object') {
+      for (const [key, item] of Object.entries(value)) {
+        vars[`--${prefix}-${key}`] = String(item)
+      }
+    } else {
+      vars[`--${prefix}`] = String(value)
+    }
+  }
+
+  return vars
+}
+
+export function themeToVars(theme: Theme, mode: 'light' | 'dark' = 'light'): Record<string, string> {
+  const { neutral, primarySource, ...colors } = theme[mode]
+
+  return flatten({
+    colors,
+    fonts: theme.fonts,
+    radius: theme.radius,
+    spacing: theme.spacing
+  })
+}
+
+export function themeToCss(theme: Theme, mode: 'light' | 'dark' = 'light', selector = ':root'): string {
+  const body = Object.entries(themeToVars(theme, mode))
+    .map(([key, value]) => `  ${key}: ${value};`)
+    .join('\n')
+
+  return `${selector} {\n${body}\n}`
+}
+
+export function themeToAppearanceCss(theme: Theme, appearance: Appearance = 'system', selector = ':root'): string {
+  if (appearance === 'light' || appearance === 'dark') {
+    return `${themeToCss(theme, appearance, selector)}\n${selector} { color-scheme: ${appearance}; }`
+  }
+
+  return [
+    themeToCss(theme, 'light', selector),
+    `${selector} { color-scheme: light dark; }`,
+    `@media (prefers-color-scheme: dark) {\n${themeToCss(theme, 'dark', selector)}\n}`
+  ].join('\n')
 }

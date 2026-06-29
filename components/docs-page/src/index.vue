@@ -228,7 +228,7 @@ watch([requestedPath, tocLinks], async () => {
 	flex-direction: column;
 	overflow: hidden;
 	scrollbar-width: thin;
-	scrollbar-color: var(--vvc-border, #e2e8f0) transparent;
+	scrollbar-color: var(--color-border, #e2e8f0) transparent;
 }
 
 .vvc-docs-page-sidebar .vvc-docs-aside-body {
@@ -236,7 +236,7 @@ watch([requestedPath, tocLinks], async () => {
 	min-height: 0;
 	overflow-y: auto;
 	scrollbar-width: thin;
-	scrollbar-color: var(--vvc-border, #e2e8f0) transparent;
+	scrollbar-color: var(--color-border, #e2e8f0) transparent;
 }
 
 .vvc-docs-page-outline {
@@ -246,7 +246,7 @@ watch([requestedPath, tocLinks], async () => {
 	max-height: calc(100vh - var(--vvc-toc-sticky-top, 80px) - 16px);
 	overflow: auto;
 	scrollbar-width: thin;
-	scrollbar-color: var(--vvc-border, #e2e8f0) transparent;
+	scrollbar-color: var(--color-border, #e2e8f0) transparent;
 }
 
 .vvc-docs-page-content {
@@ -257,14 +257,14 @@ watch([requestedPath, tocLinks], async () => {
 .vvc-docs-page-meta {
 	margin-bottom: 24px;
 	padding-bottom: 20px;
-	border-bottom: 1px solid var(--vvc-border, #e2e8f0);
+	border-bottom: 1px solid var(--color-border, #e2e8f0);
 }
 
 .vvc-docs-page-description {
 	margin: 0 0 16px;
 	font-size: 15px;
 	line-height: 1.7;
-	color: var(--vvc-text-muted, #64748b);
+	color: var(--color-text-muted, #64748b);
 }
 
 .vvc-docs-page-not-found {
@@ -280,7 +280,7 @@ watch([requestedPath, tocLinks], async () => {
 	font-size: 2rem;
 	font-weight: 700;
 	margin-bottom: 1rem;
-	color: var(--vvc-text, #0f172a);
+	color: var(--color-text, #0f172a);
 }
 
 .vvc-docs-page-content h2 {
@@ -288,8 +288,8 @@ watch([requestedPath, tocLinks], async () => {
 	font-weight: 600;
 	margin-top: 2rem;
 	margin-bottom: 0.75rem;
-	color: var(--vvc-text, #0f172a);
-	border-bottom: 1px solid var(--vvc-border, #e2e8f0);
+	color: var(--color-text, #0f172a);
+	border-bottom: 1px solid var(--color-border, #e2e8f0);
 	padding-bottom: 0.5rem;
 }
 
@@ -298,17 +298,17 @@ watch([requestedPath, tocLinks], async () => {
 	font-weight: 600;
 	margin-top: 1.5rem;
 	margin-bottom: 0.5rem;
-	color: var(--vvc-text, #0f172a);
+	color: var(--color-text, #0f172a);
 }
 
 .vvc-docs-page-content p {
 	margin-bottom: 1rem;
 	line-height: 1.7;
-	color: var(--vvc-text-muted, #64748b);
+	color: var(--color-text-muted, #64748b);
 }
 
 .vvc-docs-page-content a {
-	color: var(--vvc-color-primary, #3b82f6);
+	color: var(--color-primary, #3b82f6);
 	text-decoration: none;
 }
 
@@ -317,11 +317,11 @@ watch([requestedPath, tocLinks], async () => {
 }
 
 .vvc-docs-page-content code {
-	background-color: var(--vvc-bg-elevated, #f1f5f9);
+	background-color: var(--color-surface-elevated, #f1f5f9);
 	padding: 0.125rem 0.375rem;
 	border-radius: 0.25rem;
 	font-size: 0.875rem;
-	color: var(--vvc-color-primary-dark, #2563eb);
+	color: var(--color-primary-dark, #2563eb);
 }
 
 
@@ -334,25 +334,25 @@ watch([requestedPath, tocLinks], async () => {
 .vvc-docs-page-content li {
 	margin-bottom: 0.25rem;
 	line-height: 1.7;
-	color: var(--vvc-text-muted, #64748b);
+	color: var(--color-text-muted, #64748b);
 }
 
 .vvc-docs-page-content blockquote {
-	border-left: 4px solid var(--vvc-color-primary, #3b82f6);
+	border-left: 4px solid var(--color-primary, #3b82f6);
 	padding-left: 1rem;
 	margin: 1rem 0;
-	color: var(--vvc-text-muted, #64748b);
+	color: var(--color-text-muted, #64748b);
 	font-style: italic;
 }
 
 .vvc-docs-page-content img {
 	max-width: 100%;
-	border-radius: var(--vvc-radius, 0.25rem);
+	border-radius: var(--radius, 0.25rem);
 }
 
 .vvc-docs-page-content hr {
 	border: none;
-	border-top: 1px solid var(--vvc-border, #e2e8f0);
+	border-top: 1px solid var(--color-border, #e2e8f0);
 	margin: 2rem 0;
 }
 
@@ -365,14 +365,14 @@ watch([requestedPath, tocLinks], async () => {
 .vvc-docs-page-content th,
 .vvc-docs-page-content td {
 	padding: 0.75rem;
-	border: 1px solid var(--vvc-border, #e2e8f0);
+	border: 1px solid var(--color-border, #e2e8f0);
 	text-align: left;
 }
 
 .vvc-docs-page-content th {
-	background-color: var(--vvc-bg-muted, #f8fafc);
+	background-color: var(--color-surface, #f8fafc);
 	font-weight: 600;
-	color: var(--vvc-text, #0f172a);
+	color: var(--color-text, #0f172a);
 }
 
 @media (max-width: 1100px) {

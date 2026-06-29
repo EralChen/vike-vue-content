@@ -36,6 +36,7 @@ import { ThemeSettings } from '@vike-vue-content/components/theme-settings'
 - 🎯 中性色选择（5种灰色系）
 - 📐 圆角大小调整（7种预设）
 - 📝 字体选择（8种字体）
+- 📤 导出完整 CSS 变量（`:root` / `.dark`）和 vike-themes 兼容 JSON
 - 🔄 一键重置主题
 
 ## 依赖

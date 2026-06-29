@@ -37,6 +37,6 @@ const resolvedAriaLabel = computed(() => {
 .vvc-docs-aside-bottom {
 	margin-top: 16px;
 	padding-top: 16px;
-	border-top: 1px solid var(--vvc-border, #e2e8f0);
+	border-top: 1px solid var(--color-border, #e2e8f0);
 }
 </style>

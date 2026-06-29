@@ -95,9 +95,9 @@ onUnmounted(() => {
   position: sticky;
   top: 0;
   z-index: 40;
-  background-color: color-mix(in srgb, var(--vvc-bg) 75%, transparent);
+  background-color: color-mix(in srgb, var(--color-bg) 75%, transparent);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--vvc-border);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .layout-header-inner {
@@ -127,7 +127,7 @@ onUnmounted(() => {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--vvc-text);
+  color: var(--color-text);
 }
 
 .github-link {
@@ -135,14 +135,14 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   padding: 8px;
-  border-radius: var(--vvc-radius);
-  color: var(--vvc-text-muted);
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .github-link:hover {
-  color: var(--vvc-text);
-  background-color: var(--vvc-bg-elevated);
+  color: var(--color-text);
+  background-color: var(--color-surface-elevated);
 }
 
 .layout-header-actions {
@@ -163,16 +163,16 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--vvc-radius);
+  border-radius: var(--radius);
   transition: all 0.2s ease;
   font-size: 18px;
   line-height: 1;
-  color: var(--vvc-text-muted);
+  color: var(--color-text-muted);
 }
 
 .theme-picker-trigger:hover,
 .theme-picker-trigger.is-open {
-  background-color: var(--vvc-bg-elevated);
+  background-color: var(--color-surface-elevated);
 }
 
 .theme-picker-panel {

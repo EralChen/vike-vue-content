@@ -29,6 +29,13 @@
           {{ color }}
         </button>
       </div>
+      <input
+        class="vvc-theme-picker-input"
+        type="text"
+        :value="customPrimary"
+        placeholder="#0066cc"
+        @input="handleCustomPrimaryInput"
+      >
     </fieldset>
 
     <!-- Neutral 颜色选择 -->
@@ -115,18 +122,16 @@
       <legend class="vvc-theme-picker-legend">Export</legend>
       <div class="vvc-theme-picker-export">
         <button
-          v-if="hasCSSChanges"
           class="vvc-theme-picker-export-button"
           @click="handleExportCSS"
         >
           {{ copiedCSS ? '✓ Copied' : 'main.css' }}
         </button>
         <button
-          v-if="hasConfigChanges"
           class="vvc-theme-picker-export-button"
           @click="handleExportConfig"
         >
-          {{ copiedConfig ? '✓ Copied' : 'config.json' }}
+          {{ copiedConfig ? '✓ Copied' : 'vike-theme.json' }}
         </button>
         <button
           class="vvc-theme-picker-reset"
@@ -141,7 +146,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import {
   useTheme,
   primaryColors,
@@ -149,7 +154,8 @@ import {
   radiusPresets,
   fontPresets,
   getColorValue,
-  getNeutralColorValue
+  getNeutralColorValue,
+  isHexColor
 } from '@vike-vue-content/composables/theme'
 
 const {
@@ -164,7 +170,7 @@ const {
   hasCSSChanges,
   hasConfigChanges,
   exportCSS,
-  exportConfig,
+  exportVikeThemeConfig,
   resetTheme
 } = useTheme()
 
@@ -174,6 +180,17 @@ const copiedConfig = ref(false)
 // 重命名以保持模板兼容
 const radiuses = radiusPresets
 const fonts = fontPresets
+
+const customPrimary = computed(() =>
+  typeof primary.value === 'string' && isHexColor(primary.value) ? primary.value : ''
+)
+
+function handleCustomPrimaryInput(event: Event) {
+  const value = (event.target as HTMLInputElement).value.trim()
+  if (isHexColor(value)) {
+    primary.value = value
+  }
+}
 
 async function handleExportCSS() {
   try {
@@ -189,7 +206,7 @@ async function handleExportCSS() {
 
 async function handleExportConfig() {
   try {
-    await navigator.clipboard.writeText(exportConfig())
+    await navigator.clipboard.writeText(exportVikeThemeConfig())
     copiedConfig.value = true
     setTimeout(() => {
       copiedConfig.value = false
@@ -336,6 +353,35 @@ async function handleExportConfig() {
   transition: all 0.2s;
   margin: 0 -8px;
   width: calc(100% + 16px);
+}
+
+.vvc-theme-picker-input {
+  width: calc(100% + 16px);
+  margin: 8px -8px 0;
+  padding: 6px 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  background-color: transparent;
+  font-size: 11px;
+  color: #475569;
+  transition: all 0.2s;
+}
+
+.dark .vvc-theme-picker-input {
+  border-color: #475569;
+  color: #94a3b8;
+  background-color: #1e293b;
+}
+
+.vvc-theme-picker-input:hover,
+.vvc-theme-picker-input:focus {
+  background-color: rgba(241, 245, 249, 0.5);
+  outline: none;
+}
+
+.dark .vvc-theme-picker-input:hover,
+.dark .vvc-theme-picker-input:focus {
+  background-color: rgba(51, 65, 85, 0.5);
 }
 
 .dark .vvc-theme-picker-select {

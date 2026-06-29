@@ -66,14 +66,14 @@ function transformSlot(slot: any, index: number): TabItem | (TabItem | null)[] |
 }
 
 .vvc-code-group {
-	border: 1px solid var(--vvc-border, #e2e8f0);
-	border-radius: var(--vvc-radius, 8px);
+	border: 1px solid var(--color-border, #e2e8f0);
+	border-radius: var(--radius, 8px);
 	margin: 1.25rem 0;
 	overflow: hidden;
 }
 
 .dark .vvc-code-group {
-	border-color: var(--vvc-border, #334155);
+	border-color: var(--color-border, #334155);
 }
 
 .vvc-code-group-tabs {
@@ -81,20 +81,20 @@ function transformSlot(slot: any, index: number): TabItem | (TabItem | null)[] |
 	align-items: center;
 	gap: 4px;
 	padding: 8px;
-	background-color: var(--vvc-bg-elevated, #f1f5f9);
-	border-bottom: 1px solid var(--vvc-border, #e2e8f0);
+	background-color: var(--color-surface-elevated, #f1f5f9);
+	border-bottom: 1px solid var(--color-border, #e2e8f0);
 	overflow-x: auto;
 }
 
 .dark .vvc-code-group-tabs {
-	background-color: var(--vvc-bg-muted, #1e293b);
-	border-bottom-color: var(--vvc-border, #334155);
+	background-color: var(--color-surface, #1e293b);
+	border-bottom-color: var(--color-border, #334155);
 }
 
 .vvc-code-group-tab {
 	padding: 6px 12px;
 	font-size: 13px;
-	color: var(--vvc-text-muted, #64748b);
+	color: var(--color-text-muted, #64748b);
 	background: transparent;
 	border: none;
 	border-radius: 6px;
@@ -105,24 +105,24 @@ function transformSlot(slot: any, index: number): TabItem | (TabItem | null)[] |
 }
 
 .vvc-code-group-tab:hover {
-	color: var(--vvc-text, #1e293b);
-	background-color: var(--vvc-bg, #fff);
+	color: var(--color-text, #1e293b);
+	background-color: var(--color-bg, #fff);
 }
 
 .dark .vvc-code-group-tab:hover {
-	color: var(--vvc-text, #e2e8f0);
-	background-color: var(--vvc-bg-elevated, #334155);
+	color: var(--color-text, #e2e8f0);
+	background-color: var(--color-surface-elevated, #334155);
 }
 
 .vvc-code-group-tab[data-state="active"] {
-	color: var(--vvc-text, #1e293b);
-	background-color: var(--vvc-bg, #fff);
+	color: var(--color-text, #1e293b);
+	background-color: var(--color-bg, #fff);
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .dark .vvc-code-group-tab[data-state="active"] {
-	color: var(--vvc-text, #e2e8f0);
-	background-color: var(--vvc-bg-elevated, #334155);
+	color: var(--color-text, #e2e8f0);
+	background-color: var(--color-surface-elevated, #334155);
 }
 
 .vvc-code-group-content .vvc-prose-code-wrapper {

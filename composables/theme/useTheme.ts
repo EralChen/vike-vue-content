@@ -1,182 +1,263 @@
-import { ref, computed, watch, onMounted } from 'vue'
-import { useLocalStorage } from '@vueuse/core'
-import { defaultTheme, colorModes, colorMap, neutralColorMap } from './constants'
-import type { ThemeConfig } from './types'
+import { computed, onMounted, ref, watch } from 'vue'
+import { createSharedComposable, useLocalStorage } from '@vueuse/core'
+import {
+  colorModes,
+  defaultThemeState,
+  defineTheme,
+  themeToVars
+} from './constants'
+import { exportThemeCss, exportVikeThemeConfig as stringifyVikeThemeConfig } from './export'
+import type { Appearance, ThemeState } from './types'
 
-export function useTheme() {
-  const theme = useLocalStorage<ThemeConfig>('vvc-theme', { ...defaultTheme })
+function cloneDefaultState(): ThemeState {
+  return {
+    theme: defineTheme(defaultThemeState.theme),
+    appearance: defaultThemeState.appearance,
+    blackAsPrimary: false
+  }
+}
+
+function fontCss(font: string): string {
+  return font === 'system-ui' ? 'system-ui, sans-serif' : `'${font}', sans-serif`
+}
+
+function normalizeState(value: any): ThemeState {
+  if (value?.theme) {
+    return {
+      theme: defineTheme(value.theme),
+      appearance: value.appearance || 'system',
+      blackAsPrimary: value.blackAsPrimary ?? false
+    }
+  }
+
+  return cloneDefaultState()
+}
+
+function fontName(font: string): string {
+  const first = font.split(',')[0]?.trim() || 'Inter'
+  return first.replace(/^['"]|['"]$/g, '')
+}
+
+function withPrimary(tokens: Record<string, string>, color: string): Record<string, string> {
+  const { primary, primarySource, 'primary-light': primaryLight, 'primary-dark': primaryDark, ...rest } = tokens
+  return {
+    ...rest,
+    primary: color
+  }
+}
+
+function withNeutral(tokens: Record<string, string>, color: string): Record<string, string> {
+  const {
+    neutral,
+    muted,
+    'muted-light': mutedLight,
+    'muted-dark': mutedDark,
+    bg,
+    surface,
+    'surface-elevated': surfaceElevated,
+    text,
+    'text-muted': textMuted,
+    'text-dimmed': textDimmed,
+    border,
+    'border-muted': borderMuted,
+    ...rest
+  } = tokens
+
+  return {
+    ...rest,
+    neutral: color
+  }
+}
+
+function _useTheme() {
+  const state = useLocalStorage<ThemeState>('vvc-theme', cloneDefaultState())
   const isDark = ref(false)
 
-  // 计算属性
+  state.value = normalizeState(state.value)
+
+  const theme = computed({
+    get: () => state.value.theme,
+    set: next => {
+      state.value.theme = defineTheme(next)
+    }
+  })
+
   const primary = computed({
-    get: () => theme.value.colors.primary,
+    get: () => state.value.theme.light.primarySource || state.value.theme.light.primary || 'blue',
     set: (color: string) => {
-      theme.value.colors.primary = color
-      theme.value.blackAsPrimary = false
+      state.value.theme = defineTheme({
+        ...state.value.theme,
+        light: withPrimary(state.value.theme.light, color),
+        dark: withPrimary(state.value.theme.dark, color)
+      })
+      state.value.blackAsPrimary = false
+      applyTheme()
     }
   })
 
   const neutral = computed({
-    get: () => theme.value.colors.neutral,
+    get: () => state.value.theme.light.neutral || 'slate',
     set: (color: string) => {
-      theme.value.colors.neutral = color
+      state.value.theme = defineTheme({
+        ...state.value.theme,
+        light: withNeutral(state.value.theme.light, color),
+        dark: withNeutral(state.value.theme.dark, color)
+      })
+      applyTheme()
     }
   })
 
   const radius = computed({
-    get: () => theme.value.radius,
-    set: (r: number) => {
-      theme.value.radius = r
+    get: () => Number.parseFloat(state.value.theme.radius || '0.25rem'),
+    set: (value: number) => {
+      state.value.theme = defineTheme({
+        ...state.value.theme,
+        radius: `${value}rem`
+      })
+      applyTheme()
     }
   })
 
   const font = computed({
-    get: () => theme.value.font,
-    set: (f: string) => {
-      theme.value.font = f
+    get: () => fontName(state.value.theme.fonts.sans || 'Inter'),
+    set: (value: string) => {
+      state.value.theme = defineTheme({
+        ...state.value.theme,
+        fonts: {
+          ...state.value.theme.fonts,
+          sans: fontCss(value)
+        }
+      })
+      applyTheme()
     }
   })
 
   const mode = computed({
-    get: () => theme.value.colorMode,
-    set: (m: 'light' | 'dark' | 'system') => {
-      theme.value.colorMode = m
+    get: () => state.value.appearance,
+    set: (value: Appearance) => {
+      setAppearance(value)
     }
   })
 
-  const blackAsPrimary = computed(() => theme.value.blackAsPrimary ?? false)
-
+  const blackAsPrimary = computed(() => state.value.blackAsPrimary ?? false)
   const modes = colorModes
 
-  // 检查是否有变更
   const hasCSSChanges = computed(() => {
-    return theme.value.radius !== defaultTheme.radius
-      || theme.value.blackAsPrimary
-      || theme.value.font !== defaultTheme.font
+    return state.value.theme.radius !== defaultThemeState.theme.radius
+      || state.value.blackAsPrimary
+      || state.value.theme.fonts.sans !== defaultThemeState.theme.fonts.sans
   })
 
   const hasConfigChanges = computed(() => {
-    return theme.value.colors.primary !== defaultTheme.colors.primary
-      || theme.value.colors.neutral !== defaultTheme.colors.neutral
+    return primary.value !== 'blue' || neutral.value !== 'slate'
   })
 
-  // 应用颜色模式
   function applyColorMode() {
-    const { colorMode } = theme.value
+    const appearance = state.value.appearance
 
-    if (colorMode === 'system') {
+    if (appearance === 'system') {
       isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
     } else {
-      isDark.value = colorMode === 'dark'
+      isDark.value = appearance === 'dark'
     }
 
     document.documentElement.classList.toggle('dark', isDark.value)
   }
 
-  // 应用主题变量
-  function applyThemeVariables() {
-    const { colors, radius, font, blackAsPrimary: blackPrimary } = theme.value
-    const root = document.documentElement
-
-    // 主色调
-    if (blackPrimary) {
-      root.style.setProperty('--vvc-color-primary', isDark.value ? '#ffffff' : '#000000')
-      root.style.setProperty('--vvc-color-primary-light', isDark.value ? '#e2e8f0' : '#334155')
-      root.style.setProperty('--vvc-color-primary-dark', isDark.value ? '#cbd5e1' : '#1e293b')
-    } else {
-      const primaryColor = colorMap[colors.primary] || colorMap.blue
-      root.style.setProperty('--vvc-color-primary', primaryColor[500])
-      root.style.setProperty('--vvc-color-primary-light', primaryColor[400])
-      root.style.setProperty('--vvc-color-primary-dark', primaryColor[600])
+  function activeTheme() {
+    if (!state.value.blackAsPrimary) {
+      return state.value.theme
     }
 
-    // 中性色
-    const neutralColor = neutralColorMap[colors.neutral] || neutralColorMap.slate
-    root.style.setProperty('--vvc-color-neutral', neutralColor[500])
-    root.style.setProperty('--vvc-color-neutral-light', neutralColor[400])
-    root.style.setProperty('--vvc-color-neutral-dark', neutralColor[600])
-
-    // 圆角
-    root.style.setProperty('--vvc-radius', `${radius}rem`)
-
-    // 字体
-    root.style.setProperty('--vvc-font-family', `'${font}', sans-serif`)
+    return defineTheme({
+      ...state.value.theme,
+      light: {
+        ...withPrimary(state.value.theme.light, isDark.value ? '#ffffff' : '#000000'),
+        'primary-light': isDark.value ? '#e2e8f0' : '#334155',
+        'primary-dark': isDark.value ? '#cbd5e1' : '#1e293b'
+      },
+      dark: {
+        ...withPrimary(state.value.theme.dark, '#ffffff'),
+        'primary-light': '#e2e8f0',
+        'primary-dark': '#cbd5e1'
+      }
+    })
   }
 
-  // 监听系统主题变化
+  function applyThemeVariables() {
+    const vars = themeToVars(activeTheme(), isDark.value ? 'dark' : 'light')
+    const root = document.documentElement
+
+    for (const [key, value] of Object.entries(vars)) {
+      root.style.setProperty(key, value)
+    }
+  }
+
   function watchSystemTheme() {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     mediaQuery.addEventListener('change', () => {
-      if (theme.value.colorMode === 'system') {
+      if (state.value.appearance === 'system') {
         applyColorMode()
         applyThemeVariables()
       }
     })
   }
 
-  // 初始化主题
   function initTheme() {
     applyColorMode()
     applyThemeVariables()
     watchSystemTheme()
   }
 
-  watch(theme, () => {
+  function applyTheme() {
     applyColorMode()
     applyThemeVariables()
+  }
+
+  watch(state, () => {
+    applyTheme()
   }, { deep: true })
 
   onMounted(() => {
+    state.value.theme = defineTheme(state.value.theme)
     initTheme()
   })
 
-  // 方法
   function toggleDarkMode() {
-    const currentIndex = colorModes.findIndex(m => m.label === theme.value.colorMode)
+    const currentIndex = colorModes.findIndex(item => item.label === state.value.appearance)
     const nextIndex = (currentIndex + 1) % colorModes.length
-    theme.value.colorMode = colorModes[nextIndex].label
+    setAppearance(colorModes[nextIndex].label)
+  }
+
+  function setAppearance(value: Appearance) {
+    state.value.appearance = value
+    applyTheme()
   }
 
   function setBlackAsPrimary(value: boolean) {
-    theme.value.blackAsPrimary = value
+    state.value.blackAsPrimary = value
+    applyTheme()
   }
 
   function resetTheme() {
-    theme.value = { ...defaultTheme, blackAsPrimary: false }
+    state.value = cloneDefaultState()
+    applyTheme()
   }
 
   function exportCSS(): string {
-    const lines: string[] = [
-      ':root {',
-      `  --vvc-radius: ${theme.value.radius}rem;`,
-      `  --vvc-font-family: '${theme.value.font}', sans-serif;`,
-      '}'
-    ]
-
-    if (theme.value.blackAsPrimary) {
-      lines.push('', '.dark {', '  --vvc-color-primary: #ffffff;', '}')
-    }
-
-    return lines.join('\n')
+    return exportThemeCss(activeTheme(), state.value.appearance)
   }
 
   function exportConfig(): string {
-    const config = {
-      colors: {
-        primary: theme.value.colors.primary,
-        neutral: theme.value.colors.neutral
-      },
-      radius: theme.value.radius,
-      font: theme.value.font,
-      colorMode: theme.value.colorMode,
-      blackAsPrimary: theme.value.blackAsPrimary
-    }
+    return JSON.stringify(state.value, null, 2)
+  }
 
-    return JSON.stringify(config, null, 2)
+  function exportVikeThemeConfig(): string {
+    return stringifyVikeThemeConfig(activeTheme())
   }
 
   return {
-    // 状态
+    state,
     theme,
     isDark,
     primary,
@@ -188,12 +269,13 @@ export function useTheme() {
     modes,
     hasCSSChanges,
     hasConfigChanges,
-
-    // 方法
     toggleDarkMode,
     setBlackAsPrimary,
     resetTheme,
     exportCSS,
-    exportConfig
+    exportConfig,
+    exportVikeThemeConfig
   }
 }
+
+export const useTheme = createSharedComposable(_useTheme)
