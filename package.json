@@ -35,7 +35,7 @@
     "npm-run-all2": "^9.0.2",
     "typescript": "^6.0.3",
     "unbuild": "^3.6.1",
-    "vike": "0.4.259-commit-ac2142e",
+    "vike": "^0.4.260",
     "vike-vue": "^0.9.12",
     "vite": "^8.1.0",
     "vitest": "^4.1.9",
