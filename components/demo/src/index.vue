@@ -12,6 +12,9 @@ const { demos, parsedSources, components } = useContentRenderer()
 const previewKey = computed(() => props.preview.trim())
 
 const demoComponent = computed(() => {
+	console.debug('previewKey.value', previewKey.value)
+	console.debug('demos.value', demos.value)
+	console.debug('demos.value[previewKey.value]', demos.value[previewKey.value])
 	return demos.value[previewKey.value] 
 })
 
