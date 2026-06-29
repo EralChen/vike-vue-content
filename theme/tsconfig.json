@@ -2,7 +2,9 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
     "../env.d.ts",
-    "+config.ts"
+    "./**/*.ts",
+    "./**/*.tsx",
+    "./**/*.vue"
   ],
   "exclude": [
     "dist",
@@ -10,15 +12,12 @@
   ],
   "compilerOptions": {
     "noEmit": false,
-    "types": [
-      "node"
-    ],
     "allowImportingTsExtensions": true,
     "emitDeclarationOnly": true,
     "declaration": true,
     "rootDir": "./",
     "outDir": "dist",
     "noImplicitAny": false,
-    "tsBuildInfoFile": "../node_modules/.tmp/tsconfig.node.tsbuildinfo"
+    "tsBuildInfoFile": "../node_modules/.tmp/theme.tsbuildinfo"
   }
 }

@@ -8,18 +8,10 @@
       </legend>
       <div class="vvc-theme-picker-grid vvc-theme-picker-grid--3">
         <button
-          class="vvc-theme-picker-button"
-          :class="{ 'is-selected': blackAsPrimary }"
-          @click="setBlackAsPrimary(true)"
-        >
-          <span class="vvc-theme-picker-dot" style="background-color: #000" />
-          Black
-        </button>
-        <button
           v-for="color in primaryColors"
           :key="color"
           class="vvc-theme-picker-button"
-          :class="{ 'is-selected': !blackAsPrimary && primary === color }"
+          :class="{ 'is-selected': primary === color }"
           @click="primary = color"
         >
           <span
@@ -147,8 +139,8 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
+import { useTheme } from '@vike-vue-content/composables/theme'
 import {
-  useTheme,
   primaryColors,
   neutralColors,
   radiusPresets,
@@ -156,15 +148,13 @@ import {
   getColorValue,
   getNeutralColorValue,
   isHexColor
-} from '@vike-vue-content/composables/theme'
+} from '@vike-vue-content/theme'
 
 const {
   primary,
   neutral,
   radius,
   font,
-  blackAsPrimary,
-  setBlackAsPrimary,
   modes,
   mode,
   hasCSSChanges,

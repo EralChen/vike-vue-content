@@ -2,35 +2,31 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { createSharedComposable, useLocalStorage } from '@vueuse/core'
 import {
   colorModes,
-  defaultThemeState,
+  defaultTheme,
   defineTheme,
   themeToVars
-} from './constants'
-import { exportThemeCss, exportVikeThemeConfig as stringifyVikeThemeConfig } from './export'
-import type { Appearance, ThemeState } from './types'
+} from '@vike-vue-content/theme'
+import { exportThemeCss, exportVikeThemeConfig as stringifyVikeThemeConfig } from '@vike-vue-content/theme'
+import type { Appearance, ThemeState } from '@vike-vue-content/theme'
+import { getDefaultThemeState } from './defaultState'
 
 function cloneDefaultState(): ThemeState {
-  return {
-    theme: defineTheme(defaultThemeState.theme),
-    appearance: defaultThemeState.appearance,
-    blackAsPrimary: false
-  }
-}
-
-function fontCss(font: string): string {
-  return font === 'system-ui' ? 'system-ui, sans-serif' : `'${font}', sans-serif`
+  return getDefaultThemeState()
 }
 
 function normalizeState(value: any): ThemeState {
   if (value?.theme) {
     return {
       theme: defineTheme(value.theme),
-      appearance: value.appearance || 'system',
-      blackAsPrimary: value.blackAsPrimary ?? false
+      appearance: value.appearance || 'system'
     }
   }
 
   return cloneDefaultState()
+}
+
+function fontCss(font: string): string {
+  return font === 'system-ui' ? 'system-ui, sans-serif' : `'${font}', sans-serif`
 }
 
 function fontName(font: string): string {
@@ -90,7 +86,6 @@ function _useTheme() {
         light: withPrimary(state.value.theme.light, color),
         dark: withPrimary(state.value.theme.dark, color)
       })
-      state.value.blackAsPrimary = false
       applyTheme()
     }
   })
@@ -139,13 +134,11 @@ function _useTheme() {
     }
   })
 
-  const blackAsPrimary = computed(() => state.value.blackAsPrimary ?? false)
   const modes = colorModes
 
   const hasCSSChanges = computed(() => {
-    return state.value.theme.radius !== defaultThemeState.theme.radius
-      || state.value.blackAsPrimary
-      || state.value.theme.fonts.sans !== defaultThemeState.theme.fonts.sans
+    return state.value.theme.radius !== defaultTheme.radius
+      || state.value.theme.fonts.sans !== defaultTheme.fonts.sans
   })
 
   const hasConfigChanges = computed(() => {
@@ -164,28 +157,8 @@ function _useTheme() {
     document.documentElement.classList.toggle('dark', isDark.value)
   }
 
-  function activeTheme() {
-    if (!state.value.blackAsPrimary) {
-      return state.value.theme
-    }
-
-    return defineTheme({
-      ...state.value.theme,
-      light: {
-        ...withPrimary(state.value.theme.light, isDark.value ? '#ffffff' : '#000000'),
-        'primary-light': isDark.value ? '#e2e8f0' : '#334155',
-        'primary-dark': isDark.value ? '#cbd5e1' : '#1e293b'
-      },
-      dark: {
-        ...withPrimary(state.value.theme.dark, '#ffffff'),
-        'primary-light': '#e2e8f0',
-        'primary-dark': '#cbd5e1'
-      }
-    })
-  }
-
   function applyThemeVariables() {
-    const vars = themeToVars(activeTheme(), isDark.value ? 'dark' : 'light')
+    const vars = themeToVars(state.value.theme, isDark.value ? 'dark' : 'light')
     const root = document.documentElement
 
     for (const [key, value] of Object.entries(vars)) {
@@ -234,18 +207,13 @@ function _useTheme() {
     applyTheme()
   }
 
-  function setBlackAsPrimary(value: boolean) {
-    state.value.blackAsPrimary = value
-    applyTheme()
-  }
-
   function resetTheme() {
     state.value = cloneDefaultState()
     applyTheme()
   }
 
   function exportCSS(): string {
-    return exportThemeCss(activeTheme(), state.value.appearance)
+    return exportThemeCss(state.value.theme, state.value.appearance)
   }
 
   function exportConfig(): string {
@@ -253,7 +221,7 @@ function _useTheme() {
   }
 
   function exportVikeThemeConfig(): string {
-    return stringifyVikeThemeConfig(activeTheme())
+    return stringifyVikeThemeConfig(state.value.theme)
   }
 
   return {
@@ -265,12 +233,10 @@ function _useTheme() {
     radius,
     font,
     mode,
-    blackAsPrimary,
     modes,
     hasCSSChanges,
     hasConfigChanges,
     toggleDarkMode,
-    setBlackAsPrimary,
     resetTheme,
     exportCSS,
     exportConfig,

@@ -5,6 +5,7 @@ packages:
   - query
   - components
   - composables
+  - theme
   - locale
   - shared
   - entry

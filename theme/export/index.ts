@@ -1,5 +1,9 @@
-import { defineTheme, themeToAppearanceCss } from './constants'
-import type { Appearance, Theme, ThemeTokens } from './types'
+import {
+  defaultAppearance,
+  defineTheme,
+  themeToAppearanceCss
+} from '../core'
+import type { Appearance, Theme, ThemeTokens } from '../core'
 
 function cleanModeTokens(tokens: Record<string, string>): Record<string, string> {
   const { primarySource, neutral, ...cleaned } = tokens
@@ -14,7 +18,7 @@ function cleanTheme(theme: Theme): Theme {
   }
 }
 
-export function exportThemeCss(theme: Theme | ThemeTokens, appearance: Appearance = 'system', selector = ':root'): string {
+export function exportThemeCss(theme: Theme | ThemeTokens, appearance: Appearance = defaultAppearance, selector = ':root'): string {
   return themeToAppearanceCss(defineTheme(theme), appearance, selector)
 }
 

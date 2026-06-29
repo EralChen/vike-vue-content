@@ -23,6 +23,9 @@ importers:
       '@vike-vue-content/shared':
         specifier: workspace:*
         version: link:shared
+      '@vike-vue-content/theme':
+        specifier: workspace:*
+        version: link:theme
       '@vueuse/core':
         specifier: ^14.3.0
         version: 14.3.0(vue@3.5.39(typescript@6.0.3))
@@ -104,13 +107,12 @@ importers:
 
   composables:
     dependencies:
-      chroma-js:
-        specifier: ^3.2.0
-        version: 3.2.0
-    devDependencies:
-      '@types/chroma-js':
-        specifier: ^3.1.2
-        version: 3.1.2
+      '@vike-vue-content/theme':
+        specifier: workspace:*
+        version: link:../theme
+      vike-vue:
+        specifier: ^0.9.11
+        version: 0.9.11(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3))
 
   config:
     dependencies:
@@ -123,6 +125,9 @@ importers:
       '@vike-vue-content/query':
         specifier: workspace:*
         version: link:../query
+      '@vike-vue-content/theme':
+        specifier: workspace:*
+        version: link:../theme
       yaml:
         specifier: ^2.9.0
         version: 2.9.0
@@ -175,6 +180,9 @@ importers:
       tinyglobby:
         specifier: ^0.2.0
         version: 0.2.17
+      vike-vue:
+        specifier: ^0.9.11
+        version: 0.9.11(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(vike@0.4.259-commit-ac2142e(srvx@0.11.17)(vite@8.1.0(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(vue@3.5.39(typescript@6.0.3))
       yaml:
         specifier: ^2.9.0
         version: 2.9.0
@@ -193,6 +201,16 @@ importers:
         version: 2.9.0
 
   shared: {}
+
+  theme:
+    dependencies:
+      chroma-js:
+        specifier: ^3.2.0
+        version: 3.2.0
+    devDependencies:
+      '@types/chroma-js':
+        specifier: ^3.1.2
+        version: 3.1.2
 
   vike:
     dependencies:

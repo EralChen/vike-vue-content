@@ -1,21 +1,17 @@
 import { useLocalStorage } from '@vueuse/core'
-import { defaultThemeState, defineTheme } from './constants'
-import type { Appearance, ThemeState } from './types'
+import { defineTheme } from '@vike-vue-content/theme'
+import type { Appearance, ThemeState } from '@vike-vue-content/theme'
+import { getDefaultThemeState } from './defaultState'
 
 function defaultState(): ThemeState {
-  return {
-    theme: defineTheme(defaultThemeState.theme),
-    appearance: defaultThemeState.appearance,
-    blackAsPrimary: false
-  }
+  return getDefaultThemeState()
 }
 
 function normalizeState(value: any): ThemeState {
   if (value?.theme) {
     return {
       theme: defineTheme(value.theme),
-      appearance: value.appearance || 'system',
-      blackAsPrimary: value.blackAsPrimary ?? false
+      appearance: value.appearance || 'system'
     }
   }
 
@@ -79,7 +75,6 @@ export function useThemeStorage() {
       light: withPrimary(state.value.theme.light, color),
       dark: withPrimary(state.value.theme.dark, color)
     })
-    state.value.blackAsPrimary = false
   }
 
   function setNeutralColor(color: string) {
@@ -111,10 +106,6 @@ export function useThemeStorage() {
     state.value.appearance = mode
   }
 
-  function setBlackAsPrimary(value: boolean) {
-    state.value.blackAsPrimary = value
-  }
-
   return {
     state,
     theme: state,
@@ -124,7 +115,6 @@ export function useThemeStorage() {
     setNeutralColor,
     setRadius,
     setFont,
-    setColorMode,
-    setBlackAsPrimary
+    setColorMode
   }
 }

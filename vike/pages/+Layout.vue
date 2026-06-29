@@ -46,6 +46,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import 'element-plus/dist/index.css';
 import 'vike-vue-content/index.css';
+import '../styles/reset.css';
 import { ConfigProvider } from 'vike-vue-content/components/config-provider';
 import { ThemeToggle } from 'vike-vue-content/components/theme-toggle';
 import { ThemeSettings } from 'vike-vue-content/components/theme-settings';

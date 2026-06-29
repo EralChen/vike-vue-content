@@ -4,7 +4,8 @@ import type _ from 'vike-vue/config'
 import type { ContentConfig, DocsPageOptions } from '@vike-vue-content/shared/types'
 import { collectWorkspaceDocsRedirects } from '@vike-vue-content/docs/redirects'
 import { docsRuntimeBasePlugin, demoAutoCollectPlugin } from '@vike-vue-content/docs/plugin'
-import { generateThemeInitScript } from '@vike-vue-content/composables/theme'
+import { defaultTheme } from '@vike-vue-content/theme'
+import type { ThemesConfigValue } from '@vike-vue-content/theme'
 
 const config = {
   name: 'vike-vue-content',
@@ -20,8 +21,33 @@ const config = {
   },
   onAfterRenderHtml: 'import:vike-vue-content/docs/search:onAfterRenderHtml',
   passToClient: ['_searchIndexMap'],
-  headHtmlBegin: generateThemeInitScript(),
+  headHtmlBegin: 'import:vike-vue-content/theme/headHtmlBegin:headHtmlBegin',
+  theme: defaultTheme.name,
+  themes: defaultTheme,
+  appearance: 'system',
   meta: {
+    theme: {
+      env: {
+        config: true,
+        server: true,
+        client: true,
+      },
+    },
+    themes: {
+      env: {
+        config: true,
+        server: true,
+        client: true,
+      },
+      cumulative: true,
+    },
+    appearance: {
+      env: {
+        config: true,
+        server: true,
+        client: true,
+      },
+    },
     content: {
       env: {
         config: true,
@@ -53,10 +79,14 @@ declare global {
     interface Config {
       content?: ContentConfig
       docs?: DocsPageOptions
+      theme?: string
+      themes?: ThemesConfigValue
+      appearance?: 'light' | 'dark' | 'system'
     }
     interface ConfigResolved {
       content?: ContentConfig
       docs?: DocsPageOptions
+      themes?: ThemesConfigValue[]
     }
   }
 }

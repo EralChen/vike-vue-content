@@ -1,5 +1,39 @@
 import chroma from 'chroma-js'
-import type { Appearance, ColorValue, Theme, ThemeConfig, ThemeTokens } from './types'
+
+export type Appearance = 'light' | 'dark' | 'system'
+export type ColorMode = Appearance
+
+export interface ThemeTokens {
+  name?: string
+  fonts?: Record<string, string>
+  radius?: string
+  spacing?: Record<string, string>
+  colors?: Record<string, string>
+  light?: Record<string, string>
+  dark?: Record<string, string>
+}
+
+export interface ColorValue {
+  500: string
+  400: string
+  600: string
+}
+
+export interface Theme {
+  name: string
+  fonts: Record<string, string>
+  radius?: string
+  spacing: Record<string, string>
+  light: Record<string, string>
+  dark: Record<string, string>
+}
+
+export interface ThemeState {
+  theme: Theme
+  appearance: Appearance
+}
+
+export type ThemeConfig = ThemeState
 
 export interface NeutralThemeVars {
   muted: string
@@ -15,19 +49,15 @@ export interface NeutralThemeVars {
   borderMuted: string
 }
 
-// 主色调预设
 export const primaryColors = [
   'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal',
   'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose'
 ]
 
-// 中性色预设
 export const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone']
 
-// 圆角预设
 export const radiusPresets = [0, 0.125, 0.25, 0.375, 0.5]
 
-// 字体预设
 export const fontPresets = [
   'Inter',
   'system-ui',
@@ -39,14 +69,12 @@ export const fontPresets = [
   'Raleway'
 ]
 
-// 颜色模式预设
 export const colorModes = [
   { label: 'light' as const, icon: '☀️' },
   { label: 'dark' as const, icon: '🌙' },
   { label: 'system' as const, icon: '💻' }
 ]
 
-// 主色调映射表
 export const colorMap: Record<string, ColorValue> = {
   red:     { 500: '#ef4444', 400: '#f87171', 600: '#dc2626' },
   orange:  { 500: '#f97316', 400: '#fb923c', 600: '#ea580c' },
@@ -67,7 +95,6 @@ export const colorMap: Record<string, ColorValue> = {
   rose:    { 500: '#f43f5e', 400: '#fb7185', 600: '#e11d48' },
 }
 
-// 中性色映射表
 export const neutralColorMap: Record<string, ColorValue> = {
   slate:   { 500: '#64748b', 400: '#94a3b8', 600: '#475569' },
   gray:    { 500: '#6b7280', 400: '#9ca3af', 600: '#4b5563' },
@@ -218,11 +245,7 @@ export const defaultTheme = defineTheme({
   }
 })
 
-export const defaultThemeState: ThemeConfig = {
-  theme: defaultTheme,
-  appearance: 'system',
-  blackAsPrimary: false
-}
+export const defaultAppearance: Appearance = 'system'
 
 const VAR_GROUPS = {
   colors: 'color',
@@ -269,7 +292,7 @@ export function themeToCss(theme: Theme, mode: 'light' | 'dark' = 'light', selec
   return `${selector} {\n${body}\n}`
 }
 
-export function themeToAppearanceCss(theme: Theme, appearance: Appearance = 'system', selector = ':root'): string {
+export function themeToAppearanceCss(theme: Theme, appearance: Appearance = defaultAppearance, selector = ':root'): string {
   if (appearance === 'light' || appearance === 'dark') {
     return `${themeToCss(theme, appearance, selector)}\n${selector} { color-scheme: ${appearance}; }`
   }

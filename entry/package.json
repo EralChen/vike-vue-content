@@ -273,6 +273,31 @@
       "default": "./shared/types/index.es.js",
       "import": "./shared/types/index.es.js",
       "types": "./shared/types/index.d.ts"
+    },
+    "./theme": {
+      "default": "./theme/index.es.js",
+      "import": "./theme/index.es.js",
+      "types": "./theme/index.d.ts"
+    },
+    "./theme/core": {
+      "default": "./theme/core/index.es.js",
+      "import": "./theme/core/index.es.js",
+      "types": "./theme/core/index.d.ts"
+    },
+    "./theme/export": {
+      "default": "./theme/export/index.es.js",
+      "import": "./theme/export/index.es.js",
+      "types": "./theme/export/index.d.ts"
+    },
+    "./theme/headHtmlBegin": {
+      "default": "./theme/headHtmlBegin/index.es.js",
+      "import": "./theme/headHtmlBegin/index.es.js",
+      "types": "./theme/headHtmlBegin/index.d.ts"
+    },
+    "./theme/script": {
+      "default": "./theme/script/index.es.js",
+      "import": "./theme/script/index.es.js",
+      "types": "./theme/script/index.d.ts"
     }
   },
   "dependencies": {
@@ -282,6 +307,7 @@
     "oxc-parser": "^0.135.0",
     "shiki": "^4.2.0",
     "tinyglobby": "^0.2.0",
+    "vike-vue": "^0.9.11",
     "yaml": "^2.9.0"
   },
   "peerDependencies": {
