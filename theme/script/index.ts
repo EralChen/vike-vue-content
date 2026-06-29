@@ -19,6 +19,8 @@ export function generateThemeInitScript(theme: Theme | ThemeTokens = defaultThem
   const lightVars = varsToScript(themeToVars(resolvedTheme, 'light'))
   const darkVars = varsToScript(themeToVars(resolvedTheme, 'dark'))
 
+  // First paint only restores the persisted appearance.
+  // Persisted theme tokens are applied later by useTheme() after mount.
   return `<script>(function(){try{var r=document.documentElement;var s=JSON.parse(localStorage.getItem('vvc-theme')||'{}');var m=s.appearance||${JSON.stringify(appearance)};var d=m==='dark'||(m==='system'&&window.matchMedia('(prefers-color-scheme:dark)').matches);if(d){r.classList.add('dark');${darkVars}}else{r.classList.remove('dark');${lightVars}}}catch(e){}})()</script>`
 }
 

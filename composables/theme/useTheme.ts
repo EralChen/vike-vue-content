@@ -86,7 +86,6 @@ function _useTheme() {
         light: withPrimary(state.value.theme.light, color),
         dark: withPrimary(state.value.theme.dark, color)
       })
-      applyTheme()
     }
   })
 
@@ -98,7 +97,6 @@ function _useTheme() {
         light: withNeutral(state.value.theme.light, color),
         dark: withNeutral(state.value.theme.dark, color)
       })
-      applyTheme()
     }
   })
 
@@ -109,7 +107,6 @@ function _useTheme() {
         ...state.value.theme,
         radius: `${value}rem`
       })
-      applyTheme()
     }
   })
 
@@ -123,7 +120,6 @@ function _useTheme() {
           sans: fontCss(value)
         }
       })
-      applyTheme()
     }
   })
 
@@ -192,7 +188,6 @@ function _useTheme() {
   }, { deep: true })
 
   onMounted(() => {
-    state.value.theme = defineTheme(state.value.theme)
     initTheme()
   })
 
@@ -204,12 +199,10 @@ function _useTheme() {
 
   function setAppearance(value: Appearance) {
     state.value.appearance = value
-    applyTheme()
   }
 
   function resetTheme() {
     state.value = cloneDefaultState()
-    applyTheme()
   }
 
   function exportCSS(): string {
