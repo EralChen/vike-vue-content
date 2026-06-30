@@ -1,6 +1,6 @@
 {
   "name": "vike-vue-content",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "description": "Content rendering framework for Vike and Vue documentation sites",
   "author": "EralChen",
   "license": "MIT",
@@ -85,6 +85,11 @@
       "default": "./components/docs-toc/index.es.js",
       "import": "./components/docs-toc/index.es.js",
       "types": "./components/docs-toc/index.d.ts"
+    },
+    "./components/drawer": {
+      "default": "./components/drawer/index.es.js",
+      "import": "./components/drawer/index.es.js",
+      "types": "./components/drawer/index.d.ts"
     },
     "./components/hello-world": {
       "default": "./components/hello-world/index.es.js",
