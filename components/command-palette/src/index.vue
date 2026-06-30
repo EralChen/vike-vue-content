@@ -234,7 +234,7 @@ onBeforeUnmount(() => {
 .vvc-cmd-overlay {
 	position: fixed;
 	inset: 0;
-	z-index: 100;
+	z-index: 110;
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
