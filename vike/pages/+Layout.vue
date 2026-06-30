@@ -150,6 +150,7 @@ onUnmounted(() => {
   margin: 0 auto;
   width: 100%;
   position: relative;
+  overflow-x: clip;
 }
 
 .layout-header-brand {
